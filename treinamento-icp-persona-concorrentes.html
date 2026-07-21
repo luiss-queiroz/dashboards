@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Treinamento — ICP, Persona e Concorrentes | impulseup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root, [data-theme="light"]{
+  --bg:#FFFFFF;--bg-alt:#F4F2EF;--bg-card:#FFFFFF;--fg:#0C0C0C;--fg-muted:#666666;
+  --border:#E0E0E0;--border-md:#CCCCCC;--primary:#CC0088;--primary-h:#A3006D;--primary-d:#770055;
+  --primary-dim:rgba(204,0,136,0.08);--primary-glow:rgba(204,0,136,0.2);
+  --success:#1A8A44;--success-dim:rgba(26,138,68,0.08);--success-border:rgba(26,138,68,0.25);
+  --danger:#CC3322;--danger-dim:rgba(204,51,34,0.08);--danger-border:rgba(204,51,34,0.25);
+  --warn:#B47A00;--warn-dim:rgba(180,122,0,0.08);--warn-border:rgba(180,122,0,0.25);
+  --r:10px;--r-lg:16px;--font:'Poppins',sans-serif;
+}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font);background:var(--bg-alt);color:var(--fg);min-height:100vh;-webkit-font-smoothing:antialiased;}
+.app{max-width:980px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;background:var(--bg);}
+
+/* TOPBAR */
+.topbar{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--border);padding:14px 28px;}
+.topbar-row{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:10px;}
+.brand{display:flex;align-items:center;gap:8px;}
+.brand-logo{width:26px;height:26px;background:var(--primary);border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:#fff;}
+.brand-text{font-size:14px;font-weight:700;color:var(--fg);}
+.brand-text span{color:var(--primary);}
+.slide-count{font-size:11px;font-weight:600;color:var(--fg-muted);letter-spacing:.04em;}
+.progress-track{height:5px;background:var(--border);border-radius:20px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--primary);border-radius:20px;transition:width .35s ease;}
+
+/* MAIN */
+.stage{flex:1;padding:40px 28px 30px;display:flex;flex-direction:column;}
+.slide{display:none;animation:fadeUp .3s ease;}
+.slide.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--primary);margin-bottom:10px;}
+h1.title{font-size:30px;font-weight:800;letter-spacing:-.5px;line-height:1.2;margin-bottom:14px;}
+h2.subtitle{font-size:19px;font-weight:700;margin-bottom:12px;letter-spacing:-.3px;}
+p.lead{font-size:15px;color:var(--fg-muted);line-height:1.75;margin-bottom:14px;font-weight:400;}
+p.lead strong, .body-text strong{color:var(--fg);font-weight:600;}
+.body-text{font-size:14px;color:var(--fg-muted);line-height:1.8;margin-bottom:10px;}
+
+.cover{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-height:60vh;}
+.cover .eyebrow{font-size:12px;}
+.cover h1{font-size:42px;margin-bottom:16px;}
+.cover p.lead{font-size:16px;max-width:520px;}
+
+.card{background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px 22px;margin-bottom:14px;}
+.card-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-muted);margin-bottom:8px;}
+.card-title{font-size:14px;font-weight:700;color:var(--fg);margin-bottom:6px;}
+.card-body{font-size:13.5px;color:var(--fg-muted);line-height:1.75;}
+.card-body ul{margin-left:18px;margin-top:6px;}
+.card-body li{margin-bottom:4px;}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+@media(max-width:700px){.grid2,.grid3{grid-template-columns:1fr;}}
+
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;padding:4px 11px;border-radius:20px;background:var(--primary-dim);color:var(--primary);border:1px solid rgba(204,0,136,.25);margin-right:6px;margin-bottom:6px;}
+.pill.muted{background:var(--bg-alt);color:var(--fg-muted);border-color:var(--border-md);}
+.pill.good{background:var(--success-dim);color:var(--success);border-color:var(--success-border);}
+.pill.bad{background:var(--danger-dim);color:var(--danger);border-color:var(--danger-border);}
+.pill.warn{background:var(--warn-dim);color:var(--warn);border-color:var(--warn-border);}
+
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:16px;}
+.stat-card{background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;}
+.stat-label{font-size:10.5px;color:var(--fg-muted);font-weight:600;margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em;}
+.stat-val{font-size:20px;font-weight:800;color:var(--fg);}
+.stat-sub{font-size:10.5px;color:var(--fg-muted);}
+
+/* persona */
+.persona-head{display:flex;align-items:center;gap:16px;margin-bottom:16px;}
+.persona-avatar{width:64px;height:64px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;flex-shrink:0;}
+.persona-name{font-size:22px;font-weight:800;}
+.persona-role{font-size:13px;color:var(--fg-muted);font-weight:500;}
+.persona-quote{border-left:3px solid var(--primary);padding:10px 16px;font-style:italic;font-size:13.5px;color:var(--fg);background:var(--primary-dim);border-radius:0 var(--r) var(--r) 0;margin-bottom:16px;}
+
+/* matriz */
+.matrix{border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin-bottom:16px;}
+.matrix table{width:100%;border-collapse:collapse;font-size:12px;}
+.matrix th,.matrix td{padding:10px 8px;text-align:center;border:1px solid var(--border);}
+.matrix th{background:var(--bg-alt);font-weight:700;color:var(--fg-muted);font-size:11px;}
+.matrix td.icp{background:var(--success-dim);color:var(--success);font-weight:700;}
+.matrix td.acp2{background:var(--primary-dim);color:var(--primary);font-weight:600;}
+.matrix td.acp3{background:var(--warn-dim);color:var(--warn);font-weight:600;}
+.matrix td.acp4{background:#eee;color:var(--fg-muted);font-weight:600;}
+.matrix td.ucp{background:var(--danger-dim);color:var(--danger);font-weight:700;}
+.matrix td.label{background:var(--bg-alt);font-weight:700;color:var(--fg);text-align:left;}
+
+/* Interactive: classification game */
+.game-box{background:var(--bg-alt);border:1px dashed var(--border-md);border-radius:var(--r-lg);padding:22px;margin-bottom:16px;}
+.game-scenario{font-size:14px;color:var(--fg);line-height:1.7;margin-bottom:16px;padding:14px 16px;background:var(--bg);border-radius:var(--r);border:1px solid var(--border);}
+.opt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;}
+.opt-btn{min-height:44px;background:var(--bg);border:2px solid var(--border-md);border-radius:var(--r);padding:10px 14px;font-family:var(--font);font-size:13px;font-weight:600;color:var(--fg);cursor:pointer;transition:all .15s;}
+.opt-btn:hover{border-color:var(--primary);}
+.opt-btn.correct{background:var(--success-dim);border-color:var(--success);color:var(--success);}
+.opt-btn.wrong{background:var(--danger-dim);border-color:var(--danger);color:var(--danger);}
+.opt-btn:disabled{cursor:default;}
+.feedback{margin-top:14px;padding:12px 16px;border-radius:var(--r);font-size:13px;line-height:1.65;display:none;}
+.feedback.show{display:block;animation:fadeUp .25s ease;}
+.feedback.correct{background:var(--success-dim);border:1px solid var(--success-border);color:var(--success);}
+.feedback.wrong{background:var(--danger-dim);border:1px solid var(--danger-border);color:var(--danger);}
+
+/* flashcard flip */
+.flip-card{perspective:1000px;height:220px;cursor:pointer;margin-bottom:16px;}
+.flip-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d;}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg);}
+.flip-face{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:var(--r-lg);border:1px solid var(--border);padding:20px;display:flex;flex-direction:column;justify-content:center;}
+.flip-front{background:var(--bg-alt);align-items:center;text-align:center;}
+.flip-back{background:var(--primary-dim);transform:rotateY(180deg);border-color:rgba(204,0,136,.3);}
+.flip-hint{font-size:11px;color:var(--fg-muted);margin-top:10px;}
+
+/* score */
+.score-badge{display:inline-flex;align-items:center;gap:8px;background:var(--primary-dim);border:1px solid rgba(204,0,136,.3);color:var(--primary);padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;margin-bottom:16px;}
+
+/* footer nav */
+.navbar{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.nav-btn{min-height:44px;padding:10px 20px;border-radius:var(--r);font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;border:2px solid var(--border-md);background:var(--bg);color:var(--fg);}
+.nav-btn.primary{background:var(--primary);border-color:var(--primary);color:#fff;box-shadow:0 0 12px var(--primary-glow);}
+.nav-btn.primary:hover{background:var(--primary-h);}
+.nav-btn:disabled{opacity:.35;cursor:not-allowed;}
+.nav-dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;max-width:280px;}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--border-md);}
+.dot.done{background:var(--primary);}
+.dot.current{background:var(--primary);width:16px;border-radius:4px;}
+
+/* end screen */
+.end-wrap{text-align:center;padding:40px 0;}
+.end-emoji-ring{width:90px;height:90px;border-radius:50%;background:var(--primary-dim);border:2px solid var(--primary);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:34px;font-weight:800;color:var(--primary);}
+
+@media(max-width:700px){
+  .topbar,.stage,.navbar{padding-left:18px;padding-right:18px;}
+  .cover h1{font-size:30px;}
+  h1.title{font-size:24px;}
+  .nav-dots{display:none;}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="topbar">
+    <div class="topbar-row">
+      <div class="brand">
+        <div class="brand-logo">up</div>
+        <div class="brand-text">impulse<span>up</span> · Treinamento Comercial</div>
+      </div>
+      <div class="slide-count"><span id="slideNum">1</span> / <span id="slideTotal"></span></div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  </div>
+
+  <div class="stage" id="stage"></div>
+
+  <div class="navbar">
+    <button class="nav-btn" id="btnPrev" onclick="goPrev()">← Voltar</button>
+    <div class="nav-dots" id="navDots"></div>
+    <button class="nav-btn primary" id="btnNext" onclick="goNext()">Avançar →</button>
+  </div>
+
+</div>
+
+<script>
+/* ==================== CONTEÚDO DAS TELAS ==================== */
+const slides = [];
+
+function s(html){ slides.push(html); }
+
+/* 1 — CAPA */
+s(`
+<div class="cover">
+  <div class="eyebrow">Treinamento de pré-vendedores</div>
+  <h1 class="title">ICP, Persona<br>e Concorrentes</h1>
+  <p class="lead">Antes de qualquer conversa com um lead, você precisa saber <strong>quem</strong> é o nosso cliente ideal, <strong>com quem</strong> vamos falar dentro daquela empresa e <strong>contra quem</strong> estamos competindo. Esse é o mapa que vai guiar toda a sua qualificação.</p>
+  <span class="pill">Passo a passo</span>
+  <span class="pill">Com dinâmicas interativas</span>
+</div>
+`);
+
+/* DIVISOR — Módulo 1 */
+s(`
+<div class="cover" style="min-height:50vh;">
+  <div class="eyebrow">Módulo 1</div>
+  <h1 class="title">Contexto de mercado</h1>
+  <p class="lead">Por que a impulseup precisa de um ICP bem definido.</p>
+</div>
+`);
+
+/* 2 — Por que ICP importa */
+s(`
+<div class="eyebrow">Módulo 1 · Contexto</div>
+<h1 class="title">Por que precisamos de um ICP?</h1>
+<p class="lead">O mercado de gestão de desempenho está <strong>amadurecendo e cada vez mais competitivo</strong>. Estimamos que entre <strong>100 e 200 empresas</strong> no Brasil vendem soluções de avaliação de desempenho.</p>
+<div class="card">
+  <div class="card-label">Players consolidados</div>
+  <div class="card-body">Qulture.Rocks, Gupy, TOTVS e Sólides concentram a maior parte do market share do mercado hoje.</div>
+</div>
+<div class="card">
+  <div class="card-label">O que isso muda para o SDR</div>
+  <div class="card-body">O que antes funcionava — atacar para todos os lados — agora fica cada vez mais difícil. Para sobrevivermos no mercado, precisamos ser <strong>muito bons para um determinado público</strong>. É exatamente isso que o ICP define.</div>
+</div>
+`);
+
+/* DIVISOR — Módulo 2 */
+s(`
+<div class="cover" style="min-height:50vh;">
+  <div class="eyebrow">Módulo 2</div>
+  <h1 class="title">O conceito de ICP</h1>
+  <p class="lead">ICP, ACP e UCP — a régua que qualifica todo lead.</p>
+</div>
+`);
+
+/* 3 — O que é ICP */
+s(`
+<div class="eyebrow">Módulo 2 · Conceito</div>
+<h1 class="title">O que é ICP</h1>
+<p class="lead">O <strong>Perfil de Cliente Ideal (ICP)</strong> é a fatia do mercado que mais queremos vender. É a forma de dizermos, de forma ativa, quem é o nosso foco como negócio.</p>
+<div class="grid3">
+  <div class="card">
+    <div class="card-label">ICP</div>
+    <div class="card-title">Perfil de cliente ideal</div>
+    <div class="card-body">100% para quem queremos ser bons.</div>
+  </div>
+  <div class="card">
+    <div class="card-label">ACP</div>
+    <div class="card-title">Perfil aceitável</div>
+    <div class="card-body">Não é perfeito, mas ainda tira valor real da solução.</div>
+  </div>
+  <div class="card">
+    <div class="card-label">UCP</div>
+    <div class="card-title">Perfil inaceitável</div>
+    <div class="card-body">Custa muito e não traz retorno.</div>
+  </div>
+</div>
+<p class="body-text">Essa é a base que vamos usar para qualificar leads e clientes ao longo de todo o treinamento.</p>
+`);
+
+/* DIVISOR — Módulo 3 */
+s(`
+<div class="cover" style="min-height:50vh;">
+  <div class="eyebrow">Módulo 3</div>
+  <h1 class="title">A base do ICP</h1>
+  <p class="lead">Público e Tamanho — as duas variáveis que cruzam para formar a classificação.</p>
+</div>
+`);
+
+/* 4 — Públicos intro */
+s(`
+<div class="eyebrow">Módulo 3 · Base do ICP</div>
+<h1 class="title">O ICP é o cruzamento de duas variáveis</h1>
+<p class="lead">Analisamos muitas variáveis para entender o que impactava a receita e a satisfação. O resultado é simples — e foi feito para ser simples.</p>
+<div class="grid2">
+  <div class="card">
+    <div class="card-label">Variável 1</div>
+    <div class="card-title">Público</div>
+    <div class="card-body">Operacional Manual, Operacional Especializado ou Corporativo.</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Variável 2</div>
+    <div class="card-title">Tamanho</div>
+    <div class="card-body">Tamanho da empresa e, principalmente, tamanho do projeto fechado.</div>
+  </div>
+</div>
+`);
+
+/* 5 — Público Operacional Manual */
+s(`
+<div class="eyebrow">Módulo 3 · Públicos</div>
+<h2 class="subtitle">Público Operacional Manual</h2>
+<p class="lead">É a força de trabalho de execução direta. Seja operando uma máquina, levantando um muro ou atendendo um cliente no balcão. O foco é <strong>repetição, presença e escala</strong>.</p>
+<div class="card">
+  <div class="card-label">Quem está aqui</div>
+  <div class="card-body"><strong>Esforço físico:</strong> operário de fábrica, pedreiro/mestre de obras, motorista, limpeza.<br><strong>Atendimento/vendas:</strong> vendedor de loja, garçom, porteiro, bancário de agência/caixa.</div>
+</div>
+<div class="card">
+  <div class="card-label">A dor do RH</div>
+  <div class="card-body">Turnover alto, absenteísmo (faltas), gestão de escala e motivação básica.</div>
+</div>
+`);
+
+/* 6 — Público Operacional Especializado */
+s(`
+<div class="eyebrow">Módulo 3 · Públicos</div>
+<h2 class="subtitle">Público Operacional Especializado</h2>
+<p class="lead">É o profissional que atua na ponta ("mão na massa"), mas cuja entrega depende de <strong>formação acadêmica superior e registro de classe</strong>. Ele toma decisão técnica baseada em ciência ou pedagogia durante a execução.</p>
+<div class="card">
+  <div class="card-label">Quem está aqui</div>
+  <div class="card-body">Médicos, enfermeiros, professores (docentes), engenheiros de campo/projetos (ART), pilotos, oficiais de marinha.</div>
+</div>
+<div class="card">
+  <div class="card-label">A dor do RH</div>
+  <div class="card-body">Retenção de conhecimento (se ele sai, leva a técnica), atualização profissional e gestão de ego técnico.</div>
+</div>
+`);
+
+/* 7 — Público Corporativo */
+s(`
+<div class="eyebrow">Módulo 3 · Públicos</div>
+<h2 class="subtitle">Público Corporativo</h2>
+<p class="lead">É o profissional do conhecimento (White Collar) e da inovação. Ele desenha a estratégia, cria o produto, garante a regulação ou suporta a operação no Backoffice.</p>
+<div class="card">
+  <div class="card-label">Quem está aqui</div>
+  <div class="card-body">Financeiro, RH, Marketing, desenvolvedores (devs), cientistas de dados, especialistas, gerentes de produto, consultores de estratégia, diretores.</div>
+</div>
+<div class="card">
+  <div class="card-label">A dor do RH</div>
+  <div class="card-body">Cultura, plano de carreira, bônus/partnership, liderança e saúde mental.</div>
+</div>
+`);
+
+/* 8 — Tamanho */
+s(`
+<div class="eyebrow">Módulo 3 · Tamanho</div>
+<h1 class="title">Tamanho da empresa x tamanho do projeto</h1>
+<p class="lead">Queremos uma proporção boa entre satisfação e retorno financeiro — precisamos ser tão bons para a empresa quanto ela é para nós.</p>
+<div class="card">
+  <div class="card-label">Regra de ouro</div>
+  <div class="card-body"><strong>Tamanho da empresa ≠ tamanho do projeto.</strong> Se a empresa tem 4.000 colaboradores, mas o projeto fechado é para 300, ela ainda é considerada uma <strong>G3</strong>. O que qualifica é o projeto, não o CNPJ.</div>
+</div>
+<div class="matrix">
+  <table>
+    <tr><th>Território</th><th>Faixa (colaboradores no projeto)</th></tr>
+    <tr><td class="label">M2</td><td>100–249</td></tr>
+    <tr><td class="label">M3</td><td>250–499</td></tr>
+    <tr><td class="label">G1</td><td>500–999</td></tr>
+    <tr><td class="label">G2</td><td>1.000–2.999</td></tr>
+    <tr><td class="label">G3</td><td>3.000+</td></tr>
+  </table>
+</div>
+`);
+
+/* 9 — Matriz ICP (informativa) */
+s(`
+<div class="eyebrow">Módulo 3 · Matriz</div>
+<h1 class="title">A matriz de classificação</h1>
+<p class="lead">Cruzando Público e Tamanho, chegamos à nossa matriz de classificação. Estude bem — na próxima tela você vai precisar aplicá-la sem consultar.</p>
+<div class="matrix">
+  <table>
+    <tr><th></th><th>&lt;100</th><th>100–250</th><th>250–1000</th><th>1000–5000</th><th>&gt;5000</th></tr>
+    <tr><td class="label">Op. Manual</td><td class="ucp">UCP</td><td class="acp3">ACP T3</td><td class="icp">ICP</td><td class="icp">ICP</td><td class="acp4">ACP T4</td></tr>
+    <tr><td class="label">Op. Especializado</td><td class="ucp">UCP</td><td class="acp3">ACP T3</td><td class="icp">ICP</td><td class="icp">ICP</td><td class="acp4">ACP T4</td></tr>
+    <tr><td class="label">Corporativo</td><td class="acp2">ACP T2</td><td class="acp2">ACP T2</td><td class="acp3">ACP T3</td><td class="acp3">ACP T3</td><td class="acp4">ACP T4</td></tr>
+  </table>
+</div>
+`);
+
+/* DIVISOR — Dinâmica de classificação */
+s(`
+<div class="cover" style="min-height:50vh;">
+  <div class="eyebrow">Dinâmica · Sem consulta</div>
+  <h1 class="title">Classifique os 3 cenários</h1>
+  <p class="lead">A partir daqui a matriz não está mais visível. Use o que você acabou de estudar.</p>
+</div>
+`);
+
+/* 10 — GAME: 3 cenários de classificação */
+s(`
+<div class="eyebrow">Módulo 3 · Dinâmica</div>
+<h1 class="title">Classifique o cenário</h1>
+<div class="game-box">
+  <div class="game-scenario"><strong>Cenário 1 —</strong> "Somos uma indústria com 600 colaboradores na fábrica, o projeto que estamos avaliando é para toda a operação."</div>
+  <div class="opt-grid">
+    <button class="opt-btn" onclick="checkGame('game1', this, false)">UCP</button>
+    <button class="opt-btn" onclick="checkGame('game1', this, false)">ACP Tier 3</button>
+    <button class="opt-btn" onclick="checkGame('game1', this, true)">ICP</button>
+    <button class="opt-btn" onclick="checkGame('game1', this, false)">ACP Tier 4</button>
+  </div>
+  <div class="feedback" id="game1-feedback"></div>
+</div>
+<div class="game-box">
+  <div class="game-scenario"><strong>Cenário 2 —</strong> "Somos um escritório de advocacia com 60 colaboradores, público 100% corporativo, e o projeto seria para todo mundo."</div>
+  <div class="opt-grid">
+    <button class="opt-btn" onclick="checkGame('game1b', this, true)">ACP Tier 2</button>
+    <button class="opt-btn" onclick="checkGame('game1b', this, false)">ICP</button>
+    <button class="opt-btn" onclick="checkGame('game1b', this, false)">UCP</button>
+    <button class="opt-btn" onclick="checkGame('game1b', this, false)">ACP Tier 3</button>
+  </div>
+  <div class="feedback" id="game1b-feedback"></div>
+</div>
+<div class="game-box">
+  <div class="game-scenario"><strong>Cenário 3 —</strong> "Somos uma rede hospitalar com 8.000 colaboradores, público operacional especializado (médicos e enfermeiros), projeto para toda a rede."</div>
+  <div class="opt-grid">
+    <button class="opt-btn" onclick="checkGame('game1c', this, false)">ICP</button>
+    <button class="opt-btn" onclick="checkGame('game1c', this, true)">ACP Tier 4</button>
+    <button class="opt-btn" onclick="checkGame('game1c', this, false)">ACP Tier 2</button>
+    <button class="opt-btn" onclick="checkGame('game1c', this, false)">UCP</button>
+  </div>
+  <div class="feedback" id="game1c-feedback"></div>
+</div>
+`);
+
+/* DIVISOR — Módulo 4 */
+s(`
+<div class="cover" style="min-height:50vh;">
+  <div class="eyebrow">Módulo 4</div>
+  <h1 class="title">Performance real do ICP</h1>
+  <p class="lead">O que os dados de 2024 e 2025 mostram sobre o nosso próprio ICP.</p>
+</div>
+`);
+
+/* 10 — Dados reais do ICP */
+s(`
+<div class="eyebrow">Módulo 4 · Performance</div>
+<h1 class="title">Como o nosso ICP performa de verdade</h1>
+<p class="lead">Esse é o nosso ICP — mas como essa categoria vem performando para o negócio, ano a ano?</p>
+<div class="matrix">
+  <table>
+    <tr><th>Métrica</th><th>2024</th><th>2025</th></tr>
+    <tr><td class="label">ICP no funil</td><td>33,5%</td><td>38,42%</td></tr>
+    <tr><td class="label">Taxa de fechamento</td><td>20,13%</td><td>15,81%</td></tr>
+    <tr><td class="label">Churn</td><td>—</td><td>12,35%</td></tr>
+    <tr><td class="label">NPS</td><td>—</td><td>64%</td></tr>
+    <tr><td class="label">ARR total</td><td>—</td><td>52,17%</td></tr>
+  </table>
+</div>
+<div class="card">
+  <div class="card-label">Leitura do closer/SDR</div>
+  <div class="card-body">O ICP já é maioria no funil <strong>e cresceu de 2024 para 2025</strong> — mas a taxa de fechamento caiu no mesmo período, sinal de processos mais longos e complexos. Em compensação, o churn é menor e, quando o cliente ICP fecha, ele fica <strong>anos</strong> com a gente.</div>
+</div>
+`);
+
+/* DIVISOR — Módulo 5 */
+s(`
+<div class="cover" style="min-height:50vh;">
+  <div class="eyebrow">Módulo 5</div>
+  <h1 class="title">Perfil do cliente ideal</h1>
+  <p class="lead">Quem é, de fato, o RH que mais performa com a impulseup.</p>
+</div>
+`);
+
+/* 11 — Perfil real */
+s(`
+<div class="eyebrow">Módulo 5 · Perfil do cliente ideal</div>
+<h1 class="title">Quem é, de fato, o nosso cliente ideal</h1>
+<div class="card">
+  <div class="card-label">RH segmentado, mas generalista</div>
+  <div class="card-body">RH grande, com estrutura complexa e áreas segmentadas — mas nem sempre com uma área de DHO bem construída. O RH acumula tarefas operacionais, e AD é um projeto importante, mas não a única responsabilidade do time.</div>
+</div>
+<div class="card">
+  <div class="card-label">Público dominante: 70% operacional</div>
+  <div class="card-body">É o público mais fácil de acessar e que mais engaja. Em alguns casos, o público operacional nem responde à avaliação — só as lideranças, que também são difíceis de acessar (sem e-mail corporativo, sem celular da empresa, alta rotatividade).</div>
+</div>
+<div class="card">
+  <div class="card-label">Cultura: qualidade antes de inovação</div>
+  <div class="card-body">Processos claros, sem erro, mesmo que demorem mais. Segurança e estabilidade importam mais que velocidade. A mudança cultural é <strong>lenta e leva anos</strong> — o projeto não tem prazo de um ano só.</div>
+</div>
+<div class="card">
+  <div class="card-label">Liderança média: técnica e insegura</div>
+  <div class="card-body">A liderança média manda e desmanda, mas é insegura na gestão de pessoas. O RH quer parar de trabalhar por ela e começar a ensiná-la a gerir times. Controle e meritocracia são discursos centrais.</div>
+</div>
+<div class="card">
+  <div class="card-label">Indicadores que o RH persegue</div>
+  <div class="card-body">Turnover, absenteísmo, retenção de recém-contratados, adesão ao ciclo, nine box, gaps de competência, conclusão de PDI.</div>
+</div>
+`);
+
+/* DIVISOR — Módulo 6 */
+s(`
+<div class="cover" style="min-height:50vh;">
+  <div class="eyebrow">Módulo 6</div>
+  <h1 class="title">Posicionamento</h1>
+  <p class="lead">Os 6 pilares que sustentam nosso diferencial no ICP.</p>
+</div>
+`);
+
+/* 12 — 6 pilares */
+s(`
+<div class="eyebrow">Módulo 6 · Posicionamento</div>
+<h1 class="title">6 pilares estratégicos para o ICP</h1>
+<p class="lead">São os focos que nos diferenciam do mercado — as principais dores que resolvemos e os benefícios que entregamos.</p>
+<div class="grid3">
+  <div class="card"><div class="card-title">Engajamento</div><div class="card-body">Garante alta adesão de públicos operacionais.</div></div>
+  <div class="card"><div class="card-title">Atendimento consultivo</div><div class="card-body">Acompanhamento especializado do início ao fim.</div></div>
+  <div class="card"><div class="card-title">Controle</div><div class="card-body">Confiabilidade de todo o processo.</div></div>
+  <div class="card"><div class="card-title">Flexibilidade</div><div class="card-body">Garante os processos de DHO como foram definidos.</div></div>
+  <div class="card"><div class="card-title">Inteligente</div><div class="card-body">Insights e análises para tomada de decisão.</div></div>
+  <div class="card"><div class="card-title">Liderança</div><div class="card-body">Liderança engajada e alinhada com a gestão de pessoas.</div></div>
+</div>
+`);
+
+/* DIVISOR — Módulo 7 */
+s(`
+<div class="cover" style="min-height:50vh;">
+  <div class="eyebrow">Módulo 7</div>
+  <h1 class="title">Persona</h1>
+  <p class="lead">Quem você encontra do outro lado da linha, dentro do ICP.</p>
+</div>
+`);
+
+/* 13 — Personas intro */
+s(`
+<div class="eyebrow">Módulo 7 · Persona</div>
+<h1 class="title">Quem você vai encontrar do outro lado da linha</h1>
+<p class="lead">Conhecer o ICP diz quem é a <strong>empresa</strong> certa. Conhecer a persona diz quem é a <strong>pessoa</strong> certa dentro dela. Vamos conhecer as duas personas principais da impulseup: <strong>Daniela</strong> (Analista de RH) e <strong>Luisa</strong> (Gerente de RH / tomadora de decisão).</p>
+`);
+
+/* 14 — Persona Daniela */
+s(`
+<div class="eyebrow">Módulo 7 · Persona</div>
+<div class="persona-head">
+  <div class="persona-avatar">D</div>
+  <div><div class="persona-name">Daniela</div><div class="persona-role">Analista de RH · Formação em Psicologia</div></div>
+</div>
+<div class="persona-quote">"Depois de todas as calibrações, recebi vários elogios das lideranças sobre como as decisões foram tomadas! Meu trabalho foi bem mais importante e trará real impacto na vida das pessoas, o que me deixa muito orgulhosa."</div>
+<div class="grid2">
+  <div class="card">
+    <div class="card-label">Dores</div>
+    <div class="card-body"><ul><li>Trabalho manual excessivo</li><li>Falta de engajamento nos processos do RH</li><li>Dificuldade ao analisar dados</li><li>Destrinchar estratégias em planos de ação</li></ul></div>
+  </div>
+  <div class="card">
+    <div class="card-label">Necessidades</div>
+    <div class="card-body"><ul><li>Plataforma fácil de configurar</li><li>Dados simples e análises já prontas</li><li>Auxílio consultivo durante todo o processo</li></ul></div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-label">Metas dela (o que fecha o mês bem)</div>
+  <div class="card-body">Rodar o eNPS e a avaliação de desempenho <strong>dentro do prazo</strong>, com 100% de adesão em 3 meses. Ter 100% dos colaboradores com metas cadastradas dentro do prazo. Fechar promoções e bonificações.</div>
+</div>
+<div class="card">
+  <div class="card-label">Como encontra fornecedores</div>
+  <div class="card-body">Pesquisa no Google, confia em grupos de WhatsApp de RH e no networking com outros profissionais da área. Consome conteúdo no LinkedIn e Instagram.</div>
+</div>
+`);
+
+/* 15 — Anti-persona Daniela */
+s(`
+<div class="eyebrow">Módulo 7 · Atenção</div>
+<h2 class="subtitle">Quando NÃO é a Daniela</h2>
+<p class="lead">Sinal de alerta: você está falando com a <strong>anti-persona</strong> quando o perfil do RH tem estas características.</p>
+<div class="card">
+  <div class="card-label">Anti-persona (Analista de RH)</div>
+  <div class="card-body"><ul>
+    <li>Não tem visão estratégica sobre os próprios projetos, só executa</li>
+    <li>Depende da gestão para tomar decisões ou formar opinião</li>
+    <li>Insegura quanto ao valor do próprio trabalho</li>
+    <li>Não vai atrás de conhecimento e reclama do processo</li>
+    <li>Não tem metas estipuladas para o próprio trabalho</li>
+  </ul></div>
+</div>
+<p class="body-text">Isso não invalida o lead — mas muda a abordagem: menos histórias de impacto, mais suporte prático e passo a passo.</p>
+`);
+
+/* 16 — Persona Luisa */
+s(`
+<div class="eyebrow">Módulo 7 · Persona</div>
+<div class="persona-head">
+  <div class="persona-avatar">L</div>
+  <div><div class="persona-name">Luisa</div><div class="persona-role">Gerente de RH · Tomadora de decisão · Formação em Psicologia</div></div>
+</div>
+<div class="persona-quote">"O meu objetivo é garantir que aqui seja um ambiente bom de se trabalhar e de desenvolvimento. Só assim conseguiremos ter times engajados e aptos para alcançar os resultados da organização."</div>
+<div class="grid2">
+  <div class="card">
+    <div class="card-label">Dores</div>
+    <div class="card-body"><ul><li>Garantir execução de qualidade das iniciativas</li><li>Conseguir budget para suas iniciativas</li><li>Conciliar estratégia com operação</li><li>Engajar lideranças</li></ul></div>
+  </div>
+  <div class="card">
+    <div class="card-label">Necessidades</div>
+    <div class="card-body"><ul><li>Encontrar insights valiosos para o negócio</li><li>Indicadores claros e rápidos sobre o resultado</li><li>Acompanhar a evolução dos times</li></ul></div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-label">Metas dela</div>
+  <div class="card-body">Metrificar a cultura da empresa, reduzir o turnover, melhorar a performance das equipes, ter lideranças maduras e — acima de tudo — <strong>mostrar o ROI da área de RH</strong>.</div>
+</div>
+<div class="card">
+  <div class="card-label">O maior desafio dela</div>
+  <div class="card-body">"Conseguir provar que a área de RH tem impacto nos resultados da organização." É esse o gancho que a leva a comprar — não a ferramenta em si, o argumento que ela pode levar para a diretoria.</div>
+</div>
+`);
+
+/* 17 — Anti-persona Luisa */
+s(`
+<div class="eyebrow">Módulo 7 · Atenção</div>
+<h2 class="subtitle">Quando NÃO é a Luisa</h2>
+<div class="card">
+  <div class="card-label">Anti-persona (Gerente de RH)</div>
+  <div class="card-body"><ul>
+    <li>Não tem visão estratégica do RH, foca só no operacional</li>
+    <li>Tem dificuldade em mexer na própria plataforma</li>
+    <li>Não tem voz dentro da gestão / não influencia decisão</li>
+    <li>Pede processos que não fazem sentido nem para o time dela</li>
+  </ul></div>
+</div>
+<p class="body-text">Se você identificar esse padrão em quem se apresenta como "gerente", vale investigar quem realmente decide — pode ser um sinal de Influência baixa no framework dos 3 I's.</p>
+`);
+
+/* 18 — QUIZ Daniela ou Luisa */
+s(`
+<div class="eyebrow">Módulo 7 · Dinâmica</div>
+<h1 class="title">Daniela ou Luisa?</h1>
+<p class="lead">Leia a frase e identifique de qual persona ela é mais provável.</p>
+<div class="game-box">
+  <div class="game-scenario">"Meu maior desafio hoje é conseguir provar que a área de RH tem impacto nos resultados da organização. Conseguindo fazer isso, eu teria mais investimento e segurança para atuar de forma mais completa."</div>
+  <div class="opt-grid">
+    <button class="opt-btn" onclick="checkGame('game2', this, false)">Daniela (Analista)</button>
+    <button class="opt-btn" onclick="checkGame('game2', this, true)">Luisa (Gerente)</button>
+  </div>
+  <div class="feedback" id="game2-feedback"></div>
+</div>
+<div class="game-box">
+  <div class="game-scenario">"Depois de todas as calibrações, recebi vários elogios das lideranças sobre como as decisões foram tomadas! Meu trabalho foi bem mais importante."</div>
+  <div class="opt-grid">
+    <button class="opt-btn" onclick="checkGame('game3', this, true)">Daniela (Analista)</button>
+    <button class="opt-btn" onclick="checkGame('game3', this, false)">Luisa (Gerente)</button>
+  </div>
+  <div class="feedback" id="game3-feedback"></div>
+</div>
+`);
+
+/* DIVISOR — Módulo 8 */
+s(`
+<div class="cover" style="min-height:50vh;">
+  <div class="eyebrow">Módulo 8</div>
+  <h1 class="title">Persona x Categoria</h1>
+  <p class="lead">A mesma pessoa pede coisas diferentes dependendo da maturidade do cliente.</p>
+</div>
+`);
+
+/* 19 — Categoria 1 x 2 por persona */
+s(`
+<div class="eyebrow">Módulo 8 · Persona x Categoria</div>
+<h1 class="title">A mesma persona muda de acordo com a categoria</h1>
+<p class="lead">Categoria 1 (sem processo formal) e Categoria 2 (planilhas) mudam o que Daniela e Luisa precisam de você.</p>
+<div class="grid2">
+  <div class="card">
+    <div class="card-label">Daniela · Categoria 1</div>
+    <div class="card-body">Precisa criar o processo do zero, sozinha, lidando com resistência interna e burocracia. Precisa de <strong>apoio consultivo teórico</strong>.</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Daniela · Categoria 2</div>
+    <div class="card-body">Já tem um processo (mesmo que em planilha) e quer uma plataforma que se encaixe nele, mostrando análises inviáveis no Excel. Precisa de <strong>apoio consultivo técnico</strong>.</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Luisa · Categoria 1</div>
+    <div class="card-body">Precisa de pessoas para operacionalizar as iniciativas e provar o valor de um processo totalmente novo para a diretoria.</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Luisa · Categoria 2</div>
+    <div class="card-body">Precisa garantir a satisfação de diferentes stakeholders que já usam algo, e acompanhar de perto a operação da transição.</div>
+  </div>
+</div>
+`);
+
+/* DIVISOR — Módulo 9 */
+s(`
+<div class="cover" style="min-height:50vh;">
+  <div class="eyebrow">Módulo 9</div>
+  <h1 class="title">Concorrentes</h1>
+  <p class="lead">Quem está na mesa quando o lead já está pesquisando o mercado.</p>
+</div>
+`);
+
+/* 21 — Concorrentes panorama */
+s(`
+<div class="eyebrow">Módulo 9 · Concorrentes</div>
+<h1 class="title">Panorama de concorrentes validados</h1>
+<p class="lead">Estes são os concorrentes que aparecem com frequência na nossa jornada comercial. Sempre que um nome novo aparecer numa transcrição e você não tiver certeza, <strong>confirme com o time antes de registrar</strong> — não presuma pelo texto transcrito.</p>
+<div class="card">
+  <div class="card-body">
+    <span class="pill">Qulture.Rocks</span><span class="pill">Feedz</span><span class="pill">TOTVS</span><span class="pill">Sólides</span>
+    <span class="pill">Mindsight</span><span class="pill">Mereo</span><span class="pill">Menvie</span><span class="pill">LG (Lugar de Gente)</span>
+    <span class="pill">Team Guide</span><span class="pill">Elofy</span><span class="pill">Efficient</span><span class="pill">Team Culture</span>
+    <span class="pill">Gupy</span><span class="pill">YouRH</span><span class="pill">Pin People</span><span class="pill">SmartLeader</span>
+  </div>
+</div>
+<div class="card">
+  <div class="card-label">Como isso conecta com o ICP</div>
+  <div class="card-body">Qulture.Rocks, Gupy, TOTVS e Sólides são os líderes de mercado — quando aparecem numa call, é sinal de que o lead já pesquisou bastante. Elofy costuma aparecer em contas com origem em Metas/OKR. SmartLeader é concorrente direto em SIA (IA), gamificação e LMS.</div>
+</div>
+`);
+
+/* 21b — Qulture.Rocks detalhado */
+s(`
+<div class="eyebrow">Módulo 9 · Concorrente</div>
+<div class="persona-head">
+  <div class="persona-avatar" style="background:#60A5FA;">QR</div>
+  <div><div class="persona-name">Qulture.Rocks</div><div class="persona-role">Ex-YC · adquirida pela UOL Edtech em 2022 · rebranding 2025</div></div>
+</div>
+<div class="stat-grid">
+  <div class="stat-card"><div class="stat-label">Clientes</div><div class="stat-val">~1.100</div></div>
+  <div class="stat-card"><div class="stat-label">Headcount</div><div class="stat-val">~36</div></div>
+  <div class="stat-card"><div class="stat-label">NPS declarado</div><div class="stat-val">96</div></div>
+  <div class="stat-card"><div class="stat-label">Preço/user (80 users)</div><div class="stat-val">R$ 36,21</div></div>
+</div>
+<div class="grid2">
+  <div class="card">
+    <div class="card-label">Forças reais — respeite</div>
+    <div class="card-body"><ul><li>Brand awareness fortíssimo, clientes-logo como Nubank e Itaúsa</li><li>Ecossistema de conteúdo (Sapiência, 180+ títulos)</li><li>Demo consultiva muito bem executada</li></ul></div>
+  </div>
+  <div class="card">
+    <div class="card-label">Fraquezas confirmadas — explore</div>
+    <div class="card-body"><ul><li>Analytics fraco — precisa exportar para Excel para análises mais profundas</li><li>Configuração de avaliação é considerada complexa pelos próprios clientes</li><li>Learning.Rocks é produto separado: dois logins, dois times de CS</li><li>CEO fundador sai da empresa em earnout até 2026</li></ul></div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-label">Preço — comparativo direto (faixa 100–249 usuários)</div>
+  <div class="card-body">impulseup: <strong>R$ 21,16/user/mês</strong> (AD + Metas). Qulture.Rocks: <strong>R$ 36,21/user/mês</strong> (base 80 usuários). A impulseup sai ~41% mais barata entregando IA analítica e RV combinado nativamente — a QR precisa de Excel para análises cruzadas.</div>
+</div>
+<div class="card">
+  <div class="card-label">Frase pronta se o lead citar QR</div>
+  <div class="card-body">"A QR que você conhece mudou de mãos — virou UOL Edtech, com o fundador de saída até 2026. É um bom produto, mas peça para ver como eles fazem análise cruzada sem exportar para o Excel."</div>
+</div>
+`);
+
+/* 21c — Gupy detalhado */
+s(`
+<div class="eyebrow">Módulo 9 · Concorrente</div>
+<div class="persona-head">
+  <div class="persona-avatar" style="background:#F5A623;">GP</div>
+  <div><div class="persona-name">Gupy</div><div class="persona-role">Líder em R&S · all-in-one via 3 aquisições (Kenoby, Niduu, Pulses)</div></div>
+</div>
+<div class="stat-grid">
+  <div class="stat-card"><div class="stat-label">Clientes</div><div class="stat-val">4.000+</div></div>
+  <div class="stat-card"><div class="stat-label">Market share R&S</div><div class="stat-val">79,2%</div></div>
+  <div class="stat-card"><div class="stat-label">Módulo Performance</div><div class="stat-val">fev/2024</div></div>
+  <div class="stat-card"><div class="stat-label">Preço Performance/user</div><div class="stat-val">R$ 1,42</div></div>
+</div>
+<div class="grid2">
+  <div class="card">
+    <div class="card-label">Forças reais — respeite</div>
+    <div class="card-body"><ul><li>Marca dominante em recrutamento e seleção</li><li>IA "GAIA" no recrutamento é genuinamente forte</li><li>LMS + LXP com gamificação bem executados</li></ul></div>
+  </div>
+  <div class="card">
+    <div class="card-label">Fraquezas confirmadas — explore</div>
+    <div class="card-body"><ul><li><strong>Não tem módulo de Metas/OKRs</strong> — avaliação desconectada de entregas reais</li><li>Módulo de Performance lançado em fev/2024, ainda imaturo</li><li>3 produtos com arquiteturas de código distintas — bugs de sincronização</li><li>Cada módulo tem mínimo de licenças e implementação separados (50–60 dias cada)</li></ul></div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-label">Preço — transparência</div>
+  <div class="card-body">Em cenário comparável (AD + Pesquisa + Learning), a Gupy sai mais barata no papel (~R$ 3.758/mês vs. ~R$ 11.738/mês da impulseup nesse volume). O argumento não é preço — é o que cada real compra: a Gupy não tem Metas nativas, e o módulo de Performance tem menos de 2 anos de maturidade.</div>
+</div>
+<div class="card">
+  <div class="card-label">Pergunta que expõe a lacuna</div>
+  <div class="card-body">"Como vocês conectam a avaliação de desempenho às metas e resultados dos colaboradores dentro da plataforma?" — a resposta tende a ser "não conectamos".</div>
+</div>
+`);
+
+/* 21d — Elofy e SmartLeader resumo */
+s(`
+<div class="eyebrow">Módulo 9 · Concorrente</div>
+<h2 class="subtitle">Elofy</h2>
+<p class="lead">Fundada em 2017 em Porto Alegre, adquirida pelo grupo italiano Zucchetti em 2021. Nasceu como produto de Metas/OKR e depois incorporou Avaliação de Desempenho.</p>
+<div class="card">
+  <div class="card-label">Fraqueza central</div>
+  <div class="card-body">O cálculo de RV com acelerador/redutor <strong>não é nativo da interface</strong> — existe apenas como planilha manual que o cliente precisa solicitar ao suporte.</div>
+</div>
+<div class="card">
+  <div class="card-label">Nosso diferencial aqui</div>
+  <div class="card-body">RV combinado (meta + comportamental) nativo na plataforma, e IAP (IA para devolutiva e insights de avaliação).</div>
+</div>
+<h2 class="subtitle" style="margin-top:22px;">SmartLeader</h2>
+<p class="lead">Concorrente com portfólio parecido ao nosso próprio roadmap: SIA (chat de IA genérico), gamificação e LMS nativo.</p>
+<div class="card">
+  <div class="card-label">Ponto de atenção</div>
+  <div class="card-body">O LMS e a gamificação deles são reais diferenciais em engajamento de líderes — mas o SIA é um chat de IA genérico, fraco em analytics de avaliação de desempenho.</div>
+</div>
+`);
+
+/* 21e — Sólides detalhado */
+s(`
+<div class="eyebrow">Módulo 9 · Concorrente</div>
+<div class="persona-head">
+  <div class="persona-avatar" style="background:#888;">SL</div>
+  <div><div class="persona-name">Sólides</div><div class="persona-role">RH completo · recrutamento, DP e desempenho num só ecossistema</div></div>
+</div>
+<div class="grid2">
+  <div class="card">
+    <div class="card-label">O que oferecem</div>
+    <div class="card-body">Atração de Talentos (R&S), Gestão de Talentos (DP, PDI), Retenção e Engajamento (pesquisa de clima, radar de rotatividade, controle de metas) e o <strong>Sólides Profiler</strong> — perfil comportamental (DISC), historicamente o carro-chefe da marca.</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Ponto de atenção</div>
+    <div class="card-body">Na própria central de ajuda, avaliação de desempenho (90°/180°/270°/360°, Nine Box) aparece diluída dentro de "Gestão de Talentos" — não como módulo de destaque próprio. O LMS (Sólides Academy) está em <strong>migração para outra plataforma (RHGestor)</strong>, sinal de reorganização de produto em andamento.</div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-label">Como posicionar</div>
+  <div class="card-body">O forte histórico da Sólides é comportamental (Profiler/DISC) e recrutamento para PMEs — não profundidade analítica em gestão de desempenho. Pergunta útil: "Como vocês calibram as notas entre avaliadores diferentes, e o 9box tem histórico visual entre ciclos?"</div>
+</div>
+<p class="body-text" style="font-size:11.5px;">Fonte: central de ajuda pública da Sólides (ajuda.solides.com.br), mai/2026. Ainda sem validação com Batalha/Abrantes — confirme antes de usar em call.</p>
+`);
+
+/* 21f — Mindsight detalhado */
+s(`
+<div class="eyebrow">Módulo 9 · Concorrente</div>
+<div class="persona-head">
+  <div class="persona-avatar" style="background:#4B5EAA;">MS</div>
+  <div><div class="persona-name">Mindsight</div><div class="persona-role">Origem em avaliação psicométrica · hoje suite completa de gestão de pessoas</div></div>
+</div>
+<div class="grid2">
+  <div class="card">
+    <div class="card-label">O que oferecem</div>
+    <div class="card-body">Fluxo de Avaliação de Desempenho bem estruturado: Indicação → Validação → Avaliação → Calibração (com 9box e notas sugeridas) → Resultados. Também têm Gestão de Metas/OKR, PDI, Pesquisa de Clima e um módulo forte de R&S com testes psicométricos (Mindmatch, arquétipos, Nexa Learning Agility).</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Força real</div>
+    <div class="card-body">O nome "Mindsight" vem da herança em avaliação psicológica/psicométrica — o diferencial histórico deles é a qualidade dos testes de recrutamento, não necessariamente a profundidade analítica do ciclo de desempenho.</div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-label">Como posicionar</div>
+  <div class="card-body">É um concorrente estruturado e completo — não subestime. O ponto de comparação mais forte é a integração nativa entre analytics do ciclo, RV e IA (IAP), onde a impulseup tem mais profundidade do que uma suite nascida do R&S.</div>
+</div>
+<p class="body-text" style="font-size:11.5px;">Fonte: central de ajuda pública da Mindsight (suporte.mindsight.com.br), mai/2026. Ainda sem validação com Batalha/Abrantes — confirme antes de usar em call.</p>
+`);
+
+/* 21g — TOTVS / Feedz detalhado */
+s(`
+<div class="eyebrow">Módulo 9 · Concorrente</div>
+<div class="persona-head">
+  <div class="persona-avatar" style="background:#0C0C0C;">TV</div>
+  <div><div class="persona-name">TOTVS (Feedz)</div><div class="persona-role">Feedz foi adquirida pela TOTVS — hoje opera como "Feedz by TOTVS"</div></div>
+</div>
+<div class="grid2">
+  <div class="card">
+    <div class="card-label">O que oferecem</div>
+    <div class="card-body">Portfólio muito amplo: Avaliação de Desempenho (o maior volume de conteúdo de suporte, 79 artigos), Metas e Objetivos/OKR, Comitê de Calibração, Clima e Engajamento, Pesquisas, Feedback, 1:1, PDI, Comunicados, Gamificação, Termômetro de Humor, Ouvidoria, R&S e Departamento Pessoal (88 artigos — o maior de todos, puxado pela força histórica da TOTVS em folha/DP).</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Ponto de atenção</div>
+    <div class="card-body">Portfólio muito amplo tende ao mesmo risco de outros "all-in-one" via aquisição: portal financeiro já é separado ("Portal Financeiro do Cliente TOTVS"), sinal de que a integração comercial/administrativa entre Feedz e TOTVS ainda tem camadas distintas.</div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-label">Como posicionar</div>
+  <div class="card-body">A força da TOTVS é a marca e a base instalada em folha/DP no Brasil — não necessariamente a profundidade do módulo de desempenho em si. Pergunta útil: "O suporte de avaliação de desempenho é do mesmo time que atende folha e DP, ou são times diferentes?"</div>
+</div>
+<p class="body-text" style="font-size:11.5px;">Fonte: central de ajuda pública da Feedz/TOTVS (ajuda.feedz.com.br), mai/2026. Ainda sem validação com Batalha/Abrantes — confirme antes de usar em call.</p>
+`);
+
+/* 23 — Encerramento */
+s(`
+<div class="end-wrap">
+  <div class="end-emoji-ring">✓</div>
+  <h1 class="title" style="text-align:center;">Fechamos o treinamento</h1>
+  <p class="lead" style="text-align:center;max-width:520px;margin:0 auto 20px;">Agora você já sabe reconhecer o ICP pelo cruzamento de público e tamanho, identificar se está falando com a Daniela ou com a Luisa, e mapear rapidamente o concorrente que está na mesa.</p>
+  <div class="score-badge" id="finalScore">Sua pontuação nas dinâmicas: 0 / 5</div>
+  <p class="body-text" style="text-align:center;">Dúvidas? Fale com o Batalha ou com o time de enablement comercial.</p>
+</div>
+`);
+
+/* ==================== ENGINE ==================== */
+let current = 0;
+const total = slides.length;
+document.getElementById('slideTotal').textContent = total;
+let scoreState = {};
+
+function render(){
+  const stage = document.getElementById('stage');
+  stage.innerHTML = `<div class="slide active">${slides[current]}</div>`;
+  document.getElementById('slideNum').textContent = current+1;
+  document.getElementById('progressFill').style.width = ((current)/(total-1)*100)+'%';
+  document.getElementById('btnPrev').disabled = current===0;
+  document.getElementById('btnNext').textContent = current===total-1 ? 'Concluir ✓' : 'Avançar →';
+  buildDots();
+  if(current===total-1) updateFinalScore();
+}
+
+function buildDots(){
+  const wrap = document.getElementById('navDots');
+  wrap.innerHTML='';
+  for(let i=0;i<total;i++){
+    const d=document.createElement('div');
+    d.className='dot'+(i<current?' done':'')+(i===current?' current':'');
+    wrap.appendChild(d);
+  }
+}
+
+function goNext(){ if(current<total-1){ current++; render(); window.scrollTo(0,0);} }
+function goPrev(){ if(current>0){ current--; render(); window.scrollTo(0,0);} }
+
+function checkGame(gameId, btn, isCorrect){
+  const container = btn.parentElement;
+  const buttons = container.querySelectorAll('.opt-btn');
+  buttons.forEach(b=>b.disabled=true);
+  if(isCorrect){ btn.classList.add('correct'); } else { btn.classList.add('wrong'); }
+  const fb = document.getElementById(gameId+'-feedback');
+  if(fb){
+    fb.classList.add('show');
+    if(isCorrect){
+      fb.classList.add('correct'); fb.classList.remove('wrong');
+      fb.textContent = '✓ Correto!';
+      if(!scoreState[gameId]) scoreState[gameId]=1;
+    } else {
+      fb.classList.add('wrong'); fb.classList.remove('correct');
+      fb.textContent = '✗ Não é essa. Reveja o conteúdo acima antes de seguir.';
+      scoreState[gameId]=0;
+      buttons.forEach(b=>{ if(!b.disabled) return; });
+    }
+  }
+}
+
+function updateFinalScore(){
+  const totalGames = ['game1','game1b','game1c','game2','game3'];
+  let pts = 0;
+  totalGames.forEach(g=>{ if(scoreState[g]===1) pts++; });
+  document.getElementById('finalScore').textContent = 'Sua pontuação nas dinâmicas: '+pts+' / '+totalGames.length;
+}
+
+render();
+</script>
+</body>
+</html>
