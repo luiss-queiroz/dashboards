@@ -1,19 +1,4 @@
 <!DOCTYPE html>
-<script type="application/json" id="cowork-artifact-meta">
-{
-  "name": "Pipeline Visao Comercial",
-  "schemaVersion": 1,
-  "description": "Dashboard ao vivo do pipeline comercial da impulseup. Mostra todas as contas abertas (BS, CP, EP, Negociando, etc.) com contagem de stakeholders e compliance do modelo novo de reuniões (e-mail champion, pré/pós demo, demo, proposta, TD acessado) via campo Visão Comercial do HubSpot. Atualiza em tempo real ao ser aberto.",
-  "mcpTools": [
-    "mcp__9b6f0d6f-2b47-4d2e-abb7-d9d93cd88cde__search_crm_objects",
-    "mcp__9b6f0d6f-2b47-4d2e-abb7-d9d93cd88cde__search_owners"
-  ],
-  "mcpServerNames": [
-    "HubSpot",
-    "HubSpot"
-  ]
-}
-</script>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -149,15 +134,44 @@ td { padding: 9px 12px; vertical-align: middle; }
 
 @media (max-width: 1100px) { .kpi-grid { grid-template-columns: repeat(4, 1fr); } }
 @media (max-width: 700px)  { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+
+/* Token screen */
+#token-screen { position:fixed; inset:0; background:#f6f7f9; display:flex; align-items:center; justify-content:center; z-index:999; }
+.token-box { background:white; border:1px solid #e8e8e8; border-radius:14px; padding:40px 48px; max-width:440px; width:100%; box-shadow:0 4px 24px rgba(0,0,0,0.07); }
+.token-box h2 { font-size:17px; font-weight:700; color:#0C0C0C; margin-bottom:6px; }
+.token-box p  { font-size:13px; color:#888; margin-bottom:20px; line-height:1.5; }
+.token-input { width:100%; padding:9px 12px; border:1.5px solid #ddd; border-radius:8px; font-size:13px; outline:none; font-family:monospace; }
+.token-input:focus { border-color:#CC0088; }
+.token-btn { margin-top:12px; width:100%; padding:10px; background:#CC0088; color:white; border:none; border-radius:8px; font-size:14px; font-weight:700; cursor:pointer; }
+.token-btn:hover { background:#aa006e; }
+.token-err { margin-top:8px; font-size:12px; color:#c62828; display:none; }
+.token-link { font-size:11px; color:#CC0088; text-decoration:none; }
+.reset-token { font-size:11px; color:#aaa; cursor:pointer; background:none; border:none; padding:0; margin-left:8px; }
+.reset-token:hover { color:#CC0088; }
 </style>
 </head>
 <body>
+
+<div id="token-screen" style="display:none">
+  <div class="token-box">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
+      <div style="width:34px;height:34px;background:#CC0088;border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:13px">iup</div>
+      <strong style="font-size:15px">Pipeline — Visão Comercial</strong>
+    </div>
+    <h2>Conectar ao HubSpot</h2>
+    <p>Cole o seu <strong>Private App token</strong> para carregar os dados do pipeline.<br>
+    <a class="token-link" href="https://app.hubspot.com/private-apps/23158579" target="_blank">Gerar token no HubSpot →</a></p>
+    <input class="token-input" id="token-input" type="password" placeholder="pat-na1-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" />
+    <div class="token-err" id="token-err">Token inválido ou sem permissão. Verifique e tente novamente.</div>
+    <button class="token-btn" onclick="submitToken()">Conectar</button>
+  </div>
+</div>
 
 <div class="header">
   <div class="logo">iup</div>
   <div class="header-text">
     <h1>Pipeline — Visão Comercial</h1>
-    <p>Stakeholders, modelo novo e I's do Champion por conta ativa</p>
+    <p>Stakeholders, modelo novo e I's do Champion por conta ativa <button class="reset-token" onclick="resetToken()" title="Trocar token">⚙ Token</button></p>
   </div>
 </div>
 
@@ -529,34 +543,62 @@ function populateClosers() {
   opts.forEach(o=>sel.appendChild(o));
 }
 
+const TOKEN_KEY = 'iup_hubspot_token';
+function getToken() { return localStorage.getItem(TOKEN_KEY)||''; }
+function saveToken(t) { if(t) localStorage.setItem(TOKEN_KEY,t); else localStorage.removeItem(TOKEN_KEY); }
+
+async function submitToken() {
+  const t = document.getElementById('token-input').value.trim();
+  if(!t){document.getElementById('token-err').style.display='block';return;}
+  saveToken(t);
+  document.getElementById('token-screen').style.display='none';
+  await init();
+}
+
+function resetToken() {
+  saveToken('');
+  location.reload();
+}
+
 async function loadDeals() {
+  const token = getToken();
   const props=['dealname','dealstage','num_associated_contacts','visao_comercial_status_geral_da_conta','quais_i_s_nosso_champion_tem_','hubspot_owner_id','createdate','acessamos_td_','e_key_account_'];
-  let results=[],offset=0;
+  let results=[], after=undefined;
   while(true){
-    const r=await window.cowork.callMcpTool('mcp__9b6f0d6f-2b47-4d2e-abb7-d9d93cd88cde__search_crm_objects',{
-      objectType:'deals',
+    const body={
       filterGroups:[{filters:[{propertyName:'dealstage',operator:'IN',values:OPEN}]}],
-      properties:props,limit:200,offset,
-      sorts:[{propertyName:'dealname',direction:'ASCENDING'}],
-      chatInsights:{userIntent:'pipeline dashboard',satisfaction:'NEUTRAL'}
+      properties:props, limit:200,
+      sorts:[{propertyName:'dealname',direction:'ASCENDING'}]
+    };
+    if(after) body.after=after;
+    const r=await fetch('https://api.hubapi.com/crm/v3/objects/deals/search',{
+      method:'POST',
+      headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},
+      body:JSON.stringify(body)
     });
-    let data;try{data=r.structuredContent??JSON.parse(r.content[0].text);}catch(e){break;}
+    if(r.status===401){saveToken('');throw new Error('Token inválido. Recarregue a página e insira um token válido.');}
+    if(!r.ok) throw new Error('HubSpot API error: '+r.status);
+    const data=await r.json();
     if(!data.results||!data.results.length)break;
     results=results.concat(data.results);
-    if(results.length>=data.total||data.results.length<200)break;
-    offset+=200;
+    if(!data.paging?.next?.after)break;
+    after=data.paging.next.after;
   }
   return results;
 }
 
 async function tryEnrichOwners(ids) {
-  const missing=ids.filter(id=>!ownerNames[String(id)]);
-  if(!missing.length)return;
   try{
-    const r=await window.cowork.callMcpTool('mcp__9b6f0d6f-2b47-4d2e-abb7-d9d93cd88cde__search_owners',{ownerIds:missing.map(Number).filter(Boolean),limit:100});
-    let data;try{data=r.structuredContent??JSON.parse(r.content[0].text);}catch(e){return;}
-    const list=data.owners||data.results||(Array.isArray(data)?data:[]);
-    list.forEach(o=>{if(o.ownerId&&o.name&&o.name.trim())ownerNames[String(o.ownerId)]=o.name.trim();});
+    const token=getToken();
+    const r=await fetch('https://api.hubapi.com/crm/v3/owners/?limit=500',{
+      headers:{'Authorization':'Bearer '+token}
+    });
+    if(!r.ok)return;
+    const data=await r.json();
+    (data.results||[]).forEach(o=>{
+      const name=[o.firstName,o.lastName].filter(Boolean).join(' ').trim();
+      if(o.id&&name)ownerNames[String(o.id)]=name;
+    });
   }catch(e){}
 }
 
@@ -583,6 +625,10 @@ function resetFilters(){
 }
 
 async function init(){
+  if(!getToken()){
+    document.getElementById('token-screen').style.display='flex';
+    return;
+  }
   try{
     all=await loadDeals();
     const ownerIds=[...new Set(all.map(d=>d.properties.hubspot_owner_id).filter(Boolean))];
