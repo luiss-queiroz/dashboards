@@ -382,6 +382,14 @@
       <select id="f-acesso-td"><option value="">Todos</option></select>
     </div>
     <div>
+      <label>É Key Account?</label>
+      <select id="f-key-account">
+        <option value="">Todas</option>
+        <option value="sim">Sim</option>
+        <option value="nao">Não</option>
+      </select>
+    </div>
+    <div>
       <label>Data de</label>
       <input type="date" id="f-data-de">
     </div>
@@ -426,7 +434,7 @@
 // ---- DADOS (embutidos — resultado da auditoria-processo, linhas 30 a 40, + propriedades HubSpot) ----
 const DADOS = [
   {
-    linha: 29, deal: "Grupo Promenac Camvel", empresa: "Grupo Promenac Camvel", closer: "Lucas Costa", data: "2026-05-29",
+    linha: 29, deal: "Grupo Promenac Camvel", empresa: "Grupo Promenac Camvel", key_account: false, closer: "Lucas Costa", data: "2026-05-29",
     fase: "conexao", etapa_negocio: "Lost", momento_jornada: "Buscando Solução",
     score_fase: 33, score_geral: 37, status: "critico", alerta_alto_risco: false, codigo_alerta: null,
     flags: [
@@ -461,7 +469,7 @@ const DADOS = [
     }
   },
   {
-    linha: 30, deal: "Grupo Promenac Camvel", empresa: "Grupo Promenac Camvel", closer: "Lucas Costa", data: "2026-06-01",
+    linha: 30, deal: "Grupo Promenac Camvel", empresa: "Grupo Promenac Camvel", key_account: false, closer: "Lucas Costa", data: "2026-06-01",
     fase: "demo", etapa_negocio: "Lost", momento_jornada: "Buscando Solução",
     score_fase: 36, score_geral: 44, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: [
@@ -491,7 +499,7 @@ const DADOS = [
     }
   },
   {
-    linha: 31, deal: "CESAR", empresa: "CESAR", closer: "Jonny Steinmetz", data: "2026-05-29",
+    linha: 31, deal: "CESAR", empresa: "CESAR", key_account: true, closer: "Jonny Steinmetz", data: "2026-05-29",
     fase: "conexao", etapa_negocio: "Construindo o Projeto", momento_jornada: "Entendendo Problema",
     score_fase: 42, score_geral: 48, status: "critico", alerta_alto_risco: false, codigo_alerta: null,
     flags: [
@@ -524,7 +532,7 @@ const DADOS = [
     }
   },
   {
-    linha: 32, deal: "Clam", empresa: "Clam", closer: "Jonny Steinmetz", data: "2026-05-29",
+    linha: 32, deal: "Clam", empresa: "Clam", key_account: false, closer: "Jonny Steinmetz", data: "2026-05-29",
     fase: "proposta", etapa_negocio: "Lost", momento_jornada: "Construindo Projeto",
     score_fase: 0, score_geral: 10, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-P, A-P2",
     flags: [
@@ -544,7 +552,7 @@ const DADOS = [
     }
   },
   {
-    linha: 33, deal: "MP King", empresa: "MP King", closer: "Karynne Rocha", data: "2026-05-29",
+    linha: 33, deal: "MP King", empresa: "MP King", key_account: true, closer: "Karynne Rocha", data: "2026-05-29",
     fase: "proposta", etapa_negocio: "Construindo o Projeto", momento_jornada: "Construindo Projeto",
     score_fase: 11.1, score_geral: 18.9, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-P, A-P2",
     flags: [
@@ -564,7 +572,7 @@ const DADOS = [
     }
   },
   {
-    linha: 34, deal: "Agrofoods/Itabom", empresa: "Agrofoods/Itabom", closer: "Jonny Steinmetz", data: "2026-06-01",
+    linha: 34, deal: "Agrofoods/Itabom", empresa: "Agrofoods/Itabom", key_account: false, closer: "Jonny Steinmetz", data: "2026-06-01",
     fase: "mista (demo + vazamento de proposta)", etapa_negocio: "Won", momento_jornada: "Construindo Projeto",
     score_fase: 54.5, score_geral: 53.6, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: [
@@ -584,7 +592,7 @@ const DADOS = [
     }
   },
   {
-    linha: 35, deal: "Grupo Estrela", empresa: "Grupo Estrela", closer: "Jonny Steinmetz", data: "2026-06-01",
+    linha: 35, deal: "Grupo Estrela", empresa: "Grupo Estrela", key_account: true, closer: "Jonny Steinmetz", data: "2026-06-01",
     fase: "mista (demo + proposta)", etapa_negocio: "Construindo o Projeto", momento_jornada: "Construindo Projeto",
     score_fase: 28.3, score_geral: 27.6, status: "critico", alerta_alto_risco: true, codigo_alerta: "D06, A-P (P08), A-P2 (P09)",
     flags: [
@@ -604,7 +612,7 @@ const DADOS = [
     }
   },
   {
-    linha: 36, deal: "Grupo Promenac Camvel (retorno)", empresa: "Grupo Promenac Camvel", closer: "Lucas Costa", data: "2026-06-01",
+    linha: 36, deal: "Grupo Promenac Camvel (retorno)", empresa: "Grupo Promenac Camvel", key_account: false, closer: "Lucas Costa", data: "2026-06-01",
     fase: "demo", etapa_negocio: "Lost", momento_jornada: "Buscando Solução",
     score_fase: 27.3, score_geral: 36.8, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: [
@@ -624,7 +632,7 @@ const DADOS = [
     }
   },
   {
-    linha: 37, deal: "Volix", empresa: "Volix", closer: "Lucas Costa", data: "2026-06-02",
+    linha: 37, deal: "Volix", empresa: "Volix", key_account: false, closer: "Lucas Costa", data: "2026-06-02",
     fase: "mista (conexão + demo)", etapa_negocio: "Lost", momento_jornada: "Buscando Solução",
     score_fase: 22, score_geral: 28, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D / A-C",
     flags: [
@@ -645,7 +653,7 @@ const DADOS = [
     }
   },
   {
-    linha: 38, deal: "Itaú Unibanco - Conexão Tech", empresa: "Itaú Unibanco", closer: "Jonny Steinmetz", data: "2026-06-02",
+    linha: 38, deal: "Itaú Unibanco - Conexão Tech", empresa: "Itaú Unibanco", key_account: false, closer: "Jonny Steinmetz", data: "2026-06-02",
     fase: "demo", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 36.4, score_geral: 39.1, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: [
@@ -665,7 +673,7 @@ const DADOS = [
     }
   },
   {
-    linha: 39, deal: "Grupo Santa", empresa: "Grupo Santa", closer: "Luis Queiroz", data: "2026-06-02",
+    linha: 39, deal: "Grupo Santa", empresa: "Grupo Santa", key_account: false, closer: "Luis Queiroz", data: "2026-06-02",
     fase: "proposta", etapa_negocio: "Buscando Solução", momento_jornada: "Construindo Projeto",
     score_fase: 11.1, score_geral: 13.9, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-P",
     flags: [
@@ -685,7 +693,7 @@ const DADOS = [
     }
   },
   {
-    linha: 40, deal: "Eagles Group", empresa: "Eagles Group", closer: "Lucas Costa", data: "2026-06-02",
+    linha: 40, deal: "Eagles Group", empresa: "Eagles Group", key_account: false, closer: "Lucas Costa", data: "2026-06-02",
     fase: "demo", etapa_negocio: "Qualificação errada", momento_jornada: "Buscando Solução",
     score_fase: 18.2, score_geral: 24.5, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: [
@@ -706,7 +714,7 @@ const DADOS = [
     }
   },
   {
-    linha: 41, deal: "Sabin", empresa: "Sabin", closer: "Luis Fonseca", data: "2026-06-03",
+    linha: 41, deal: "Sabin", empresa: "Sabin", key_account: true, closer: "Luis Fonseca", data: "2026-06-03",
     fase: "indefinida (fora de escopo — implementação técnica)", etapa_negocio: "Buscando Solução", momento_jornada: "Não identificado",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
     flags: [
@@ -718,7 +726,7 @@ const DADOS = [
     recomendacao: "Ajustar a detecção de fase para sinalizar reuniões de implementação/onboarding como 'fora de escopo', evitando que entrem nos indicadores de aderência ao playbook comercial."
   },
   {
-    linha: 42, deal: "Estapar", empresa: "Estapar", closer: "Luis Fonseca", data: "2026-06-03",
+    linha: 42, deal: "Estapar", empresa: "Estapar", key_account: true, closer: "Luis Fonseca", data: "2026-06-03",
     fase: "indefinida (fora de escopo — negociação de saída de contrato concorrente)", etapa_negocio: "StandBy", momento_jornada: "Construindo Projeto",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: true, codigo_alerta: "A-RISCO-CONTRATUAL",
     flags: [
@@ -738,7 +746,7 @@ const DADOS = [
     recomendacao: "Acompanhar de perto o prazo do dia 10 para os três números solicitados e insistir para que a próxima reunião já inclua a liderança do jurídico da Estapar."
   },
   {
-    linha: 43, deal: "Unitapajós (Implementação)", empresa: "Unitapajós", closer: "Lucas Costa", data: "2026-06-03",
+    linha: 43, deal: "Unitapajós (Implementação)", empresa: "Unitapajós", key_account: true, closer: "Lucas Costa", data: "2026-06-03",
     fase: "proposta", etapa_negocio: "Construindo o Projeto", momento_jornada: "Construindo Projeto",
     score_fase: 45, score_geral: 50, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-P08-SEM-DATA-TD",
     flags: [
@@ -766,7 +774,7 @@ const DADOS = [
     }
   },
   {
-    linha: 44, deal: "SPC", empresa: "SPC", closer: "Jonny Steinmetz", data: "2026-06-03",
+    linha: 44, deal: "SPC", empresa: "SPC", key_account: false, closer: "Jonny Steinmetz", data: "2026-06-03",
     fase: "mista (conexão + demo, retomada de conta)", etapa_negocio: "Construindo o Projeto", momento_jornada: "Construindo Projeto",
     score_fase: 35, score_geral: 38, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-C08-SEM-MAPEAMENTO-STAKEHOLDER",
     flags: [
@@ -796,7 +804,7 @@ const DADOS = [
     }
   },
   {
-    linha: 227, deal: "Winover Contact Center", empresa: "Winover", closer: "Jonny Steinmetz", data: "2026-06-03",
+    linha: 227, deal: "Winover Contact Center", empresa: "Winover", key_account: true, closer: "Jonny Steinmetz", data: "2026-06-03",
     fase: "conexao", etapa_negocio: "Construindo o Projeto", momento_jornada: "Construindo Projeto",
     score_fase: 58, score_geral: 62, status: "atencao", alerta_alto_risco: false, codigo_alerta: null,
     flags: [
@@ -829,7 +837,7 @@ const DADOS = [
     }
   },
   {
-    linha: 45, deal: "PMC Automotiva", empresa: "PMC Automotiva", closer: "Luis Fonseca", data: "2026-06-03",
+    linha: 45, deal: "PMC Automotiva", empresa: "PMC Automotiva", key_account: true, closer: "Luis Fonseca", data: "2026-06-03",
     fase: "mista (demo + proposta)", etapa_negocio: "Construindo o Projeto", momento_jornada: "Construindo Projeto",
     score_fase: 55, score_geral: 52, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-SEM-TERMOMETRO-POS-DEMO",
     flags: [
@@ -858,7 +866,7 @@ const DADOS = [
     }
   },
   {
-    linha: 46, deal: "Supermercados Zona Sul", empresa: "Supermercados Zona Sul", closer: "Jonny Steinmetz", data: "2026-06-05",
+    linha: 46, deal: "Supermercados Zona Sul", empresa: "Supermercados Zona Sul", key_account: true, closer: "Jonny Steinmetz", data: "2026-06-05",
     fase: "mista (conexão + demo)", etapa_negocio: "Buscando Solução", momento_jornada: "Construindo Projeto",
     score_fase: null, score_geral: 36, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D (D06 não aplicado)",
     flags: ["Diagnóstico raso (C07)", "Decisora mapeada só por cargo (C08)", "Demo sem recap de dores (D01)", "Diferencial não validado (D07)", "Sem confirmação de e-mail pós-reunião (G05)"],
@@ -874,7 +882,7 @@ const DADOS = [
     }
   },
   {
-    linha: 47, deal: "Grupo Promenac Camvel (Mês do RH)", empresa: "Grupo Promenac Camvel", closer: "Lucas Costa", data: "2026-06-05",
+    linha: 47, deal: "Grupo Promenac Camvel (Mês do RH)", empresa: "Grupo Promenac Camvel", key_account: false, closer: "Lucas Costa", data: "2026-06-05",
     fase: "proposta", etapa_negocio: "Lost", momento_jornada: "Buscando Solução",
     score_fase: 44.4, score_geral: 55.6, status: "atencao", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Valor só surgiu após ~15min de metodologia (P02)", "Champion não treinado com as 4 perguntas do TD (P04)", "Sem menção ao risco de não agir (P05)", "Confiança do champion não medida (P07)"],
@@ -890,7 +898,7 @@ const DADOS = [
     }
   },
   {
-    linha: 48, deal: "Grupo Natureza", empresa: "Grupo Natureza", closer: "Luis Fonseca", data: "2026-06-05",
+    linha: 48, deal: "Grupo Natureza", empresa: "Grupo Natureza", key_account: false, closer: "Luis Fonseca", data: "2026-06-05",
     fase: "demo", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 27.3, score_geral: 36.8, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D (D06 não aplicado)",
     flags: ["Demo conduzida pelo cliente em bloco técnico com TI (D03/G03)", "Sem data concreta de próxima reunião (D10)"],
@@ -906,7 +914,7 @@ const DADOS = [
     }
   },
   {
-    linha: 49, deal: "Winover (Contact Center — Demo)", empresa: "Winover", closer: "Jonny Steinmetz", data: "2026-06-05",
+    linha: 49, deal: "Winover (Contact Center — Demo)", empresa: "Winover", key_account: true, closer: "Jonny Steinmetz", data: "2026-06-05",
     fase: "demo", etapa_negocio: "Construindo o Projeto", momento_jornada: "Construindo Projeto",
     score_fase: 45.5, score_geral: 41.4, status: "critico", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Demo guiada pela cliente sem fio condutor estratégico (D03/G03)", "Valores exatos por módulo antecipados fora da fase de proposta (G04)"],
@@ -922,7 +930,7 @@ const DADOS = [
     }
   },
   {
-    linha: 50, deal: "Colégio Chaminade Bauru", empresa: "Colégio Chaminade Bauru", closer: "Lucas Costa", data: "2026-06-08",
+    linha: 50, deal: "Colégio Chaminade Bauru", empresa: "Colégio Chaminade Bauru", key_account: true, closer: "Lucas Costa", data: "2026-06-08",
     fase: "demo (com investimento antecipado)", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 54.5, score_geral: 58.6, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-D (D06 não aplicado)",
     flags: ["Valores completos de contrato apresentados dentro da demo (G04)", "Sem data concreta de próxima etapa (D10)"],
@@ -938,7 +946,7 @@ const DADOS = [
     }
   },
   {
-    linha: 51, deal: "CDL POA", empresa: "CDL POA", closer: "Luis Queiroz", data: "2026-06-08",
+    linha: 51, deal: "CDL POA", empresa: "CDL POA", key_account: false, closer: "Luis Queiroz", data: "2026-06-08",
     fase: "indefinida (fora de escopo — encerramento de relacionamento pós-decisão pelo concorrente, não é conexão/demo/proposta)",
     etapa_negocio: "Lost", momento_jornada: "Construindo Projeto",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -948,7 +956,7 @@ const DADOS = [
     recomendacao: "Registrar motivo estruturado de perda no CRM (fornecedor concorrente já engajado) e agendar retomada futura, conforme combinado na call."
   },
   {
-    linha: 52, deal: "LabPharma", empresa: "LabPharma", closer: "Lucas Costa", data: "2026-06-08",
+    linha: 52, deal: "LabPharma", empresa: "LabPharma", key_account: false, closer: "Lucas Costa", data: "2026-06-08",
     fase: "mista (demo + proposta)", etapa_negocio: "Qualificação errada", momento_jornada: "Não identificado no HubSpot",
     score_fase: 25.76, score_geral: 25.6, status: "critico", alerta_alto_risco: true, codigo_alerta: "D06, P08, P09",
     flags: [
@@ -965,7 +973,7 @@ const DADOS = [
     }
   },
   {
-    linha: 53, deal: "Grupo Carburgo", empresa: "Grupo Carburgo", closer: "Luis Fonseca", data: "2026-06-08",
+    linha: 53, deal: "Grupo Carburgo", empresa: "Grupo Carburgo", key_account: true, closer: "Luis Fonseca", data: "2026-06-08",
     fase: "proposta", etapa_negocio: "Construindo o Projeto", momento_jornada: "Construindo Projeto",
     score_fase: 33.3, score_geral: 26.7, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-P (P08), A-P2 (P09)",
     flags: ["P08 — data marcada é novo encontro closer-champion, não reunião com o TD/diretoria", "P09 — closer não investigou o formato real de acesso ao TD"],
@@ -981,7 +989,7 @@ const DADOS = [
     }
   },
   {
-    linha: 54, deal: "Itaú Unibanco — Conexão Tech", empresa: "Itaú Unibanco - Conexão Tech", closer: "Jonny Steinmetz", data: "2026-06-08",
+    linha: 54, deal: "Itaú Unibanco — Conexão Tech", empresa: "Itaú Unibanco - Conexão Tech", key_account: false, closer: "Jonny Steinmetz", data: "2026-06-08",
     fase: "demo", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 18, score_geral: 32.4, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D (D06)",
     flags: ["Segunda reunião com a mesma conta — repetição/aprofundamento de demo anterior", "Closer citou faixa de valores antes da fase de proposta (viola G04)", "D06 — nenhum termômetro pós-demo aplicado", "Dúvida técnica da cliente ficou sem encaminhamento com prazo"],
@@ -997,7 +1005,7 @@ const DADOS = [
     }
   },
   {
-    linha: 55, deal: "ViV Saúde", empresa: "ViV Saúde", closer: "Jonny Steinmetz", data: "2026-06-09",
+    linha: 55, deal: "ViV Saúde", empresa: "ViV Saúde", key_account: false, closer: "Jonny Steinmetz", data: "2026-06-09",
     fase: "mista (conexão + demo)", etapa_negocio: "Qualificação errada", momento_jornada: "Entendendo Problema",
     score_fase: 29.5, score_geral: 33.6, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-C (C12), A-D (D06)",
     flags: ["C12 — sem data de demo futura definida; reunião interrompida abruptamente pelo cliente", "D06 — nenhum termômetro pós-demo aplicado", "Closer cedeu à pressão do cliente e entrou em demo extensa antes de completar o diagnóstico", "Menção a custo/negociável antes da fase de proposta"],
@@ -1013,7 +1021,7 @@ const DADOS = [
     }
   },
   {
-    linha: 56, deal: "Santa Mônica Clube de Campo", empresa: "Santa Mônica Clube de Campo", closer: "Karynne Rocha", data: "2026-06-09",
+    linha: 56, deal: "Santa Mônica Clube de Campo", empresa: "Santa Mônica Clube de Campo", key_account: true, closer: "Karynne Rocha", data: "2026-06-09",
     fase: "conexao", etapa_negocio: "Construindo o Projeto", momento_jornada: "Construindo Projeto",
     score_fase: 62, score_geral: 65, status: "atencao", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Apenas um stakeholder identificado (Carolina, analista de DHO)"],
@@ -1027,7 +1035,7 @@ const DADOS = [
     }
   },
   {
-    linha: 57, deal: "DELP", empresa: "DELP", closer: "Luis Fonseca", data: "2026-06-09",
+    linha: 57, deal: "DELP", empresa: "DELP", key_account: false, closer: "Luis Fonseca", data: "2026-06-09",
     fase: "indefinida (fora de escopo — negociação atípica de venda de acesso à plataforma para uso por consultoria externa de mentoria contratada pela DELP, em modelo de créditos reduzidos, não o funil padrão de diagnóstico de RH da própria empresa)",
     etapa_negocio: "Qualificação errada", momento_jornada: "Não identificado no HubSpot",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -1038,7 +1046,7 @@ const DADOS = [
     recomendacao: "Tratar esta negociação como fluxo comercial diferenciado (plataforma para consultoria terceira), não pontuável pelo checklist padrão; considerar checklist específico para esse tipo de negociação em calibração futura."
   },
   {
-    linha: 58, deal: "Líber", empresa: "Líber", closer: "Karynne Rocha", data: "2026-06-09",
+    linha: 58, deal: "Líber", empresa: "Líber", key_account: true, closer: "Karynne Rocha", data: "2026-06-09",
     fase: "proposta", etapa_negocio: "Lost", momento_jornada: "Construindo Projeto",
     score_fase: 55, score_geral: 58, status: "critico", alerta_alto_risco: true, codigo_alerta: "DEAL_PERDIDO_POS_PROPOSTA",
     flags: ["Deal fechado como perdido cerca de 3 semanas depois desta reunião", "Concorrente mencionado explicitamente com comparação direta de funcionalidade e preço"],
@@ -1052,7 +1060,7 @@ const DADOS = [
     }
   },
   {
-    linha: 59, deal: "Salesbud (reunião interna)", empresa: "Salesbud", closer: "Luis Queiroz", data: "2026-06-10",
+    linha: 59, deal: "Salesbud (reunião interna)", empresa: "Salesbud", key_account: false, closer: "Luis Queiroz", data: "2026-06-10",
     fase: "indefinida (fora de escopo — reunião interna de parceria/enablement com o fornecedor de transcrição, sem cliente do funil comercial)",
     etapa_negocio: "Não aplicável (reunião interna, sem deal/cliente)", momento_jornada: "Não aplicável",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -1062,7 +1070,7 @@ const DADOS = [
     recomendacao: "Nenhuma ação de auditoria de processo comercial aplicável. Revisar classificação/tags dessa linha no Salesbud para evitar reprocessamento futuro."
   },
   {
-    linha: 60, deal: "Bornelli (Franquias McDonald's)", empresa: "Bornelli", closer: "Luis Fonseca", data: "2026-06-10",
+    linha: 60, deal: "Bornelli (Franquias McDonald's)", empresa: "Bornelli", key_account: true, closer: "Luis Fonseca", data: "2026-06-10",
     fase: "proposta", etapa_negocio: "Construindo o Projeto", momento_jornada: "Construindo Projeto",
     score_fase: 68, score_geral: 70, status: "atencao", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Decisão depende de aprovação de diretoria ausente/em viagem, sem data confirmada"],
@@ -1078,7 +1086,7 @@ const DADOS = [
     }
   },
   {
-    linha: 61, deal: "CESAR (Demo Metas)", empresa: "CESAR", closer: "Jonny Steinmetz", data: "2026-06-10",
+    linha: 61, deal: "CESAR (Demo Metas)", empresa: "CESAR", key_account: true, closer: "Jonny Steinmetz", data: "2026-06-10",
     fase: "demo", etapa_negocio: "Construindo o Projeto", momento_jornada: "Entendendo Problema",
     score_fase: 27.3, score_geral: 41.8, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: ["Demo dominada por perguntas técnicas do cliente, sem fio condutor dores→módulos sustentado pelo closer (D03)", "Nenhum termômetro pós-demo aplicado (D06)"],
@@ -1094,7 +1102,7 @@ const DADOS = [
     }
   },
   {
-    linha: 62, deal: "Drilling do Brasil", empresa: "Drilling do Brasil", closer: "Lucas Costa", data: "2026-06-10",
+    linha: 62, deal: "Drilling do Brasil", empresa: "Drilling do Brasil", key_account: false, closer: "Lucas Costa", data: "2026-06-10",
     fase: "conexao", etapa_negocio: "Lost", momento_jornada: "Construindo Projeto",
     score_fase: 41.7, score_geral: 53.3, status: "atencao", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Diagnóstico interrompido por blocos de produto antes de mapear dores (C03a/C03b)", "Cliente falou menos de 50% do tempo (C05)"],
@@ -1110,7 +1118,7 @@ const DADOS = [
     }
   },
   {
-    linha: 63, deal: "Cimento Nacional", empresa: "Cimento Nacional", closer: "Luis Fonseca", data: "2026-06-10",
+    linha: 63, deal: "Cimento Nacional", empresa: "Cimento Nacional", key_account: true, closer: "Luis Fonseca", data: "2026-06-10",
     fase: "demo", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 36.4, score_geral: 49.1, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: ["Champion elogiou espontaneamente a plataforma mas closer não aplicou termômetro/diferencial (D06/D07)", "Demo conduzida majoritariamente pelas perguntas do cliente (D03)"],
@@ -1126,7 +1134,7 @@ const DADOS = [
     }
   },
   {
-    linha: 64, deal: "Blau Farmacêutica", empresa: "Blau Farmacêutica", closer: "Karynne Rocha", data: "2026-06-10",
+    linha: 64, deal: "Blau Farmacêutica", empresa: "Blau Farmacêutica", key_account: false, closer: "Karynne Rocha", data: "2026-06-10",
     fase: "proposta", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 11.1, score_geral: 18.9, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-P",
     flags: ["Champion e TI concluíram, sem o closer presente, que preferem customizar sistema já existente (SuccessFactors) em vez de avançar (G03)", "Reunião encerrou sem data concreta de retorno (A-P)"],
@@ -1142,7 +1150,7 @@ const DADOS = [
     }
   },
   {
-    linha: 65, deal: "Veloe (Demonstração, 11/06)", empresa: "Veloe", closer: "Lucas Costa", data: "2026-06-11",
+    linha: 65, deal: "Veloe (Demonstração, 11/06)", empresa: "Veloe", key_account: true, closer: "Lucas Costa", data: "2026-06-11",
     fase: "demo", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 27.3, score_geral: 36.8, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: ["Cliente elogiou plataforma mas closer não aplicou termômetro (D06) nem perguntas de diferencial (D07)", "Demo conduzida pelas perguntas técnicas da cliente sobre módulo Learning (D03)", "Processo formal de RFP com 3 fornecedores obrigatórios"],
@@ -1158,7 +1166,7 @@ const DADOS = [
     }
   },
   {
-    linha: 66, deal: "Grupo Salta (Gestão de Metas)", empresa: "Grupo Salta", closer: "Luis Fonseca", data: "2026-06-11",
+    linha: 66, deal: "Grupo Salta (Gestão de Metas)", empresa: "Grupo Salta", key_account: false, closer: "Luis Fonseca", data: "2026-06-11",
     fase: "mista (conexão retomada + demo)", etapa_negocio: "Construindo o Projeto", momento_jornada: "Construindo Projeto",
     score_fase: 39.1, score_geral: 51.2, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: ["Cliente falou menos de 50% do tempo (C05)", "Demo feature-first sem amarrar benefício antes (D04)", "Sem mapeamento de stakeholders/TD (C08, C09)"],
@@ -1174,7 +1182,7 @@ const DADOS = [
     }
   },
   {
-    linha: 67, deal: "Fundatec (CRA/MG)", empresa: "Fundatec", closer: "Luis Fonseca", data: "2026-06-11",
+    linha: 67, deal: "Fundatec (CRA/MG)", empresa: "Fundatec", key_account: false, closer: "Luis Fonseca", data: "2026-06-11",
     fase: "indefinida (fora de escopo — negociação contratual entre parceiro de canal (Fundatec) e impulseup sobre matriz de responsabilidades e proposta para repasse a terceiro; não é conexão/demo/proposta com o usuário final)",
     etapa_negocio: "Qualificação errada", momento_jornada: "Não aplicável",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -1185,7 +1193,7 @@ const DADOS = [
     recomendacao: "Reunião de alinhamento contratual/operacional com parceiro de canal (Fundatec atuando como intermediária para o cliente final CRA/MG). Não se aplica checklist de fase comercial."
   },
   {
-    linha: 68, deal: "Nova Noiva", empresa: "Nova Noiva", closer: "Karynne Rocha", data: "2026-06-11",
+    linha: 68, deal: "Nova Noiva", empresa: "Nova Noiva", key_account: true, closer: "Karynne Rocha", data: "2026-06-11",
     fase: "conexao", etapa_negocio: "Construindo o Projeto", momento_jornada: "Buscando Solução",
     score_fase: 75, score_geral: 75, status: "aderente", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Cliente não atingiu claramente ≥50% do tempo (C05)", "Valores exatos de investimento detalhados a pedido do cliente (G04)"],
@@ -1199,7 +1207,7 @@ const DADOS = [
     }
   },
   {
-    linha: 69, deal: "Grupo IOB (11/06)", empresa: "Grupo IOB", closer: "Luis Fonseca", data: "2026-06-11",
+    linha: 69, deal: "Grupo IOB (11/06)", empresa: "Grupo IOB", key_account: false, closer: "Luis Fonseca", data: "2026-06-11",
     fase: "demo", etapa_negocio: "Lost", momento_jornada: "Buscando Solução",
     score_fase: 27.3, score_geral: 31.8, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: ["Demo guiada pela cliente com sequência extensa de perguntas técnicas", "Detalhes comerciais antecipados durante a demo", "3 concorrentes finalistas mencionados sem exploração estruturada de diferencial"],
@@ -1215,7 +1223,7 @@ const DADOS = [
     }
   },
   {
-    linha: 70, deal: "Veloe (Demonstração, 11/06 — retorno)", empresa: "Veloe", closer: "Lucas Costa", data: "2026-06-11",
+    linha: 70, deal: "Veloe (Demonstração, 11/06 — retorno)", empresa: "Veloe", key_account: true, closer: "Lucas Costa", data: "2026-06-11",
     fase: "demo", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 45.5, score_geral: 56.4, status: "atencao", alerta_alto_risco: true, codigo_alerta: "D06",
     flags: ["Objeção de orçamento levantada pela cliente não foi tratada proativamente", "Lacuna funcional apontada pela cliente ficou sem resposta", "Sem alinhamento de agenda no início da demo"],
@@ -1231,7 +1239,7 @@ const DADOS = [
     }
   },
   {
-    linha: 71, deal: "Grupo Comolatti", empresa: "Grupo Comolatti", closer: "Luis Fonseca", data: "2026-06-12",
+    linha: 71, deal: "Grupo Comolatti", empresa: "Grupo Comolatti", key_account: true, closer: "Luis Fonseca", data: "2026-06-12",
     fase: "conexao", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 67, score_geral: 68, status: "atencao", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Não explorou riscos do caminho de aprovação interna (C09)", "Não plantou semente de ROI/cronograma para o TD (C11)"],
@@ -1247,7 +1255,7 @@ const DADOS = [
     }
   },
   {
-    linha: 72, deal: "Avenia (Próximos Passos)", empresa: "Avenia", closer: "Lucas Costa", data: "2026-06-12",
+    linha: 72, deal: "Avenia (Próximos Passos)", empresa: "Avenia", key_account: true, closer: "Lucas Costa", data: "2026-06-12",
     fase: "demo", etapa_negocio: "Won", momento_jornada: "Buscando Solução",
     score_fase: 0, score_geral: 5, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: ["Demo foi guiada pelo cliente do início ao fim", "Closer apresentou funcionalidades de forma genérica, sem conexão explícita às dores mapeadas"],
@@ -1263,7 +1271,7 @@ const DADOS = [
     }
   },
   {
-    linha: 73, deal: "Solar Coca-Cola", empresa: "Solar Coca-Cola", closer: "Jonny Steinmetz", data: "2026-06-12",
+    linha: 73, deal: "Solar Coca-Cola", empresa: "Solar Coca-Cola", key_account: true, closer: "Jonny Steinmetz", data: "2026-06-12",
     fase: "conexao", etapa_negocio: "Lost", momento_jornada: "Construindo Projeto",
     score_fase: 58, score_geral: 62, status: "atencao", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Stakeholders mencionados majoritariamente por cargo genérico, sem nome do TD (C08)", "Pilares mencionados de forma mais reativa que estratégica (C10)"],
@@ -1279,7 +1287,7 @@ const DADOS = [
     }
   },
   {
-    linha: 74, deal: "MedSênior", empresa: "MedSênior", closer: "Jonny Steinmetz", data: "2026-06-15",
+    linha: 74, deal: "MedSênior", empresa: "MedSênior", key_account: true, closer: "Jonny Steinmetz", data: "2026-06-15",
     fase: "indefinida (fora de escopo — negociação comercial direta de condições contratuais/desconto, sem estrutura de conexão, demo ou proposta a champion)",
     etapa_negocio: "Won", momento_jornada: "Construindo Projeto",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -1289,7 +1297,7 @@ const DADOS = [
     recomendacao: "Não aplicável ao checklist de processo comercial padrão — reunião de negociação pós-proposta. Se recorrente, considerar checklist específico de negociação fora do escopo atual."
   },
   {
-    linha: 75, deal: "Grupo IOB (15/06 — Proposta)", empresa: "Grupo IOB", closer: "Luis Fonseca", data: "2026-06-15",
+    linha: 75, deal: "Grupo IOB (15/06 — Proposta)", empresa: "Grupo IOB", key_account: false, closer: "Luis Fonseca", data: "2026-06-15",
     fase: "proposta", etapa_negocio: "Lost", momento_jornada: "Buscando Solução",
     score_fase: 11, score_geral: 24, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-P, A-P2",
     flags: ["Champion disse que vai conversar com o diretor sozinha e o closer não questionou nem propôs reunião conjunta (A-P2)", "Reunião encerrou sem data concreta de reunião com o TD (A-P)"],
@@ -1305,7 +1313,7 @@ const DADOS = [
     }
   },
   {
-    linha: 76, deal: "Skyone (Início de Projeto)", empresa: "Skyone", closer: "Luis Queiroz", data: "2026-06-16",
+    linha: 76, deal: "Skyone (Início de Projeto)", empresa: "Skyone", key_account: true, closer: "Luis Queiroz", data: "2026-06-16",
     fase: "indefinida (fora de escopo — kickoff/gestão pós-venda de projeto já contratado, não é reunião de funil comercial)",
     etapa_negocio: "Pendente de Assinatura", momento_jornada: "Construindo Projeto",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -1315,7 +1323,7 @@ const DADOS = [
     recomendacao: "Excluir esta linha do funil de auditoria de processo comercial — é reunião de kickoff/handoff, fora do escopo do playbook de vendas. Rotear reuniões com esse padrão direto para o fluxo de handoff/CS."
   },
   {
-    linha: 77, deal: "Hemera DTVM", empresa: "Hemera DTVM", closer: "Karynne Rocha", data: "2026-06-16",
+    linha: 77, deal: "Hemera DTVM", empresa: "Hemera DTVM", key_account: false, closer: "Karynne Rocha", data: "2026-06-16",
     fase: "mista (conexão + demo)", etapa_negocio: "Qualificação errada", momento_jornada: "Não identificado",
     score_fase: 46, score_geral: 46.8, status: "critico", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Cliente avisou baixa probabilidade de fechar por falta de módulo de comunicação interna", "Mistura de diagnóstico e demo sem transição clara"],
@@ -1331,7 +1339,7 @@ const DADOS = [
     }
   },
   {
-    linha: 78, deal: "Stone", empresa: "Stone", closer: "Jonny Steinmetz", data: "2026-06-16",
+    linha: 78, deal: "Stone", empresa: "Stone", key_account: true, closer: "Jonny Steinmetz", data: "2026-06-16",
     fase: "proposta", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 33.3, score_geral: 34.7, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-P2 (P09)",
     flags: ["P09 (alto risco) — champion sem acesso real ao TD confirmado pelo closer", "Antecipou condições comerciais (desconto, contrato de 6 meses) em negociação informal solicitada pelo cliente (G04)"],
@@ -1347,7 +1355,7 @@ const DADOS = [
     }
   },
   {
-    linha: 79, deal: "Zig (Retomada)", empresa: "Zig", closer: "Luis Queiroz", data: "2026-06-16",
+    linha: 79, deal: "Zig (Retomada)", empresa: "Zig", key_account: true, closer: "Luis Queiroz", data: "2026-06-16",
     fase: "conexao", etapa_negocio: "Negociando", momento_jornada: "Buscando Solução",
     score_fase: 75, score_geral: 78, status: "aderente", alerta_alto_risco: true, codigo_alerta: "A-C (C12, atenuado)",
     flags: ["Reunião de retomada de deal frio — demo de sexta marcada sem confirmação explícita de todos os participantes (C12 atenuado)"],
@@ -1361,7 +1369,7 @@ const DADOS = [
     }
   },
   {
-    linha: 80, deal: "Super Vilton", empresa: "Super Vilton", closer: "Karynne Rocha", data: "2026-06-16",
+    linha: 80, deal: "Super Vilton", empresa: "Super Vilton", key_account: false, closer: "Karynne Rocha", data: "2026-06-16",
     fase: "mista (conexão + demo)", etapa_negocio: "Qualificação errada", momento_jornada: "Buscando Solução",
     score_fase: 41.7, score_geral: 43.3, status: "critico", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Cliente acabou de contratar um concorrente", "Valores detalhados apresentados ainda na primeira reunião de diagnóstico (G04)"],
@@ -1375,7 +1383,7 @@ const DADOS = [
     }
   },
   {
-    linha: 81, deal: "Plusoft", empresa: "Plusoft", closer: "Lucas Costa", data: "2026-06-16",
+    linha: 81, deal: "Plusoft", empresa: "Plusoft", key_account: true, closer: "Lucas Costa", data: "2026-06-16",
     fase: "conexao", etapa_negocio: "Construindo o Projeto", momento_jornada: "Construindo Projeto",
     score_fase: 25, score_geral: 40, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-C",
     flags: ["Closer deixou a conversa virar produto durante o diagnóstico, com sequência longa de telas (C03a/C03b)", "Cliente não pareceu falar 50%+ do tempo (C05)", "Pilares conectados às dores ao longo da prévia de produto, não nos últimos 20% (C10)"],
@@ -1391,7 +1399,7 @@ const DADOS = [
     }
   },
   {
-    linha: 82, deal: "Grupo Comolatti (Apresentação)", empresa: "Grupo Comolatti", closer: "Luis Fonseca", data: "2026-06-16",
+    linha: 82, deal: "Grupo Comolatti (Apresentação)", empresa: "Grupo Comolatti", key_account: true, closer: "Luis Fonseca", data: "2026-06-16",
     fase: "demo", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 27, score_geral: 42, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: ["Demo majoritariamente guiada pelas perguntas da cliente, sem fio condutor consistente (D03)", "Elogio ao diferencial foi espontâneo, sem as duas perguntas do playbook (D07)"],
@@ -1407,7 +1415,7 @@ const DADOS = [
     }
   },
   {
-    linha: 83, deal: "Grupo Salta (Teste Guiado)", empresa: "Grupo Salta", closer: "Luis Fonseca", data: "2026-06-16",
+    linha: 83, deal: "Grupo Salta (Teste Guiado)", empresa: "Grupo Salta", key_account: false, closer: "Luis Fonseca", data: "2026-06-16",
     fase: "indefinida (fora de escopo — reunião de configuração/teste guiado do ambiente já contratado)",
     etapa_negocio: "Construindo o Projeto", momento_jornada: "Construindo Projeto",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -1415,7 +1423,7 @@ const DADOS = [
     recomendacao: "Fora do escopo dos checklists de conexão/demo/proposta. Reunião de teste guiado/configuração de ambiente com cliente já em estágio avançado."
   },
   {
-    linha: 84, deal: "Tellus (Alinhamento)", empresa: "Tellus", closer: "Jonny Steinmetz", data: "2026-06-16",
+    linha: 84, deal: "Tellus (Alinhamento)", empresa: "Tellus", key_account: false, closer: "Jonny Steinmetz", data: "2026-06-16",
     fase: "conexao", etapa_negocio: "Qualificação errada", momento_jornada: "Não identificado",
     score_fase: 25, score_geral: 35, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-C",
     flags: ["Cliente dominou o ritmo por ausência de perguntas de aprofundamento do closer (C06)", "Sem conexão explícita entre pilares e dores nos últimos 20% (C10)"],
@@ -1431,7 +1439,7 @@ const DADOS = [
     }
   },
   {
-    linha: 85, deal: "MedSênior (17/06)", empresa: "MedSênior", closer: "Jonny Steinmetz", data: "2026-06-17",
+    linha: 85, deal: "MedSênior (17/06)", empresa: "MedSênior", key_account: true, closer: "Jonny Steinmetz", data: "2026-06-17",
     fase: "indefinida (fora de escopo — negociação de condições contratuais/comerciais de contrato já em fechamento)",
     etapa_negocio: "Won", momento_jornada: "Construindo Projeto",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -1439,7 +1447,7 @@ const DADOS = [
     recomendacao: "Fora do escopo dos checklists de fase — negociação de condições comerciais final (parcelamento, integração condicionada à homologação)."
   },
   {
-    linha: 86, deal: "Agrofoods/Itabom (Alinhamento)", empresa: "Agrofoods/Itabom", closer: "Jonny Steinmetz", data: "2026-06-17",
+    linha: 86, deal: "Agrofoods/Itabom (Alinhamento)", empresa: "Agrofoods/Itabom", key_account: false, closer: "Jonny Steinmetz", data: "2026-06-17",
     fase: "indefinida (fora de escopo — alinhamento jurídico/comercial pós-venda: formalização de contrato, minuta jurídica, cronograma de pagamento)",
     etapa_negocio: "Won", momento_jornada: "Construindo Projeto",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -1449,7 +1457,7 @@ const DADOS = [
     recomendacao: "Nenhuma recomendação de processo comercial aplicável — reunião de formalização contratual/jurídica."
   },
   {
-    linha: 87, deal: "Drilling do Brasil (Demonstração, 17/06)", empresa: "Drilling do Brasil", closer: "Lucas Costa", data: "2026-06-17",
+    linha: 87, deal: "Drilling do Brasil (Demonstração, 17/06)", empresa: "Drilling do Brasil", key_account: false, closer: "Lucas Costa", data: "2026-06-17",
     fase: "demo", etapa_negocio: "Lost", momento_jornada: "Construindo Projeto",
     score_fase: 27.3, score_geral: 31.8, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: ["Apresentou valor exato, parcelamento e prazo de contrato dentro da própria demo (G04)", "D06 não cumprido — pergunta usada mede aderência técnica, não escolha", "Sem data concreta de próxima etapa (D10)", "Sem confirmação de e-mail pós-reunião (G05)"],
@@ -1465,7 +1473,7 @@ const DADOS = [
     }
   },
   {
-    linha: 88, deal: "Unimed RS (Retomada)", empresa: "Unimed RS", closer: "Luis Queiroz", data: "2026-06-17",
+    linha: 88, deal: "Unimed RS (Retomada)", empresa: "Unimed RS", key_account: false, closer: "Luis Queiroz", data: "2026-06-17",
     fase: "indefinida (fora de escopo — reunião de transição de conta/passagem de bastão combinada com retomada de status de proposta já enviada)",
     etapa_negocio: "Qualificação errada", momento_jornada: "Não identificado",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -1480,7 +1488,7 @@ const DADOS = [
     }
   },
   {
-    linha: 89, deal: "Democrata (Alinhamento de projeto)", empresa: "Democrata", closer: "Jonny Steinmetz", data: "2026-06-17",
+    linha: 89, deal: "Democrata (Alinhamento de projeto)", empresa: "Democrata", key_account: true, closer: "Jonny Steinmetz", data: "2026-06-17",
     fase: "mista", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 29.3, score_geral: 38.4, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-P, A-P2",
     flags: ["P08 — única data concreta foi para teste técnico com a champion, não para reunião com TD", "P09 — closer não investigou se a champion tem acesso direto ao TD", "Valor só surgiu ao final, motivado por pergunta da cliente (P02)"],
@@ -1496,7 +1504,7 @@ const DADOS = [
     }
   },
   {
-    linha: 90, deal: "Fortbras (17/06)", empresa: "Fortbras", closer: "Luis Fonseca", data: "2026-06-17",
+    linha: 90, deal: "Fortbras (17/06)", empresa: "Fortbras", key_account: true, closer: "Luis Fonseca", data: "2026-06-17",
     fase: "conexao", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 58.3, score_geral: 66.7, status: "atencao", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Pilares conectados às dores já no meio da reunião, não restritos aos últimos 20% (C10)", "Perguntas ficaram no nível de sintoma, sem aprofundar implicação de negócio (C07)", "Mapeamento do caminho de aprovação superficial (C09)"],
@@ -1512,7 +1520,7 @@ const DADOS = [
     }
   },
   {
-    linha: 91, deal: "Santa Mônica Clube de Campo (17/06)", empresa: "Santa Mônica Clube de Campo", closer: "Karynne Rocha", data: "2026-06-17",
+    linha: 91, deal: "Santa Mônica Clube de Campo (17/06)", empresa: "Santa Mônica Clube de Campo", key_account: true, closer: "Karynne Rocha", data: "2026-06-17",
     fase: "mista", etapa_negocio: "Construindo o Projeto", momento_jornada: "Construindo Projeto",
     score_fase: 15.7, score_geral: 17.5, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D e A-P",
     flags: ["Antecipação comercial extensa — valores, parcelamento e ROI dentro da mesma call de demo (G04)", "Sem e-mail de follow-up (G05)", "Decisora final ausente e de férias — próxima reunião sem função comercial clara"],
@@ -1528,7 +1536,7 @@ const DADOS = [
     }
   },
   {
-    linha: 92, deal: "Printi (Estruturação de Cronograma)", empresa: "Printi", closer: "Luis Fonseca", data: "2026-06-17",
+    linha: 92, deal: "Printi (Estruturação de Cronograma)", empresa: "Printi", key_account: true, closer: "Luis Fonseca", data: "2026-06-17",
     fase: "indefinida (fora de escopo — negociação de preço/cronograma de migração pós-decisão de compra)",
     etapa_negocio: "Won", momento_jornada: "Buscando Solução",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -1538,7 +1546,7 @@ const DADOS = [
     recomendacao: "Não aplicar checklist de fase — encaminhar para acompanhamento de onboarding/negociação comercial fora da auditoria de processo."
   },
   {
-    linha: 93, deal: "CESAR (Demo Metas)", empresa: "CESAR", closer: "Jonny Steinmetz", data: "2026-06-18",
+    linha: 93, deal: "CESAR (Demo Metas)", empresa: "CESAR", key_account: true, closer: "Jonny Steinmetz", data: "2026-06-18",
     fase: "demo", etapa_negocio: "Construindo o Projeto", momento_jornada: "Entendendo Problema",
     score_fase: 18.2, score_geral: 29.6, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: ["Sem data concreta para próxima reunião de implantação/valores (D10)", "D06 (alto risco) — termômetro pós-demo não aplicado", "Sem e-mail de follow-up (G05)", "Momento_jornada do HubSpot parece descolado do estágio real da conta"],
@@ -1554,7 +1562,7 @@ const DADOS = [
     }
   },
   {
-    linha: 94, deal: "Nova Noiva (18/06)", empresa: "Nova Noiva", closer: "Karynne Rocha", data: "2026-06-18",
+    linha: 94, deal: "Nova Noiva (18/06)", empresa: "Nova Noiva", key_account: true, closer: "Karynne Rocha", data: "2026-06-18",
     fase: "mista", etapa_negocio: "Construindo o Projeto", momento_jornada: "Buscando Solução",
     score_fase: 10.1, score_geral: 13.1, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D e A-P",
     flags: ["G02 crítico — evidência textual de material reaproveitado de outro cliente ('identidade visual da Santa Mônica' citada nesta call)", "D06 (alto risco) — termômetro pós-demo ausente", "P08 (alto risco) — sem data de próxima reunião comercial confirmada", "Sem e-mail de follow-up (G05)"],
@@ -1570,7 +1578,7 @@ const DADOS = [
     }
   },
   {
-    linha: 95, deal: "Sumidenso", empresa: "Sumidenso", closer: "Jonny Steinmetz", data: "2026-06-18",
+    linha: 95, deal: "Sumidenso", empresa: "Sumidenso", key_account: true, closer: "Jonny Steinmetz", data: "2026-06-18",
     fase: "conexao", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 61.5, score_geral: 64.2, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-C",
     flags: ["C12 (alto risco) — sem data de demo confirmada na própria call", "Sem nomes de stakeholders na evidência disponível (C08)", "Sem e-mail de follow-up (G05)"],
@@ -1586,7 +1594,7 @@ const DADOS = [
     }
   },
   {
-    linha: 96, deal: "Printi (18/06)", empresa: "Printi", closer: "Luis Fonseca", data: "2026-06-18",
+    linha: 96, deal: "Printi (18/06)", empresa: "Printi", key_account: true, closer: "Luis Fonseca", data: "2026-06-18",
     fase: "indefinida (fora de escopo — negociação de contrato/fechamento pós-proposta)",
     etapa_negocio: "Won", momento_jornada: "Buscando Solução",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -1594,7 +1602,7 @@ const DADOS = [
     recomendacao: "Fora do escopo — negociação fina de valores já aprovados, comparativo com concorrente para defesa interna e cronograma de implantação. Deal fechado como Ganho poucos dias depois."
   },
   {
-    linha: 97, deal: "Transire", empresa: "Transire", closer: "Luis Fonseca", data: "2026-06-19",
+    linha: 97, deal: "Transire", empresa: "Transire", key_account: false, closer: "Luis Fonseca", data: "2026-06-19",
     fase: "mista", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 30.3, score_geral: 29.2, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-C, A-D",
     flags: ["Nenhum stakeholder ou TD identificado por nome (C08)", "Closer seguiu reativamente as perguntas do cliente na maior parte da call (G03)", "Gap de geração de vídeo por IA reconhecido mas sem encaminhamento firme (D09)"],
@@ -1610,7 +1618,7 @@ const DADOS = [
     }
   },
   {
-    linha: 98, deal: "Unimed Vilhena", empresa: "Unimed Vilhena", closer: "Karynne Rocha", data: "2026-06-19",
+    linha: 98, deal: "Unimed Vilhena", empresa: "Unimed Vilhena", key_account: true, closer: "Karynne Rocha", data: "2026-06-19",
     fase: "mista", etapa_negocio: "Construindo o Projeto", momento_jornada: "Buscando Solução",
     score_fase: 55.7, score_geral: 64.5, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: ["Nenhum stakeholder mapeado por nome (C08)", "Pilares conectados às dores de forma dispersa (C10)"],
@@ -1626,7 +1634,7 @@ const DADOS = [
     }
   },
   {
-    linha: 99, deal: "Printi (19/06)", empresa: "Printi", closer: "Luis Fonseca", data: "2026-06-19",
+    linha: 99, deal: "Printi (19/06)", empresa: "Printi", key_account: true, closer: "Luis Fonseca", data: "2026-06-19",
     fase: "proposta", etapa_negocio: "Won", momento_jornada: "Buscando Solução",
     score_fase: 44.4, score_geral: 56, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-P (atenuado)",
     flags: ["Sem conexão explícita à estratégia de negócio além do RH (P03)", "Sem treino estruturado do champion com as 4 perguntas do TD (P04)", "Sem escala 0-10 de confiança (P07)"],
@@ -1642,7 +1650,7 @@ const DADOS = [
     }
   },
   {
-    linha: 100, deal: "Zig (Testes)", empresa: "Zig", closer: "Luis Queiroz", data: "2026-06-19",
+    linha: 100, deal: "Zig (Testes)", empresa: "Zig", key_account: true, closer: "Luis Queiroz", data: "2026-06-19",
     fase: "indefinida (fora de escopo — teste de plataforma/enablement técnico pós-venda)",
     etapa_negocio: "Negociando", momento_jornada: "Buscando Solução",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -1652,7 +1660,7 @@ const DADOS = [
     recomendacao: "Fora do escopo — sessão técnica de configuração/teste de ambiente (filtros de elegibilidade, refresh de dados, integrações LG/SSO), sem diagnóstico, demo ou apresentação de proposta nesta call."
   },
   {
-    linha: "100.1 (Fortbras Demonstração 19/06 — recuperada)", deal: "Fortbras (Demonstração, 19/06)", empresa: "Fortbras", closer: "Luis Fonseca", data: "2026-06-19",
+    linha: "100.1 (Fortbras Demonstração 19/06 — recuperada)", deal: "Fortbras (Demonstração, 19/06)", empresa: "Fortbras", key_account: true, closer: "Luis Fonseca", data: "2026-06-19",
     fase: "demo", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 34.1, score_geral: 34.1, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: [
@@ -1684,7 +1692,7 @@ const DADOS = [
     }
   },
   {
-    linha: "100.2 (Comolatti 19/06 — recuperada)", deal: "Grupo Comolatti (19/06)", empresa: "Grupo Comolatti", closer: "Luis Fonseca", data: "2026-06-19",
+    linha: "100.2 (Comolatti 19/06 — recuperada)", deal: "Grupo Comolatti (19/06)", empresa: "Grupo Comolatti", key_account: true, closer: "Luis Fonseca", data: "2026-06-19",
     fase: "mista (demo, proposta)", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 19, score_geral: 30, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D, A-P, A-P2",
     flags: [
@@ -1716,7 +1724,7 @@ const DADOS = [
     }
   },
   {
-    linha: "100.3 (SegMedic 22/06 — recuperada)", deal: "SegMedic", empresa: "SegMedic", closer: "Lucas Costa", data: "2026-06-22",
+    linha: "100.3 (SegMedic 22/06 — recuperada)", deal: "SegMedic", empresa: "SegMedic", key_account: true, closer: "Lucas Costa", data: "2026-06-22",
     fase: "demo", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 14.55, score_geral: 29.55, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: [
@@ -1746,7 +1754,7 @@ const DADOS = [
     }
   },
   {
-    linha: "100.4 (Zona Sul Demo 22/06 — recuperada)", deal: "Supermercados Zona Sul (Demo, 22/06)", empresa: "Supermercados Zona Sul", closer: "Jonny Steinmetz", data: "2026-06-22",
+    linha: "100.4 (Zona Sul Demo 22/06 — recuperada)", deal: "Supermercados Zona Sul (Demo, 22/06)", empresa: "Supermercados Zona Sul", key_account: true, closer: "Jonny Steinmetz", data: "2026-06-22",
     fase: "demo", etapa_negocio: "Buscando Solução", momento_jornada: "Construindo Projeto",
     score_fase: 21.8, score_geral: 31.8, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: [
@@ -1774,7 +1782,7 @@ const DADOS = [
     }
   },
   {
-    linha: "100.5 (Sabin Cronograma 22/06 — recuperada)", deal: "Sabin (Cronograma, 22/06)", empresa: "Sabin", closer: "Luis Fonseca", data: "2026-06-22",
+    linha: "100.5 (Sabin Cronograma 22/06 — recuperada)", deal: "Sabin (Cronograma, 22/06)", empresa: "Sabin", key_account: true, closer: "Luis Fonseca", data: "2026-06-22",
     fase: "indefinida (fora de escopo — reunião de acompanhamento/cronograma pós-decisão, sem diagnóstico, demo ou proposta)",
     etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -1790,7 +1798,7 @@ const DADOS = [
     recomendacao: "Fora de escopo do checklist comercial. Monitorar o desfecho da reunião do cliente com a diretoria em 24/06."
   },
   {
-    linha: "100.6 (Insi Alinhamento 23/06 — recuperada)", deal: "Insi (deal não confirmado no HubSpot)", empresa: "Insi", closer: "Luis Fonseca", data: "2026-06-23",
+    linha: "100.6 (Insi Alinhamento 23/06 — recuperada)", deal: "Insi (deal não confirmado no HubSpot)", empresa: "Insi", key_account: false, closer: "Luis Fonseca", data: "2026-06-23",
     fase: "indefinida (fora de escopo — acompanhamento pós-decisão: cliente optou por manter fornecedor atual (Lo-Fi) por orçamento; sem diagnóstico, demo ou proposta nesta call)",
     etapa_negocio: "Qualificação errada", momento_jornada: "Não identificado",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -1811,7 +1819,7 @@ const DADOS = [
     recomendacao: "Confirmar manualmente no HubSpot qual é o deal correto associado a esta reunião. Tratar como nota de relacionamento/nutrição de pipeline, não como reunião de fase comercial. Abrir tarefa de follow-up para outubro com quantificação do custo da dor do cliente."
   },
   {
-    linha: "100.7 (Zig Learning 23/06 — recuperada)", deal: "Zig ([Learning])", empresa: "Zig", closer: "Luis Queiroz", data: "2026-06-23",
+    linha: "100.7 (Zig Learning 23/06 — recuperada)", deal: "Zig ([Learning])", empresa: "Zig", key_account: true, closer: "Luis Queiroz", data: "2026-06-23",
     fase: "indefinida (fora de escopo — sessão de enablement/treinamento pós-venda do módulo Learning, sem diagnóstico, demo ou proposta)",
     etapa_negocio: "Negociando", momento_jornada: "Não identificado",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -1827,7 +1835,7 @@ const DADOS = [
     recomendacao: "Fora de escopo do checklist comercial (enablement pós-venda). Melhorar a vinculação de reuniões de CS/enablement aos deals corretos no HubSpot para rastreabilidade futura."
   },
   {
-    linha: 228, deal: "Fortbras", empresa: "Fortbras", closer: "Luis Fonseca", data: "2026-06-19",
+    linha: 228, deal: "Fortbras", empresa: "Fortbras", key_account: true, closer: "Luis Fonseca", data: "2026-06-19",
     fase: "demo", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 55, score_geral: 49, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D (atenuado)",
     flags: [
@@ -1861,7 +1869,7 @@ const DADOS = [
     }
   },
   {
-    linha: 229, deal: "Grupo Comolatti (Proposta)", empresa: "Grupo Comolatti", closer: "Luis Fonseca", data: "2026-06-19",
+    linha: 229, deal: "Grupo Comolatti (Proposta)", empresa: "Grupo Comolatti", key_account: true, closer: "Luis Fonseca", data: "2026-06-19",
     fase: "proposta", etapa_negocio: "StandBy", momento_jornada: "Buscando Solução",
     score_fase: 11, score_geral: 29, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-P, A-P2",
     flags: [
@@ -1893,7 +1901,7 @@ const DADOS = [
     }
   },
   {
-    linha: 230, deal: "SegMedic", empresa: "SegMedic", closer: "Lucas Costa", data: "2026-06-22",
+    linha: 230, deal: "SegMedic", empresa: "SegMedic", key_account: true, closer: "Lucas Costa", data: "2026-06-22",
     fase: "mista (conexão + demo)", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: null, score_geral: 43, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: [
@@ -1928,7 +1936,7 @@ const DADOS = [
     }
   },
   {
-    linha: 231, deal: "Supermercados Zona Sul (Demo, retomada)", empresa: "Supermercados Zona Sul", closer: "Jonny Steinmetz", data: "2026-06-22",
+    linha: 231, deal: "Supermercados Zona Sul (Demo, retomada)", empresa: "Supermercados Zona Sul", key_account: true, closer: "Jonny Steinmetz", data: "2026-06-22",
     fase: "demo", etapa_negocio: "Buscando Solução", momento_jornada: "Construindo Projeto",
     score_fase: 18, score_geral: 20, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: [
@@ -1964,7 +1972,7 @@ const DADOS = [
     }
   },
   {
-    linha: 232, deal: "Sabin (Cronograma)", empresa: "Sabin", closer: "Luis Fonseca", data: "2026-06-22",
+    linha: 232, deal: "Sabin (Cronograma)", empresa: "Sabin", key_account: true, closer: "Luis Fonseca", data: "2026-06-22",
     fase: "indefinida (fora de escopo — implementação/cronograma técnico)", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
     flags: [],
@@ -1973,7 +1981,7 @@ const DADOS = [
     recomendacao: "Nenhuma ação de auditoria de processo comercial necessária. Sugerido apenas garantir o envio formal do cronograma/comparativo de plataformas combinado e acompanhar a validação da diretoria de RH marcada para 24/06 e a formalização jurídica do contrato."
   },
   {
-    linha: 101, deal: "Solar Coca-Cola (Demo, 23/06)", empresa: "Solar Coca-Cola", closer: "Jonny Steinmetz", data: "2026-06-23",
+    linha: 101, deal: "Solar Coca-Cola (Demo, 23/06)", empresa: "Solar Coca-Cola", key_account: true, closer: "Jonny Steinmetz", data: "2026-06-23",
     fase: "demo", etapa_negocio: "Lost", momento_jornada: "Construindo Projeto",
     score_fase: 9, score_geral: 17, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: ["Demo foi guiada pelo cliente — cliente repetidamente redirecionou o roteiro (D03)", "Objeção de flexibilidade nos campos de sucessão sem encaminhamento concreto (D09)", "Sem verificação de gaps antes de encerrar (D08)"],
@@ -1989,7 +1997,7 @@ const DADOS = [
     }
   },
   {
-    linha: 102, deal: "Hvar (Alinhamento interno)", empresa: "Hvar", closer: "Lucas Costa", data: "2026-06-23",
+    linha: 102, deal: "Hvar (Alinhamento interno)", empresa: "Hvar", key_account: true, closer: "Lucas Costa", data: "2026-06-23",
     fase: "indefinida (fora de escopo — alinhamento interno com a champion para preparar apresentação do dia seguinte ao comitê decisor, não é conexão/demo/proposta ao decisor)",
     etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -1999,7 +2007,7 @@ const DADOS = [
     recomendacao: "Nenhuma auditoria de fase aplicável — auditar a reunião real do dia seguinte com o comitê decisor (linha 106)."
   },
   {
-    linha: 103, deal: "Sabin (Alinhamento técnico)", empresa: "Sabin", closer: "Luis Fonseca", data: "2026-06-23",
+    linha: 103, deal: "Sabin (Alinhamento técnico)", empresa: "Sabin", key_account: true, closer: "Luis Fonseca", data: "2026-06-23",
     fase: "indefinida (fora de escopo — alinhamento de requisitos técnicos e comparativo de concorrentes para apoiar apresentação interna do cliente, não é conexão/demo/proposta com decisor externo)",
     etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -2009,7 +2017,7 @@ const DADOS = [
     recomendacao: "Nenhuma auditoria de fase aplicável."
   },
   {
-    linha: 233, deal: "Meta -2400 colaboradores (LI de cliente)", empresa: "Insi (rebranding de Meta)", closer: "Luis Fonseca", data: "2026-06-23",
+    linha: 233, deal: "Meta -2400 colaboradores (LI de cliente)", empresa: "Insi (rebranding de Meta)", key_account: false, closer: "Luis Fonseca", data: "2026-06-23",
     fase: "indefinida (fora de escopo — alinhamento pós-proposta, deal em standby por orçamento)", etapa_negocio: "StandBy", momento_jornada: "Buscando Solução",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
     flags: [],
@@ -2018,7 +2026,7 @@ const DADOS = [
     recomendacao: "Nenhuma ação de auditoria de processo necessária. Registrar no CRM o checkpoint combinado para meados de outubro/2026 e preparar até lá uma quantificação de ROI/impacto das dores de experiência do usuário (sugerida pelo próprio closer) para fortalecer a defesa de orçamento em 2027."
   },
   {
-    linha: 105, deal: "Zig (Pesquisas + Proposta)", empresa: "Zig", closer: "Luis Queiroz", data: "2026-06-24",
+    linha: 105, deal: "Zig (Pesquisas + Proposta)", empresa: "Zig", key_account: true, closer: "Luis Queiroz", data: "2026-06-24",
     fase: "proposta", etapa_negocio: "Negociando", momento_jornada: "Buscando Solução",
     score_fase: 22, score_geral: 33, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-P",
     flags: ["Champion trouxe forte insatisfação com o fornecedor atual e closer não estruturou isso como argumento formal de risco de não agir (P05)"],
@@ -2034,7 +2042,7 @@ const DADOS = [
     }
   },
   {
-    linha: 106, deal: "Hvar (Apresentação)", empresa: "Hvar", closer: "Lucas Costa", data: "2026-06-24",
+    linha: 106, deal: "Hvar (Apresentação)", empresa: "Hvar", key_account: true, closer: "Lucas Costa", data: "2026-06-24",
     fase: "demo", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 36, score_geral: 49, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: ["Demo apresentada de forma institucional, sem recapitulação verbal isolada antes de abrir a tela (D01)", "Fechamento sem data concreta de próxima etapa (D10)"],
@@ -2050,7 +2058,7 @@ const DADOS = [
     }
   },
   {
-    linha: 107, deal: "Unimed TV (Odilon/Jonny)", empresa: "Unimed TV", closer: "Jonny Steinmetz", data: "2026-06-24",
+    linha: 107, deal: "Unimed TV (Odilon/Jonny)", empresa: "Unimed TV", key_account: false, closer: "Jonny Steinmetz", data: "2026-06-24",
     fase: "proposta", etapa_negocio: "Qualificação errada", momento_jornada: "Não identificado no HubSpot",
     score_fase: 22, score_geral: 33, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-P",
     flags: [
@@ -2067,7 +2075,7 @@ const DADOS = [
     }
   },
   {
-    linha: 108, deal: "Zig (Proposta, 24/06)", empresa: "Zig", closer: "Luis Queiroz", data: "2026-06-24",
+    linha: 108, deal: "Zig (Proposta, 24/06)", empresa: "Zig", key_account: true, closer: "Luis Queiroz", data: "2026-06-24",
     fase: "proposta", etapa_negocio: "Negociando", momento_jornada: "Buscando Solução",
     score_fase: 33, score_geral: 42, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-P",
     flags: ["Aceitou fluxo de aprovação 100% via sistema/CEO sem propor reunião conjunta (P09)", "Sem confirmação de e-mail de follow-up desta reunião (G05)"],
@@ -2083,7 +2091,7 @@ const DADOS = [
     }
   },
   {
-    linha: 109, deal: "Veloe (Remuneração Variável)", empresa: "Veloe", closer: "Lucas Costa", data: "2026-06-25",
+    linha: 109, deal: "Veloe (Remuneração Variável)", empresa: "Veloe", key_account: true, closer: "Lucas Costa", data: "2026-06-25",
     fase: "demo", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 27, score_geral: 37, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: ["Demo tocada no fluxo funcional do sistema sem amarrar cada bloco a uma dor específica antes de mostrar (D04)", "Nenhuma data concreta de próxima etapa fechada (D10)"],
@@ -2097,7 +2105,7 @@ const DADOS = [
     }
   },
   {
-    linha: 110, deal: "Urológica MG", empresa: "Urológica MG", closer: "Lucas Costa", data: "2026-06-25",
+    linha: 110, deal: "Urológica MG", empresa: "Urológica MG", key_account: false, closer: "Lucas Costa", data: "2026-06-25",
     fase: "conexao", etapa_negocio: "Construindo o Projeto", momento_jornada: "Entendendo Problema",
     score_fase: 75, score_geral: 80, status: "aderente", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Proporção de fala da cliente não claramente majoritária (C05)"],
@@ -2113,7 +2121,7 @@ const DADOS = [
     }
   },
   {
-    linha: 111, deal: "Zig (25/06)", empresa: "Zig", closer: "Luis Queiroz", data: "2026-06-25",
+    linha: 111, deal: "Zig (25/06)", empresa: "Zig", key_account: true, closer: "Luis Queiroz", data: "2026-06-25",
     fase: "proposta", etapa_negocio: "Negociando", momento_jornada: "Buscando Solução",
     score_fase: 11, score_geral: 19, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-P, A-P2",
     flags: ["Sem cronograma de implantação com fases (P06)", "Sem medição de confiança 0-10 (P07)", "Champion vai apresentar sozinha ao C-Level e closer não propôs reunião conjunta (P04/P09)"],
@@ -2129,7 +2137,7 @@ const DADOS = [
     }
   },
   {
-    linha: 112, deal: "Arteris", empresa: "Arteris", closer: "Jonny Steinmetz", data: "2026-06-25",
+    linha: 112, deal: "Arteris", empresa: "Arteris", key_account: false, closer: "Jonny Steinmetz", data: "2026-06-25",
     fase: "conexao", etapa_negocio: "Qualificação errada", momento_jornada: "Entendendo Problema",
     score_fase: 50, score_geral: 55, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-C",
     flags: ["Stakeholders mapeados só por cargo, sem nomes próprios de decisores (C08)", "Pilares conectados às dores mas não restrito aos últimos 20% (C10)"],
@@ -2145,7 +2153,7 @@ const DADOS = [
     }
   },
   {
-    linha: 113, deal: "Colgate (Projeto Estagiários)", empresa: "Colgate", closer: "Luis Fonseca", data: "2026-06-26",
+    linha: 113, deal: "Colgate (Projeto Estagiários)", empresa: "Colgate", key_account: true, closer: "Luis Fonseca", data: "2026-06-26",
     fase: "proposta", etapa_negocio: "Construindo o Projeto", momento_jornada: "Construindo Projeto",
     score_fase: 33, score_geral: 42, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-P2",
     flags: ["Champion vai apresentar sozinha para a nova diretora sem que o closer questionasse ou propusesse participação conjunta (P09)", "Negociação de desconto sem treinar o champion antes (P04/P05)"],
@@ -2161,7 +2169,7 @@ const DADOS = [
     }
   },
   {
-    linha: 114, deal: "Sumidenso (Demo)", empresa: "Sumidenso", closer: "Jonny Steinmetz", data: "2026-06-26",
+    linha: 114, deal: "Sumidenso (Demo)", empresa: "Sumidenso", key_account: true, closer: "Jonny Steinmetz", data: "2026-06-26",
     fase: "demo", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 55, score_geral: 54, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: ["Demo parcialmente guiada pelas perguntas técnicas da cliente sem fio condutor evidente (D03/G03)", "Não perguntou sobre diferencial percebido nem peso na decisão (D07)"],
@@ -2177,7 +2185,7 @@ const DADOS = [
     }
   },
   {
-    linha: 118, deal: "Grupo SK", empresa: "Grupo SK", closer: "Lucas Costa", data: "2026-06-30",
+    linha: 118, deal: "Grupo SK", empresa: "Grupo SK", key_account: true, closer: "Lucas Costa", data: "2026-06-30",
     fase: "conexao", etapa_negocio: "Construindo o Projeto", momento_jornada: "Construindo Projeto",
     score_fase: 83, score_geral: 77, status: "aderente", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Stakeholders mapeados apenas como 'diretoria' de forma genérica, sem nome específico do TD (C08)"],
@@ -2193,7 +2201,7 @@ const DADOS = [
     }
   },
   {
-    linha: 119, deal: "CESAR (Projeto e proposta)", empresa: "CESAR", closer: "Jonny Steinmetz", data: "2026-06-30",
+    linha: 119, deal: "CESAR (Projeto e proposta)", empresa: "CESAR", key_account: true, closer: "Jonny Steinmetz", data: "2026-06-30",
     fase: "proposta", etapa_negocio: "Construindo o Projeto", momento_jornada: "Entendendo Problema",
     score_fase: 44, score_geral: 51, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-P, A-P2",
     flags: ["Valor só apresentado na segunda metade da reunião (P02)", "Sem as 4 perguntas do TD passadas à champion (P04)", "Sem escala de confiança 0-10 (P07)"],
@@ -2209,7 +2217,7 @@ const DADOS = [
     }
   },
   {
-    linha: 120, deal: "Fortbras (Agenda TI)", empresa: "Fortbras", closer: "Luis Fonseca", data: "2026-06-30",
+    linha: 120, deal: "Fortbras (Agenda TI)", empresa: "Fortbras", key_account: true, closer: "Luis Fonseca", data: "2026-06-30",
     fase: "indefinida (fora de escopo — alinhamento técnico de TI/integração de API, não é conexão/demo/proposta comercial)",
     etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -2217,7 +2225,7 @@ const DADOS = [
     recomendacao: "Não avaliável pelo checklist comercial — call técnica entre times de produto/integração e TI do cliente, sem diagnóstico, demo ou proposta."
   },
   {
-    linha: 121, deal: "Fábrica de Ideias", empresa: "Fábrica de Ideias", closer: "Lucas Costa", data: "2026-06-30",
+    linha: 121, deal: "Fábrica de Ideias", empresa: "Fábrica de Ideias", key_account: false, closer: "Lucas Costa", data: "2026-06-30",
     fase: "conexao", etapa_negocio: "Conexão", momento_jornada: "Não identificado",
     score_fase: 17, score_geral: 18, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-C",
     flags: ["Cliente falou menos de 50% do tempo (C05)", "Reunião encerrada sem diagnóstico completo — cliente só tinha 10 minutos e foi remarcada", "Nenhuma dor, stakeholder ou implicação de negócio mapeada"],
@@ -2231,7 +2239,7 @@ const DADOS = [
     }
   },
   {
-    linha: 122, deal: "Grupo Boticário", empresa: "Grupo Boticário", closer: "Luis Fonseca", data: "2026-06-30",
+    linha: 122, deal: "Grupo Boticário", empresa: "Grupo Boticário", key_account: false, closer: "Luis Fonseca", data: "2026-06-30",
     fase: "demo", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 27, score_geral: 32, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: ["Demo guiada pelo cliente — perguntas extensas conduziram boa parte da pauta (D03)", "Reunião estratégica de alto valor com score crítico", "Transcrição muito extensa, trecho final não lido por limite técnico — critérios de fechamento marcados 'não' por regra de desempate"],
@@ -2245,7 +2253,7 @@ const DADOS = [
     }
   },
   {
-    linha: 123, deal: "Grupo Fit", empresa: "Grupo Fit", closer: "Luis Fonseca", data: "2026-07-01",
+    linha: 123, deal: "Grupo Fit", empresa: "Grupo Fit", key_account: true, closer: "Luis Fonseca", data: "2026-07-01",
     fase: "conexao", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 58, score_geral: 52, status: "atencao", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Cliente dominou o ritmo e redirecionou a conversa para requisitos técnicos antes da hora (G03)", "Material não foi apresentado/personalizado nesta call (G02)"],
@@ -2261,7 +2269,7 @@ const DADOS = [
     }
   },
   {
-    linha: 124, deal: "Veloe (Implementação)", empresa: "Veloe", closer: "Lucas Costa", data: "2026-07-01",
+    linha: 124, deal: "Veloe (Implementação)", empresa: "Veloe", key_account: true, closer: "Lucas Costa", data: "2026-07-01",
     fase: "indefinida (fora de escopo — explicação de metodologia de implementação e alinhamento de processo de RFP/compras via holding, não é diagnóstico, demo nem proposta comercial)",
     etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -2270,7 +2278,7 @@ const DADOS = [
     recomendacao: "Não aplicável ao checklist de processo comercial padrão. Acompanhar qualitativamente a oportunidade em estágio de RFP/compras fora do fluxo de auditoria de fase."
   },
   {
-    linha: 125, deal: "G2L Logística (01/07)", empresa: "G2L Logística", closer: "Luis Fonseca", data: "2026-07-01",
+    linha: 125, deal: "G2L Logística (01/07)", empresa: "G2L Logística", key_account: true, closer: "Luis Fonseca", data: "2026-07-01",
     fase: "demo", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 36, score_geral: 39, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: ["Demo guiada pelo cliente — perguntas extensas sobre SCORM, segmentação regional e integração conduziram boa parte da pauta (D03)", "Reunião terminou (no trecho disponível) sem data de próxima etapa confirmada (D10)"],
@@ -2286,7 +2294,7 @@ const DADOS = [
     }
   },
   {
-    linha: 126, deal: "Skyone (Início de Projeto, 01/07)", empresa: "Skyone", closer: "Luis Queiroz", data: "2026-07-01",
+    linha: 126, deal: "Skyone (Início de Projeto, 01/07)", empresa: "Skyone", key_account: true, closer: "Luis Queiroz", data: "2026-07-01",
     fase: "indefinida (fora de escopo — negociação de cláusula contratual e alinhamento de cronograma de implantação pós-venda)",
     etapa_negocio: "Pendente de Assinatura", momento_jornada: "Construindo Projeto",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -2296,7 +2304,7 @@ const DADOS = [
     recomendacao: "Nenhuma recomendação de processo comercial aplicável — reunião de handoff/kickoff de implantação."
   },
   {
-    linha: 127, deal: "Grupo Via1", empresa: "Grupo Via1", closer: "Luis Fonseca", data: "2026-07-01",
+    linha: 127, deal: "Grupo Via1", empresa: "Grupo Via1", key_account: true, closer: "Luis Fonseca", data: "2026-07-01",
     fase: "indefinida (fora de escopo — negociação de fechamento/prazo de aprovação e revisão de contrato, com proposta já enviada anteriormente)",
     etapa_negocio: "Negociando", momento_jornada: "Buscando Solução",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -2306,7 +2314,7 @@ const DADOS = [
     recomendacao: "Nenhuma recomendação de processo comercial de fase aplicável — reunião de acompanhamento de fechamento contratual."
   },
   {
-    linha: 128, deal: "Redemix (Demo)", empresa: "Redemix", closer: "Jonny Steinmetz", data: "2026-07-01",
+    linha: 128, deal: "Redemix (Demo)", empresa: "Redemix", key_account: false, closer: "Jonny Steinmetz", data: "2026-07-01",
     fase: "mista (conexão/retomada de diagnóstico + demo comparativa)",
     etapa_negocio: "Construindo o Projeto", momento_jornada: "Buscando Solução",
     score_fase: null, score_geral: null, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-D",
@@ -2323,7 +2331,7 @@ const DADOS = [
     }
   },
   {
-    linha: 129, deal: "Grupo Comolatti (01/07)", empresa: "Grupo Comolatti", closer: "Luis Fonseca", data: "2026-07-01",
+    linha: 129, deal: "Grupo Comolatti (01/07)", empresa: "Grupo Comolatti", key_account: true, closer: "Luis Fonseca", data: "2026-07-01",
     fase: "indefinida (fora de escopo — negociação comercial de valor/desconto em resposta a proposta concorrente, sem apresentação estruturada de proposta nova nem demo)",
     etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -2333,7 +2341,7 @@ const DADOS = [
     recomendacao: "Formalizar por e-mail o compromisso de interesse do champion antes de aprofundar descontos, prática já iniciada pelo closer nesta conversa."
   },
   {
-    linha: 130, deal: "Delfia (02/07)", empresa: "Delfia", closer: "Jonny Steinmetz", data: "2026-07-02",
+    linha: 130, deal: "Delfia (02/07)", empresa: "Delfia", key_account: true, closer: "Jonny Steinmetz", data: "2026-07-02",
     fase: "conexao", etapa_negocio: "Construindo o Projeto", momento_jornada: "Entendendo Problema",
     score_fase: 75, score_geral: 75, status: "aderente", alerta_alto_risco: false, codigo_alerta: null,
     flags: [],
@@ -2349,7 +2357,7 @@ const DADOS = [
     }
   },
   {
-    linha: 131, deal: "Zig (02/07)", empresa: "Zig", closer: "Luis Queiroz", data: "2026-07-02",
+    linha: 131, deal: "Zig (02/07)", empresa: "Zig", key_account: true, closer: "Luis Queiroz", data: "2026-07-02",
     fase: "indefinida (fora de escopo — reunião de suporte/configuração técnica pós-venda: ajuste de fluxo de comitê de calibração, edição de comentários e regras de RV)",
     etapa_negocio: "Negociando", momento_jornada: "Buscando Solução",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -2357,7 +2365,7 @@ const DADOS = [
     recomendacao: "Reunião não avaliável pelo checklist comercial — é implementação/enablement técnico pós-venda."
   },
   {
-    linha: 132, deal: "Plusoft (Demonstração, 02/07)", empresa: "Plusoft", closer: "Lucas Costa", data: "2026-07-02",
+    linha: 132, deal: "Plusoft (Demonstração, 02/07)", empresa: "Plusoft", key_account: true, closer: "Lucas Costa", data: "2026-07-02",
     fase: "demo", etapa_negocio: "Construindo o Projeto", momento_jornada: "Construindo Projeto",
     score_fase: 0, score_geral: 15, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: ["Demo guiada por sequência de módulos sem recapitulação de dores antes de abrir a plataforma (D01)", "Sem conexão explícita e sustentada entre módulos e dores específicas (D03/D05)", "Não aplicou o termômetro do playbook — perguntou 'o que vocês acharam' em vez da pergunta de escolha (D06)", "Dúvida técnica sobre integração ficou sem encaminhamento com prazo (D09)", "Encerrou sem data concreta do próximo passo (D10)"],
@@ -2373,7 +2381,7 @@ const DADOS = [
     }
   },
   {
-    linha: 133, deal: "Delfia (Demo, 03/07)", empresa: "Delfia", closer: "Jonny Steinmetz", data: "2026-07-03",
+    linha: 133, deal: "Delfia (Demo, 03/07)", empresa: "Delfia", key_account: true, closer: "Jonny Steinmetz", data: "2026-07-03",
     fase: "demo", etapa_negocio: "Construindo o Projeto", momento_jornada: "Entendendo Problema",
     score_fase: 45, score_geral: 51, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: ["Transcrição lida em ~70% por limite de tamanho — critérios de fechamento (D06,D07,D08,D10,G05) marcados 'não' podem estar no trecho final não coberto", "Sem evidência do termômetro do playbook na parte lida (D06)"],
@@ -2389,7 +2397,7 @@ const DADOS = [
     }
   },
   {
-    linha: 134, deal: "TESC (Demonstração, abortada)", empresa: "TESC", closer: "Lucas Costa", data: "2026-07-03",
+    linha: 134, deal: "TESC (Demonstração, abortada)", empresa: "TESC", key_account: true, closer: "Lucas Costa", data: "2026-07-03",
     fase: "indefinida (fora de escopo — reunião não realizada: aguardando atraso de participante, decisão de reagendar 30 min depois, duração de apenas 274 segundos)",
     etapa_negocio: "Construindo o Projeto", momento_jornada: "Entendendo Problema",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -2397,7 +2405,7 @@ const DADOS = [
     recomendacao: "Reunião abortada por ausência de participante-chave; sem conteúdo para auditar. A continuação real provavelmente está registrada em outra linha da planilha na mesma data (ID 2144624)."
   },
   {
-    linha: 135, deal: "Cimento Nacional (03/07)", empresa: "Cimento Nacional", closer: "Luis Fonseca", data: "2026-07-03",
+    linha: 135, deal: "Cimento Nacional (03/07)", empresa: "Cimento Nacional", key_account: true, closer: "Luis Fonseca", data: "2026-07-03",
     fase: "indefinida (fora de escopo — parametrização técnica pós-venda de remuneração variável e metas no sistema)",
     etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -2405,7 +2413,7 @@ const DADOS = [
     recomendacao: "Reunião não avaliável pelo checklist comercial — trabalho de implementação/configuração técnica pós-venda."
   },
   {
-    linha: 136, deal: "TESC (Demonstração real)", empresa: "TESC", closer: "Lucas Costa", data: "2026-07-03",
+    linha: 136, deal: "TESC (Demonstração real)", empresa: "TESC", key_account: true, closer: "Lucas Costa", data: "2026-07-03",
     fase: "demo", etapa_negocio: "Construindo o Projeto", momento_jornada: "Entendendo Problema",
     score_fase: 55, score_geral: 64, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: ["Sem alinhamento explícito de agenda no início dizendo que hoje é demo e proposta vem depois (D02)", "Sem verificação de gaps/expectativas não atendidas (D08)", "Cliente sinalizou concorrência ativa com 3 fornecedores e negociação de preço, sem exploração ativa do posicionamento competitivo"],
@@ -2421,7 +2429,7 @@ const DADOS = [
     }
   },
   {
-    linha: 137, deal: "CESAR (Agenda Técnica)", empresa: "CESAR", closer: "Jonny Steinmetz", data: "2026-07-03",
+    linha: 137, deal: "CESAR (Agenda Técnica)", empresa: "CESAR", key_account: true, closer: "Jonny Steinmetz", data: "2026-07-03",
     fase: "indefinida (fora de escopo — sem transcrição disponível; título e participantes indicam reunião técnica de integração/TI, não comercial)",
     etapa_negocio: "Construindo o Projeto", momento_jornada: "Entendendo Problema",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -2431,7 +2439,7 @@ const DADOS = [
     recomendacao: "Sem transcrição disponível e com forte indício de reunião técnica, não é possível aplicar o checklist comercial. Última linha da planilha até o momento (2026-07-03) — auditoria completa e atualizada até aqui."
   },
   {
-    linha: 138, deal: "G2L Logística (Fluxo de Metas, 06/07)", empresa: "G2L Logística", closer: "Luis Fonseca", data: "2026-07-06",
+    linha: 138, deal: "G2L Logística (Fluxo de Metas, 06/07)", empresa: "G2L Logística", key_account: true, closer: "Luis Fonseca", data: "2026-07-06",
     fase: "conexao", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 27, score_geral: 37, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-C",
     flags: ["Reunião de preparação para demo já agendada, mas conduzida como diagnóstico raso — closer não aprofundou implicações de negócio, só mecânica de RV/metas", "Não houve pergunta de abertura calibrada nem apresentação inicial do cliente antes do closer entrar direto nas dores de metas/RV"],
@@ -2456,7 +2464,7 @@ const DADOS = [
     }
   },
   {
-    linha: 139, deal: "Comolatti (Negociação/Proposta, 06/07)", empresa: "Comolatti", closer: "Luis Fonseca", data: "2026-07-06",
+    linha: 139, deal: "Comolatti (Negociação/Proposta, 06/07)", empresa: "Comolatti", key_account: true, closer: "Luis Fonseca", data: "2026-07-06",
     fase: "proposta", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 44, score_geral: 59, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-P",
     flags: ["Negociação de desconto conduzida com transparência (304k → ~210k), mas sem data concreta de apresentação ao TD — apenas \"até sexta-feira ou no máximo\""],
@@ -2483,7 +2491,7 @@ const DADOS = [
     }
   },
   {
-    linha: 140, deal: "Ramasa", empresa: "Ramasa", closer: "Lucas Costa", data: "2026-07-06",
+    linha: 140, deal: "Ramasa", empresa: "Ramasa", key_account: false, closer: "Lucas Costa", data: "2026-07-06",
     fase: "mista (conexão + demo)", etapa_negocio: "Qualificação errada", momento_jornada: "Buscando Solução",
     score_fase: 64, score_geral: 63, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-D (D06 não aplicado)",
     flags: [
@@ -2517,7 +2525,7 @@ const DADOS = [
     }
   },
   {
-    linha: 141, deal: "Fortbras (Agenda TI, 06/07)", empresa: "Fortbras", closer: "Luis Fonseca", data: "2026-07-06",
+    linha: 141, deal: "Fortbras (Agenda TI, 06/07)", empresa: "Fortbras", key_account: true, closer: "Luis Fonseca", data: "2026-07-06",
     fase: "indefinida (fora de escopo — reunião de onboarding/negociação de contrato pós-venda: migração de histórico de dados, minuta jurídica, prazos de pagamento e integração técnica)",
     etapa_negocio: "Não aplicável (reunião de implementação/pós-venda, fora do funil comercial)", momento_jornada: "Não aplicável",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -2527,7 +2535,7 @@ const DADOS = [
     recomendacao: "Nenhuma — reunião fora do escopo do checklist comercial (fase de contratação/implementação)."
   },
   {
-    linha: 143, deal: "Artelagos Artefatos", empresa: "Artelagos", closer: "Luis Queiroz", data: "2026-07-07",
+    linha: 143, deal: "Artelagos Artefatos", empresa: "Artelagos", key_account: true, closer: "Luis Queiroz", data: "2026-07-07",
     fase: "proposta", etapa_negocio: "Negociando", momento_jornada: "Construindo Projeto",
     score_fase: 27, score_geral: 42, status: "critico", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Cliente comparou preço com contrato legado de outro fornecedor (4x mais barato) e closer negociou ao vivo reduzindo o investimento de ~80k para 45k via modelo de créditos, sem material de defesa estruturado"],
@@ -2553,7 +2561,7 @@ const DADOS = [
     }
   },
   {
-    linha: 146, deal: "Urológica (Demonstração, 07/07)", empresa: "Urológica", closer: "Lucas Costa", data: "2026-07-07",
+    linha: 146, deal: "Urológica (Demonstração, 07/07)", empresa: "Urológica", key_account: false, closer: "Lucas Costa", data: "2026-07-07",
     fase: "demo", etapa_negocio: "Construindo o Projeto", momento_jornada: "Construindo Projeto",
     score_fase: 51, score_geral: 66, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: ["Demo tecnicamente sólida e bem recebida (\"superou as expectativas\"), mas fechou sem o termômetro do playbook — colheu elogio genérico em vez de perguntar se a cliente escolheria a ImpulseUp"],
@@ -2581,7 +2589,7 @@ const DADOS = [
     }
   },
   {
-    linha: 156, deal: "[KA] TESC -260/270 colaboradores (Agenda 13h)", empresa: "TESC", closer: "Lucas Costa", data: "2026-07-10",
+    linha: 156, deal: "[KA] TESC -260/270 colaboradores (Agenda 13h)", empresa: "TESC", key_account: true, closer: "Lucas Costa", data: "2026-07-10",
     fase: "indefinida (fora de escopo — transcrição sem conteúdo comercial, apenas conversa social aguardando participantes entrarem na call)", etapa_negocio: "Construindo o Projeto", momento_jornada: "Entendendo Problema",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Transcrição de ~1 minuto contém apenas conversa informal (aniversário de colega), sem conteúdo comercial auditável — provável registro duplicado/parcial da agenda das 13h30 com a mesma TESC no mesmo dia"],
@@ -2591,7 +2599,7 @@ const DADOS = [
     acesso_td: { status: "nao_aplicavel", evidencia: "Sem conteúdo comercial na transcrição.", leitura: "execucao", motivo: "Fora de escopo.", recomendacao: "N/A" }
   },
   {
-    linha: 157, deal: "[KA] TESC -260/270 colaboradores (Agenda 13h30)", empresa: "TESC", closer: "Lucas Costa", data: "2026-07-10",
+    linha: 157, deal: "[KA] TESC -260/270 colaboradores (Agenda 13h30)", empresa: "TESC", key_account: true, closer: "Lucas Costa", data: "2026-07-10",
     fase: "proposta", etapa_negocio: "Construindo o Projeto", momento_jornada: "Entendendo Problema",
     score_fase: 54, score_geral: 54, status: "atencao", alerta_alto_risco: false, codigo_alerta: null,
     flags: [
@@ -2620,7 +2628,7 @@ const DADOS = [
     }
   },
   {
-    linha: 159, deal: "[KA] Garboti - Instagram - Campanha IAP 250 colaboradores", empresa: "Garboti", closer: "Karynne Rocha", data: "2026-07-13",
+    linha: 159, deal: "[KA] Garboti - Instagram - Campanha IAP 250 colaboradores", empresa: "Garboti", key_account: false, closer: "Karynne Rocha", data: "2026-07-13",
     fase: "demo", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 79, score_geral: 79, status: "aderente", alerta_alto_risco: false, codigo_alerta: null,
     flags: [],
@@ -2644,7 +2652,7 @@ const DADOS = [
     }
   },
   {
-    linha: 161, deal: null, empresa: "Insi (ex-Meta)", closer: "Luis Fonseca", data: "2026-06-23",
+    linha: 161, deal: null, empresa: "Insi (ex-Meta)", key_account: false, closer: "Luis Fonseca", data: "2026-06-23",
     fase: "indefinida (fora de escopo — reunião de alinhamento/checkpoint sobre deal já decidido negativamente, sem diagnóstico/demo/proposta em curso)", etapa_negocio: null, momento_jornada: null,
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Deal não localizado no HubSpot por nome de empresa/domínio (meta.com.br / insi.com) — revisão manual recomendada", "Closer assumiu a conta por licença-maternidade da titular anterior (Mayra); reunião é apenas um handoff/checkpoint, cliente já decidiu manter fornecedor atual (Lo-Fi) por questão orçamentária"],
@@ -2665,7 +2673,7 @@ const DADOS = [
     }
   },
   {
-    linha: 162, deal: "[KA] Zig - 600 usuários", empresa: "Zig", closer: "Luis Queiroz", data: "2026-06-23",
+    linha: 162, deal: "[KA] Zig - 600 usuários", empresa: "Zig", key_account: true, closer: "Luis Queiroz", data: "2026-06-23",
     fase: "demo", etapa_negocio: "108538399", momento_jornada: null,
     score_fase: 68, score_geral: 68, status: "atencao", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Reunião de aprofundamento técnico do módulo de Learning dentro de deal já em andamento (múltiplas reuniões anteriores)"],
@@ -2690,7 +2698,7 @@ const DADOS = [
     }
   },
   {
-    linha: 163, deal: "Solar Coca-Cola -22.000 colaboradores", empresa: "Solar Coca-Cola", closer: "Jonny Steinmetz", data: "2026-06-23",
+    linha: 163, deal: "Solar Coca-Cola -22.000 colaboradores", empresa: "Solar Coca-Cola", key_account: true, closer: "Jonny Steinmetz", data: "2026-06-23",
     fase: "demo", etapa_negocio: "Lost", momento_jornada: "Construindo o Projeto",
     score_fase: 22, score_geral: 32, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: [
@@ -2725,7 +2733,7 @@ const DADOS = [
     }
   },
   {
-    linha: 164, deal: "Hvar", empresa: "Hvar", closer: "Lucas Costa", data: "2026-06-23",
+    linha: 164, deal: "Hvar", empresa: "Hvar", key_account: true, closer: "Lucas Costa", data: "2026-06-23",
     fase: "indefinida (fora de escopo — alinhamento interno de roteiro entre closer e champion, sem cliente/decisor presente)", etapa_negocio: "Não aplicável (reunião interna, sem deal/cliente)", momento_jornada: null,
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
     flags: [],
@@ -2744,7 +2752,7 @@ const DADOS = [
     }
   },
   {
-    linha: 165, deal: "impulseup & Sabin", empresa: "Sabin", closer: "Luis Fonseca", data: "2026-06-23",
+    linha: 165, deal: "impulseup & Sabin", empresa: "Sabin", key_account: true, closer: "Luis Fonseca", data: "2026-06-23",
     fase: "indefinida (fora de escopo — alinhamento comparativo interno com o champion antes de reunião de aprovação, sem TD presente)", etapa_negocio: "Não aplicável (reunião interna, sem deal/cliente)", momento_jornada: null,
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["concorrente mencionado com grafia incerta na transcrição ('FIT'/'FIDS'/'FIIS', possivelmente 'Feedz') — pendente confirmação com Luís"],
@@ -2763,7 +2771,7 @@ const DADOS = [
     }
   },
   {
-    linha: 166, deal: "impulseup & Fortbras - Retorno de Proposta", empresa: "Fortbras", closer: "Luis Fonseca", data: "2026-06-24",
+    linha: 166, deal: "impulseup & Fortbras - Retorno de Proposta", empresa: "Fortbras", key_account: true, closer: "Luis Fonseca", data: "2026-06-24",
     fase: "proposta", etapa_negocio: "Qualificação errada", momento_jornada: null,
     score_fase: 44, score_geral: 56, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-P",
     flags: [],
@@ -2790,7 +2798,7 @@ const DADOS = [
     }
   },
   {
-    linha: 172, deal: "[Demonstracao] Hertz Farma & impulseup", empresa: "Hertz Farma", closer: "Lucas Costa", data: "2026-07-09",
+    linha: 172, deal: "[Demonstracao] Hertz Farma & impulseup", empresa: "Hertz Farma", key_account: true, closer: "Lucas Costa", data: "2026-07-09",
     fase: "mista (demo + proposta)", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 37, score_geral: 40, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D, A-P, A-P2",
     flags: [
@@ -2827,7 +2835,7 @@ const DADOS = [
     }
   },
   {
-    linha: 177, deal: "🔴 Fábrica de Ideias & impulseup", empresa: "Fábrica de Ideias", closer: "Lucas Costa", data: "2026-07-06",
+    linha: 177, deal: "🔴 Fábrica de Ideias & impulseup", empresa: "Fábrica de Ideias", key_account: false, closer: "Lucas Costa", data: "2026-07-06",
     fase: "mista (demo + proposta)", etapa_negocio: "Não verificado nesta rodada", momento_jornada: "Não verificado nesta rodada",
     score_fase: 25, score_geral: 35, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D, A-P",
     flags: ["Reunião mista: demo e apresentação de investimento ocorreram na mesma call, sem uma fase de proposta dedicada"],
@@ -2846,7 +2854,7 @@ const DADOS = [
     recomendacao: "Separar claramente demo de proposta em próximas contas — aplicar o termômetro (D06) e as perguntas de diferencial (D07) ao final da demo, e reservar a apresentação de investimento para uma reunião de proposta dedicada, com data de retorno da diretoria negociada explicitamente na call (P08)."
   },
   {
-    linha: 178, deal: "Artelagos Artefatos + impulseup", empresa: "Artelagos Artefatos", closer: "Luis Queiroz", data: "2026-07-07",
+    linha: 178, deal: "Artelagos Artefatos + impulseup", empresa: "Artelagos Artefatos", key_account: true, closer: "Luis Queiroz", data: "2026-07-07",
     fase: "indefinida (fora de escopo — renegociação de condições comerciais de proposta já apresentada anteriormente)", etapa_negocio: "Não verificado nesta rodada", momento_jornada: "Não verificado nesta rodada",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Reunião de renegociação/ajuste de escopo e modelo de créditos de uma proposta pré-existente — não se enquadra nos checklists de conexão/demo/proposta"],
@@ -2860,7 +2868,7 @@ const DADOS = [
     recomendacao: "Nenhuma recomendação de processo aplicável; esta call não é uma reunião de conexão/demo/proposta auditável pelo playbook atual."
   },
   {
-    linha: 179, deal: "impulseup & Grupo FIT", empresa: "Grupo FIT", closer: "Luis Fonseca", data: "2026-07-07",
+    linha: 179, deal: "impulseup & Grupo FIT", empresa: "Grupo FIT", key_account: true, closer: "Luis Fonseca", data: "2026-07-07",
     fase: "demo", etapa_negocio: "Não verificado nesta rodada", momento_jornada: "Não verificado nesta rodada",
     score_fase: 27, score_geral: 37, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: ["Transcrição recebida truncada; critérios D06 a D11 tratados como 'não' por ausência de evidência na porção disponível"],
@@ -2878,7 +2886,7 @@ const DADOS = [
     recomendacao: "Retomar o fio condutor dores→módulos mesmo com muitas perguntas técnicas, e garantir termômetro (D06) e validação de diferencial (D07) antes de encerrar a demo."
   },
   {
-    linha: 180, deal: "impulseup & Delfia - Projeto/Proposta", empresa: "Delfia", closer: "Jonny Steinmetz", data: "2026-07-07",
+    linha: 180, deal: "impulseup & Delfia - Projeto/Proposta", empresa: "Delfia", key_account: true, closer: "Jonny Steinmetz", data: "2026-07-07",
     fase: "proposta", etapa_negocio: "Não verificado nesta rodada", momento_jornada: "Não verificado nesta rodada",
     score_fase: 67, score_geral: 63, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-P",
     flags: [],
@@ -2896,7 +2904,7 @@ const DADOS = [
     recomendacao: "Negociar explicitamente data de retorno ou apresentação interna (P08) e aplicar a escala de confiança 0-10 (P07) quando o processo de decisão envolver concorrência."
   },
   {
-    linha: 181, deal: "🔴 [Demonstração] impulseup & Urológica", empresa: "Urológica MG", closer: "Lucas Costa", data: "2026-07-07",
+    linha: 181, deal: "🔴 [Demonstração] impulseup & Urológica", empresa: "Urológica MG", key_account: false, closer: "Lucas Costa", data: "2026-07-07",
     fase: "demo", etapa_negocio: "Não verificado nesta rodada", momento_jornada: "Não verificado nesta rodada",
     score_fase: 55, score_geral: 64, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: [],
@@ -2913,7 +2921,7 @@ const DADOS = [
     recomendacao: "Incluir a pergunta de escolha do termômetro e as perguntas de diferencial percebido antes de fechar a demo — o restante do processo está sólido."
   },
   {
-    linha: 182, deal: "Myralis e impulseup", empresa: "Myralis", closer: "Luis Fonseca", data: "2026-07-07",
+    linha: 182, deal: "Myralis e impulseup", empresa: "Myralis", key_account: false, closer: "Luis Fonseca", data: "2026-07-07",
     fase: "conexao", etapa_negocio: "Não verificado nesta rodada", momento_jornada: "Não verificado nesta rodada",
     score_fase: 42, score_geral: 53, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-C",
     flags: [],
@@ -2931,7 +2939,7 @@ const DADOS = [
     recomendacao: "Reter a tentação de aprofundar demonstração de produto na conexão; sempre buscar confirmar data de demo concreta na própria call (C12)."
   },
   {
-    linha: 183, deal: "G2L Logsítica e impulseup - Gestão de Desempenho e Metas", empresa: "G2L Logística", closer: "Luis Fonseca", data: "2026-07-08",
+    linha: 183, deal: "G2L Logsítica e impulseup - Gestão de Desempenho e Metas", empresa: "G2L Logística", key_account: true, closer: "Luis Fonseca", data: "2026-07-08",
     fase: "demo", etapa_negocio: "Não verificado nesta rodada", momento_jornada: "Não verificado nesta rodada",
     score_fase: 36, score_geral: 44, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: ["Transcrição recebida truncada; critérios D06 a D11 tratados como 'não' por ausência de evidência na porção disponível"],
@@ -2949,7 +2957,7 @@ const DADOS = [
     recomendacao: "Confirmar com revisão da parte final da gravação se o termômetro e o fechamento com data concreta ocorreram; reforçar a importância de sempre fechar a demo com essas duas etapas."
   },
   {
-    linha: 184, deal: "RE: ORÇAMENTO MATRIZ - plataforma de Gestão de Performance", empresa: "Hertz Farma", closer: "Lucas Costa", data: "2026-07-08",
+    linha: 184, deal: "RE: ORÇAMENTO MATRIZ - plataforma de Gestão de Performance", empresa: "Hertz Farma", key_account: true, closer: "Lucas Costa", data: "2026-07-08",
     fase: "conexao", etapa_negocio: "Não verificado nesta rodada", momento_jornada: "Não verificado nesta rodada",
     score_fase: 60, score_geral: 75, status: "aderente", alerta_alto_risco: false, codigo_alerta: null,
     flags: [],
@@ -2965,7 +2973,7 @@ const DADOS = [
     recomendacao: "Nas próximas conexões, buscar o nome específico do decisor final na diretoria (C08) para já iniciar o mapeamento de acesso ao TD."
   },
   {
-    linha: 185, deal: "Garboti e impulseup", empresa: "Garboti", closer: "Karynne Rocha", data: "2026-07-08",
+    linha: 185, deal: "Garboti e impulseup", empresa: "Garboti", key_account: false, closer: "Karynne Rocha", data: "2026-07-08",
     fase: "conexao", etapa_negocio: "Não verificado nesta rodada", momento_jornada: "Não verificado nesta rodada",
     score_fase: 47, score_geral: 57, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-C",
     flags: ["Transcrição truncada pela ferramenta antes do encerramento da reunião — C12 marcado 'não' pela regra de desempate, sem confirmação de falha real"],
@@ -2980,7 +2988,7 @@ const DADOS = [
     recomendacao: "Reconfirmar se a próxima reunião foi de fato agendada com data e horário na call; reforçar a prática de sempre fechar o C12 antes de encerrar."
   },
   {
-    linha: 186, deal: "Gauchafarma & impulseup", empresa: "Gauchafarma", closer: "Karynne Rocha", data: "2026-07-09",
+    linha: 186, deal: "Gauchafarma & impulseup", empresa: "Gauchafarma", key_account: true, closer: "Karynne Rocha", data: "2026-07-09",
     fase: "conexao", etapa_negocio: "Não verificado nesta rodada", momento_jornada: "Não verificado nesta rodada",
     score_fase: 53, score_geral: 63, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-C",
     flags: ["Transcrição cortada antes do encerramento da call; C12 marcado 'não' por ausência de evidência visível"],
@@ -2995,7 +3003,7 @@ const DADOS = [
     recomendacao: "Confirmar se o fechamento da call (fora da porção lida) definiu data/hora da próxima reunião; buscar o nome do diretor decisor na próxima interação."
   },
   {
-    linha: 187, deal: "Agenda Impulse UP <> Sulnorte", empresa: "Sulnorte", closer: "Lucas Costa", data: "2026-07-09",
+    linha: 187, deal: "Agenda Impulse UP <> Sulnorte", empresa: "Sulnorte", key_account: true, closer: "Lucas Costa", data: "2026-07-09",
     fase: "conexao", etapa_negocio: "Não verificado nesta rodada", momento_jornada: "Não verificado nesta rodada",
     score_fase: 63, score_geral: 70, status: "aderente", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Reunião com forte conteúdo de produto apresentado de forma mais extensa que um 'cheiro'"],
@@ -3011,7 +3019,7 @@ const DADOS = [
     recomendacao: "Nas conexões, resistir também à tentação de aprofundar produto mesmo quando o cliente pergunta — responder com um 'cheiro' e reservar detalhamento completo para a demo."
   },
   {
-    linha: 188, deal: "[Plano de projeto] Urológica MG & impulseup", empresa: "Urológica MG", closer: "Lucas Costa", data: "2026-07-10",
+    linha: 188, deal: "[Plano de projeto] Urológica MG & impulseup", empresa: "Urológica MG", key_account: false, closer: "Lucas Costa", data: "2026-07-10",
     fase: "proposta", etapa_negocio: "Não verificado nesta rodada", momento_jornada: "Não verificado nesta rodada",
     score_fase: 44, score_geral: 59, status: "atencao", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Reunião mesclou bloco longo de metodologia de implementação com apresentação de investimento"],
@@ -3028,7 +3036,7 @@ const DADOS = [
     recomendacao: "Antecipar a apresentação do investimento para os primeiros minutos da reunião de proposta e incluir a pergunta de escala 0–10 com pergunta de destravamento."
   },
   {
-    linha: 189, deal: "🔴 [Plano de projeto] TESC & impulseup", empresa: "TESC", closer: "Lucas Costa", data: "2026-07-10",
+    linha: 189, deal: "🔴 [Plano de projeto] TESC & impulseup", empresa: "TESC", key_account: true, closer: "Lucas Costa", data: "2026-07-10",
     fase: "indefinida (fora de escopo — reunião abortada, sem conteúdo comercial)", etapa_negocio: "Não verificado nesta rodada", momento_jornada: "Não verificado nesta rodada",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Transcrição de ~84s contém apenas conversa social e confirmação de horário para retomar a reunião — nenhum conteúdo de diagnóstico, demo ou proposta"],
@@ -3039,7 +3047,7 @@ const DADOS = [
     recomendacao: "Nenhuma ação de coaching aplicável; verificar se houve uma segunda gravação da reunião real que se seguiu a este reagendamento."
   },
   {
-    linha: 190, deal: "Global dot Com & impulseup", empresa: "Global Dot Com", closer: "Karynne Rocha", data: "2026-07-10",
+    linha: 190, deal: "Global dot Com & impulseup", empresa: "Global Dot Com", key_account: true, closer: "Karynne Rocha", data: "2026-07-10",
     fase: "mista (conexao + demo)", etapa_negocio: "Não verificado nesta rodada", momento_jornada: "Não verificado nesta rodada",
     score_fase: 48, score_geral: 63, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: ["Transcrição truncada antes do encerramento da call — D06/D10 não confirmados na porção lida"],
@@ -3055,7 +3063,7 @@ const DADOS = [
     recomendacao: "Reler o encerramento da transcrição para confirmar se o termômetro (D06) e a data de fechamento (D10) foram tratados; reforçar esse fechamento em reuniões futuras."
   },
   {
-    linha: 191, deal: "[Plano de projeto] Tesc & impulseup", empresa: "TESC", closer: "Lucas Costa", data: "2026-07-10",
+    linha: 191, deal: "[Plano de projeto] Tesc & impulseup", empresa: "TESC", key_account: true, closer: "Lucas Costa", data: "2026-07-10",
     fase: "proposta", etapa_negocio: "Não verificado nesta rodada", momento_jornada: "Não verificado nesta rodada",
     score_fase: 18, score_geral: 38, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-P, A-P2",
     flags: ["Reunião mistura apresentação de metodologia de implementação com proposta de valores; investimento só surge após ~60% da reunião"],
@@ -3073,7 +3081,7 @@ const DADOS = [
     recomendacao: "Antecipar o investimento para os primeiros minutos e sempre travar data de retorno/reunião com o TD antes de encerrar; nunca aceitar 'te retorno' sem contrapartida de agenda."
   },
   {
-    linha: 192, deal: "Cimental & Impulseup (Retomada de projeto)", empresa: "Cimental", closer: "Karynne Rocha", data: "2026-07-10",
+    linha: 192, deal: "Cimental & Impulseup (Retomada de projeto)", empresa: "Cimental", key_account: false, closer: "Karynne Rocha", data: "2026-07-10",
     fase: "mista (demo + proposta)", etapa_negocio: "Não verificado nesta rodada", momento_jornada: "Não verificado nesta rodada",
     score_fase: 4, score_geral: 14, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D, A-P, A-P2",
     flags: ["Transcrição lida apenas até ~64% do conteúdo; critérios de fechamento podem estar subavaliados por falta dos minutos finais — recomenda-se nova leitura completa antes de ação disciplinar", "Reunião conduzida majoritariamente pela cliente, o que enfraquece G03/D03"],
@@ -3092,7 +3100,7 @@ const DADOS = [
     recomendacao: "Estruturar a reunião em blocos: recapitulação de dores → demo objetiva → proposta com valor logo no início → fechamento com termômetro e data. Revisar a transcrição completa antes de ação disciplinar."
   },
   {
-    linha: 194, deal: "Bianchini e impulseup", empresa: "Bianchini", closer: "Luis Fonseca", data: "2026-07-13",
+    linha: 194, deal: "Bianchini e impulseup", empresa: "Bianchini", key_account: true, closer: "Luis Fonseca", data: "2026-07-13",
     fase: "mista (conexão + demo)", etapa_negocio: "Não verificado nesta rodada", momento_jornada: "Não verificado nesta rodada",
     score_fase: 31, score_geral: 46, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: ["Luis Fonseca conduziu toda a reunião sozinho; demais participantes listados não aparecem falando"],
@@ -3119,7 +3127,7 @@ const DADOS = [
     }
   },
   {
-    linha: 195, deal: "🔴 Honda Takai Veículos e impulseup", empresa: "Honda Takai Veículos", closer: "Lucas Costa", data: "2026-07-14",
+    linha: 195, deal: "🔴 Honda Takai Veículos e impulseup", empresa: "Honda Takai Veículos", key_account: false, closer: "Lucas Costa", data: "2026-07-14",
     fase: "conexao", etapa_negocio: "Não verificado nesta rodada", momento_jornada: "Não verificado nesta rodada",
     score_fase: 67, score_geral: 87, status: "aderente", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Lucas Costa conduziu toda a reunião sozinho; demais participantes listados não aparecem falando"],
@@ -3146,7 +3154,7 @@ const DADOS = [
     }
   },
   {
-    linha: 196, deal: "Halexistar & impulseup", empresa: "Halexistar", closer: "Lucas Costa", data: "2026-07-14",
+    linha: 196, deal: "Halexistar & impulseup", empresa: "Halexistar", key_account: true, closer: "Lucas Costa", data: "2026-07-14",
     fase: "conexao", etapa_negocio: "Não verificado nesta rodada", momento_jornada: "Não verificado nesta rodada",
     score_fase: 67, score_geral: 87, status: "aderente", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Lucas Costa conduziu toda a reunião sozinho; demais participantes listados não aparecem falando", "A transcrição registra o cliente foneticamente como 'Alex Starr' em vez de 'Halexistar' — mantido o nome do deal como canônico"],
@@ -3173,7 +3181,7 @@ const DADOS = [
     }
   },
   {
-    linha: 197, deal: "Sabemi & impulseup", empresa: "Sabemi", closer: "Karynne Rocha", data: "2026-07-14",
+    linha: 197, deal: "Sabemi & impulseup", empresa: "Sabemi", key_account: true, closer: "Karynne Rocha", data: "2026-07-14",
     fase: "mista (conexão + demo)", etapa_negocio: "Não verificado nesta rodada", momento_jornada: "Não verificado nesta rodada",
     score_fase: 78, score_geral: 78, status: "aderente", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Reprocessada em 2026-07-17 com leitura completa da transcrição (a auditoria anterior desta linha havia sido feita com leitura parcial e foi corrigida)"],
@@ -3198,7 +3206,7 @@ const DADOS = [
     }
   },
   {
-    linha: 198, deal: "impulseup & KFC", empresa: "KFC", closer: "Luis Fonseca", data: "2026-07-14",
+    linha: 198, deal: "impulseup & KFC", empresa: "KFC", key_account: false, closer: "Luis Fonseca", data: "2026-07-14",
     fase: "conexao", etapa_negocio: "Não verificado nesta rodada", momento_jornada: "Não verificado nesta rodada",
     score_fase: 68, score_geral: 68, status: "atencao", alerta_alto_risco: false, codigo_alerta: null,
     flags: [],
@@ -3224,7 +3232,7 @@ const DADOS = [
     }
   },
   {
-    linha: 199, deal: "Gauchafarma & Impulseup", empresa: "Gauchafarma", closer: "Karynne Rocha", data: "2026-07-15",
+    linha: 199, deal: "Gauchafarma & Impulseup", empresa: "Gauchafarma", key_account: true, closer: "Karynne Rocha", data: "2026-07-15",
     fase: "demo", etapa_negocio: "Não verificado nesta rodada", momento_jornada: "Não verificado nesta rodada",
     score_fase: 85, score_geral: 85, status: "aderente", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Reprocessada em 2026-07-17 com leitura completa da transcrição (a auditoria anterior desta linha havia sido feita com leitura parcial e foi corrigida)"],
@@ -3249,7 +3257,7 @@ const DADOS = [
     }
   },
   {
-    linha: 200, deal: "Fortlev Solar & impulseup", empresa: "Fortlev Solar", closer: "Lucas Costa", data: "2026-07-15",
+    linha: 200, deal: "Fortlev Solar & impulseup", empresa: "Fortlev Solar", key_account: true, closer: "Lucas Costa", data: "2026-07-15",
     fase: "conexao", etapa_negocio: "Não verificado nesta rodada", momento_jornada: "Não verificado nesta rodada",
     score_fase: 74, score_geral: 74, status: "aderente", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Reprocessada em 2026-07-17 com leitura completa da transcrição (a auditoria anterior desta linha havia sido feita com leitura parcial, cortada antes do encerramento, e foi corrigida)", "Participante listado na planilha era SDR; Lucas Costa foi identificado como quem efetivamente conduziu a reunião"],
@@ -3275,7 +3283,7 @@ const DADOS = [
     }
   },
   {
-    linha: 201, deal: "Castanhal & impulseup", empresa: "Castanhal", closer: "Lucas Costa", data: "2026-07-15",
+    linha: 201, deal: "Castanhal & impulseup", empresa: "Castanhal", key_account: false, closer: "Lucas Costa", data: "2026-07-15",
     fase: "conexao", etapa_negocio: "Não verificado nesta rodada", momento_jornada: "Não verificado nesta rodada",
     score_fase: 75, score_geral: 75, status: "aderente", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Lucas Costa conduziu toda a reunião; demais participantes listados não aparecem como falantes impulseup"],
@@ -3301,7 +3309,7 @@ const DADOS = [
     }
   },
   {
-    linha: 202, deal: "Stone", empresa: "Stone", closer: "Luis Fonseca", data: "2026-07-15",
+    linha: 202, deal: "Stone", empresa: "Stone", key_account: true, closer: "Luis Fonseca", data: "2026-07-15",
     fase: "conexao", etapa_negocio: "Não verificado nesta rodada", momento_jornada: "Não verificado nesta rodada",
     score_fase: 80, score_geral: 80, status: "aderente", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Planilha não listava participante impulseup; identificado pela transcrição como Luis Fonseca", "Trecho final de demonstração informal da plataforma solicitada pelo cliente, tratado como 'cheiro' permitido (C03b), não como fase Demo formal"],
@@ -3327,7 +3335,7 @@ const DADOS = [
     }
   },
   {
-    linha: 203, deal: "TESC e impulseup", empresa: "TESC", closer: "Lucas Costa", data: "2026-06-26",
+    linha: 203, deal: "TESC e impulseup", empresa: "TESC", key_account: true, closer: "Lucas Costa", data: "2026-06-26",
     fase: "conexao", etapa_negocio: "Não verificado nesta rodada", momento_jornada: "Não verificado nesta rodada",
     score_fase: 67, score_geral: 73, status: "aderente", alerta_alto_risco: true, codigo_alerta: "A-C",
     flags: ["Reunião marcada na planilha sem indicação de fase; confirmada como conexão pela transcrição", "Empresa passando por reestruturação após aquisição (grupo M&M Solares/Dubai) — contexto relevante para o closer explorar em próximas etapas"],
@@ -3346,7 +3354,7 @@ const DADOS = [
     recomendacao: "Fechar a próxima etapa com data e horário confirmados antes de encerrar a call, reduzir o tempo de fala do closer para dar mais espaço à cliente aprofundar as dores, e manter a prévia de plataforma breve e pontual antes da demo formal."
   },
   {
-    linha: 204, deal: "impulseup & G2L", empresa: "G2L Logística", closer: "Luis Fonseca", data: "2026-06-26",
+    linha: 204, deal: "impulseup & G2L", empresa: "G2L Logística", key_account: true, closer: "Luis Fonseca", data: "2026-06-26",
     fase: "conexao", etapa_negocio: "Não verificado nesta rodada", momento_jornada: "Não verificado nesta rodada",
     score_fase: 92, score_geral: 88, status: "aderente", alerta_alto_risco: false, codigo_alerta: null,
     flags: ["Cliente é ex-usuária da impulseup em empresa anterior — reunião com bagagem prévia da plataforma, o que reduziu a necessidade de pitch institucional", "Concorrentes citados nesta reunião: Culture Rocks (confirmado = Qulture.Rocks/QR) e Sapiens (fornecedor parceiro de conteúdo, não concorrente direto); EduSense e Neolude/Expand mencionados como fornecedores em avaliação, pendentes de confirmação com Luís"],
@@ -3363,7 +3371,7 @@ const DADOS = [
     recomendacao: "Levar um material de apoio personalizado (mesmo que simples) já na primeira conexão, e plantar explicitamente a necessidade de retorno financeiro e prazo para o comitê executivo aprovar o orçamento."
   },
   {
-    linha: 205, deal: "impulseup & Redemix", empresa: "Redemix", closer: "Jonny Steinmetz", data: "2026-06-29",
+    linha: 205, deal: "impulseup & Redemix", empresa: "Redemix", key_account: false, closer: "Jonny Steinmetz", data: "2026-06-29",
     fase: "conexao", etapa_negocio: "Construindo o Projeto", momento_jornada: "Buscando Solução",
     score_fase: 67, score_geral: 68, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-C",
     flags: ["Reunião de retomada — cliente já conhece a plataforma de contato anterior (2024), foco em levantar requisitos para troca de fornecedor (SAP)", "Deal confirmado no HubSpot como \"Redemix\" (id 61749764231), etapa presentationscheduled/Construindo o Projeto, momento Buscando Solução"],
@@ -3382,7 +3390,7 @@ const DADOS = [
     recomendacao: "Fechar a próxima reunião (demo) com dia e horário confirmados ainda dentro da própria call de conexão, e aprofundar o impacto de negócio da baixa aderência ao SAP antes de avançar para a demonstração."
   },
   {
-    linha: 206, deal: "impulseup & RedeSc", empresa: "RedeSc", closer: "Luis Fonseca", data: "2026-07-16",
+    linha: 206, deal: "impulseup & RedeSc", empresa: "RedeSc", key_account: false, closer: "Luis Fonseca", data: "2026-07-16",
     fase: "conexao", etapa_negocio: "Qualificação errada", momento_jornada: "Não verificado (deal não localizado com confiança no HubSpot)",
     score_fase: 42, score_geral: 45, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-C",
     flags: [
@@ -3414,7 +3422,7 @@ const DADOS = [
     }
   },
   {
-    linha: 207, deal: "[Próximas Etapas] Grupo Remassa & impulseup", empresa: "Ramasa", closer: "Lucas Costa", data: "2026-07-16",
+    linha: 207, deal: "[Próximas Etapas] Grupo Remassa & impulseup", empresa: "Ramasa", key_account: false, closer: "Lucas Costa", data: "2026-07-16",
     fase: "proposta", etapa_negocio: "Qualificação errada", momento_jornada: "Não verificado (deal em pipeline/etapa fora das 9 etapas padrão mapeadas)",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
     flags: [
@@ -3428,7 +3436,7 @@ const DADOS = [
     recomendacao: "Reprocessar esta linha por completo em uma próxima rodada (transcrição inteira), com atenção ao título '[Próximas Etapas]', que sugere reunião de continuidade dentro de negociação já avançada — confirmar se o deal 'Grupo Ramasa' no pipeline 21787484 é o mesmo negócio relevante para esta auditoria de processo comercial ou se pertence a um pipeline de pós-venda/CS."
   },
   {
-    linha: 208, deal: "[LM] KSPG Automotive Brazil - Rheinmetall Automotive | 200 colaboradores", empresa: "KSPG", closer: "Jonny Steinmetz", data: "2026-07-16",
+    linha: 208, deal: "[LM] KSPG Automotive Brazil - Rheinmetall Automotive | 200 colaboradores", empresa: "KSPG", key_account: false, closer: "Jonny Steinmetz", data: "2026-07-16",
     fase: "indefinida (fora de escopo — alinhamento interno pré-reunião)", etapa_negocio: "Construindo o Projeto", momento_jornada: "Construindo Projeto",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
     flags: [
@@ -3449,7 +3457,7 @@ const DADOS = [
     }
   },
   {
-    linha: 209, deal: "[LM] KSPG Automotive Brazil - Rheinmetall Automotive | 200 colaboradores", empresa: "KSPG", closer: "Jonny Steinmetz", data: "2026-07-16",
+    linha: 209, deal: "[LM] KSPG Automotive Brazil - Rheinmetall Automotive | 200 colaboradores", empresa: "KSPG", key_account: false, closer: "Jonny Steinmetz", data: "2026-07-16",
     fase: "demo", etapa_negocio: "Construindo o Projeto", momento_jornada: "Construindo Projeto",
     score_fase: 27, score_geral: 32, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: [
@@ -3479,7 +3487,7 @@ const DADOS = [
     }
   },
   {
-    linha: 210, deal: "[Demonstração] Halexistar & impulseup", empresa: "Halexistar", closer: "Lucas Costa", data: "2026-07-16",
+    linha: 210, deal: "[Demonstração] Halexistar & impulseup", empresa: "Halexistar", key_account: true, closer: "Lucas Costa", data: "2026-07-16",
     fase: "mista (demo + proposta)", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 35, score_geral: 38, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D, A-P2",
     flags: [
@@ -3513,7 +3521,7 @@ const DADOS = [
     }
   },
   {
-    linha: 211, deal: "Eurofins & impulseup", empresa: "Eurofins", closer: "Karynne Rocha", data: "2026-07-16",
+    linha: 211, deal: "Eurofins & impulseup", empresa: "Eurofins", key_account: false, closer: "Karynne Rocha", data: "2026-07-16",
     fase: "mista (conexão + demo)", etapa_negocio: "Conexão", momento_jornada: "Buscando Solução",
     score_fase: 78, score_geral: 78, status: "aderente", alerta_alto_risco: true, codigo_alerta: "A-C, A-D",
     flags: [
@@ -3545,7 +3553,7 @@ const DADOS = [
     }
   },
   {
-    linha: 212, deal: "[KA] MDS Group - 1800 colaboradores", empresa: "MDS Group", closer: "Luis Fonseca", data: "2026-07-16",
+    linha: 212, deal: "[KA] MDS Group - 1800 colaboradores", empresa: "MDS Group", key_account: true, closer: "Luis Fonseca", data: "2026-07-16",
     fase: "mista (demo + proposta)", etapa_negocio: "Buscando Solução", momento_jornada: "Construindo Projeto",
     score_fase: 35, score_geral: 43, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D, A-P",
     flags: [
@@ -3576,7 +3584,7 @@ const DADOS = [
     }
   },
   {
-    linha: 213, deal: "[Learning] Zig + impulseup", empresa: "Zig", closer: "Luis Queiroz", data: "2026-07-16",
+    linha: 213, deal: "[Learning] Zig + impulseup", empresa: "Zig", key_account: true, closer: "Luis Queiroz", data: "2026-07-16",
     fase: "indefinida (fora de escopo — enablement técnico pós-venda)", etapa_negocio: "Pendente de Assinatura", momento_jornada: "Buscando Solução",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
     flags: [
@@ -3597,7 +3605,7 @@ const DADOS = [
     }
   },
   {
-    linha: 214, deal: "Impulseup & Zona Sul", empresa: "Supermercados Zona Sul", closer: "Lucas Costa", data: "2026-07-17",
+    linha: 214, deal: "Impulseup & Zona Sul", empresa: "Supermercados Zona Sul", key_account: true, closer: "Lucas Costa", data: "2026-07-17",
     fase: "demo", etapa_negocio: "Construindo o Projeto", momento_jornada: "Construindo Projeto",
     score_fase: 55, score_geral: 59, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: [
@@ -3625,7 +3633,7 @@ const DADOS = [
     }
   },
   {
-    linha: 215, deal: "Layne do Brasil & impulseup", empresa: "Layne do Brasil", closer: "Lucas Costa", data: "2026-07-17",
+    linha: 215, deal: "Layne do Brasil & impulseup", empresa: "Layne do Brasil", key_account: true, closer: "Lucas Costa", data: "2026-07-17",
     fase: "conexao", etapa_negocio: "Construindo o Projeto", momento_jornada: "Construindo Projeto",
     score_fase: 60, score_geral: 80, status: "aderente", alerta_alto_risco: false, codigo_alerta: null,
     flags: [],
@@ -3649,7 +3657,7 @@ const DADOS = [
     }
   },
   {
-    linha: 216, deal: "RE: ORÇAMENTO MATRIZ - plataforma de Gestão de Performance (Hertz Farma - Demo)", empresa: "Hertz Farma", closer: "Lucas Costa", data: "2026-07-09",
+    linha: 216, deal: "RE: ORÇAMENTO MATRIZ - plataforma de Gestão de Performance (Hertz Farma - Demo)", empresa: "Hertz Farma", key_account: true, closer: "Lucas Costa", data: "2026-07-09",
     fase: "demo", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 44, score_geral: 54, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: [
@@ -3677,7 +3685,7 @@ const DADOS = [
     }
   },
   {
-    linha: 217, deal: "Grupo Garbo & Impulseup", empresa: "Garboti", closer: "Karynne Rocha", data: "2026-07-13",
+    linha: 217, deal: "Grupo Garbo & Impulseup", empresa: "Garboti", key_account: false, closer: "Karynne Rocha", data: "2026-07-13",
     fase: "demo", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 58, score_geral: 78, status: "aderente", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: [],
@@ -3703,7 +3711,7 @@ const DADOS = [
     }
   },
   {
-    linha: 218, deal: "[SB] [KA] HVAR - 200 colaboradores ([Cronograma de Projeto] Hvar & impulseup)", empresa: "Hvar", closer: "Lucas Costa", data: "2026-07-20",
+    linha: 218, deal: "[SB] [KA] HVAR - 200 colaboradores ([Cronograma de Projeto] Hvar & impulseup)", empresa: "Hvar", key_account: true, closer: "Lucas Costa", data: "2026-07-20",
     fase: "proposta", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 33, score_geral: 42, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-P + A-P2",
     flags: [
@@ -3731,7 +3739,7 @@ const DADOS = [
     }
   },
   {
-    linha: 219, deal: "Bianchini -1300 colaboradores (impulseup & Bianchini - Apresentação do Modelo)", empresa: "Bianchini", closer: "Luis Fonseca", data: "2026-07-20",
+    linha: 219, deal: "Bianchini -1300 colaboradores (impulseup & Bianchini - Apresentação do Modelo)", empresa: "Bianchini", key_account: true, closer: "Luis Fonseca", data: "2026-07-20",
     fase: "mista (demo + proposta)", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 23, score_geral: 33, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D + A-P + A-P2",
     flags: [
@@ -3760,7 +3768,7 @@ const DADOS = [
     }
   },
   {
-    linha: 220, deal: "[KA] MDS Group - 1800 colaboradores (impulseup & MDS - Construção de Defesa Interna)", empresa: "MDS Group", closer: "Luis Fonseca", data: "2026-07-20",
+    linha: 220, deal: "[KA] MDS Group - 1800 colaboradores (impulseup & MDS - Construção de Defesa Interna)", empresa: "MDS Group", key_account: true, closer: "Luis Fonseca", data: "2026-07-20",
     fase: "proposta", etapa_negocio: "Buscando Solução", momento_jornada: "Construindo Projeto",
     score_fase: 67, score_geral: 68, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-P",
     flags: [],
@@ -3787,7 +3795,7 @@ const DADOS = [
     }
   },
   {
-    linha: 221, deal: "[Novo negócio] Eurofins (Eurofins & Impulseup)", empresa: "Eurofins", closer: "Karynne Rocha", data: "2026-07-20",
+    linha: 221, deal: "[Novo negócio] Eurofins (Eurofins & Impulseup)", empresa: "Eurofins", key_account: false, closer: "Karynne Rocha", data: "2026-07-20",
     fase: "mista (demo + proposta)", etapa_negocio: "Construindo o Projeto", momento_jornada: "Construindo Projeto",
     score_fase: 64, score_geral: 71, status: "aderente", alerta_alto_risco: true, codigo_alerta: "A-P",
     flags: [],
@@ -3813,7 +3821,7 @@ const DADOS = [
     }
   },
   {
-    linha: 222, deal: "[KA] Garboti - Instagram - Campanha IAP 250 colaboradores (Grupo Garbo & Impulseup)", empresa: "Garboti", closer: "Karynne Rocha", data: "2026-07-20",
+    linha: 222, deal: "[KA] Garboti - Instagram - Campanha IAP 250 colaboradores (Grupo Garbo & Impulseup)", empresa: "Garboti", key_account: false, closer: "Karynne Rocha", data: "2026-07-20",
     fase: "demo", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 45, score_geral: 51, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: [
@@ -3840,7 +3848,7 @@ const DADOS = [
     }
   },
   {
-    linha: 223, deal: "Grupo Coobrastur & impulseup", empresa: "Grupo Coobrastur", closer: "Karynne Rocha", data: "2026-07-21",
+    linha: 223, deal: "Grupo Coobrastur & impulseup", empresa: "Grupo Coobrastur", key_account: false, closer: "Karynne Rocha", data: "2026-07-21",
     fase: "mista", fases_componentes: ["conexao", "demo"], etapa_negocio: "Conexão", momento_jornada: "Buscando Solução",
     score_fase: 57, score_geral: 56, status: "atencao", alerta_alto_risco: false, codigo_alerta: null,
     flags: [
@@ -3879,7 +3887,7 @@ const DADOS = [
     }
   },
   {
-    linha: 224, deal: "Impulseup | Alinhamento", empresa: "Unimed FESP", closer: "Luis Queiroz", data: "2026-07-21",
+    linha: 224, deal: "Impulseup | Alinhamento", empresa: "Unimed FESP", key_account: true, closer: "Luis Queiroz", data: "2026-07-21",
     fase: "indefinida (fora de escopo — reunião de acompanhamento de avaliação de segurança da informação/compliance de IA e LGPD com cliente já em fase de construção de projeto, não é fase comercial padrão)",
     etapa_negocio: "Buscando Solução", momento_jornada: "Construindo Projeto",
     score_fase: null, score_geral: null, status: "nao_aplicavel", alerta_alto_risco: false, codigo_alerta: null,
@@ -3896,7 +3904,7 @@ const DADOS = [
     }
   },
   {
-    linha: 225, deal: "[Demonstração] Fortlev Solar & impulseup", empresa: "Fortlev Solar", closer: "Lucas Costa", data: "2026-07-21",
+    linha: 225, deal: "[Demonstração] Fortlev Solar & impulseup", empresa: "Fortlev Solar", key_account: true, closer: "Lucas Costa", data: "2026-07-21",
     fase: "demo", etapa_negocio: "Construindo o Projeto", momento_jornada: "Construindo Projeto",
     score_fase: 58, score_geral: 68, status: "atencao", alerta_alto_risco: false, codigo_alerta: null,
     flags: [
@@ -3925,7 +3933,7 @@ const DADOS = [
     }
   },
   {
-    linha: 226, deal: "Castanhal", empresa: "Castanhal", closer: "Lucas Costa", data: "2026-07-21",
+    linha: 226, deal: "Castanhal", empresa: "Castanhal", key_account: false, closer: "Lucas Costa", data: "2026-07-21",
     fase: "demo", etapa_negocio: "Construindo o Projeto", momento_jornada: "Construindo Projeto",
     score_fase: 73, score_geral: 73, status: "aderente", alerta_alto_risco: false, codigo_alerta: null,
     flags: [
@@ -3955,7 +3963,7 @@ const DADOS = [
     }
   },
   {
-    linha: 234, deal: "Gauchafarma - Distribuidora Atacadista", empresa: "Gauchafarma", closer: "Karynne Rocha", data: "2026-07-22",
+    linha: 234, deal: "Gauchafarma - Distribuidora Atacadista", empresa: "Gauchafarma", key_account: true, closer: "Karynne Rocha", data: "2026-07-22",
     fase: "demo", etapa_negocio: "Construindo o Projeto", momento_jornada: "Construindo Projeto",
     score_fase: 18, score_geral: 30, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D (atenuado)",
     flags: [
@@ -3987,7 +3995,7 @@ const DADOS = [
     }
   },
   {
-    linha: 235, deal: "[Demonstração/Teste Guiado] Hertz & impulseup", empresa: "Hertz Farma", closer: "Lucas Costa", data: "2026-07-22",
+    linha: 235, deal: "[Demonstração/Teste Guiado] Hertz & impulseup", empresa: "Hertz Farma", key_account: true, closer: "Lucas Costa", data: "2026-07-22",
     fase: "demo", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 18, score_geral: 30, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: [
@@ -4023,7 +4031,7 @@ const DADOS = [
     }
   },
   {
-    linha: 236, deal: "Grupo Coobrastur & impulseup", empresa: "Grupo Coobrastur", closer: "Karynne Rocha", data: "2026-07-22",
+    linha: 236, deal: "Grupo Coobrastur & impulseup", empresa: "Grupo Coobrastur", key_account: false, closer: "Karynne Rocha", data: "2026-07-22",
     fase: "proposta", etapa_negocio: "Conexão", momento_jornada: "Buscando Solução",
     score_fase: 44, score_geral: 56, status: "atencao", alerta_alto_risco: true, codigo_alerta: "A-P (atenuado)",
     flags: [
@@ -4054,7 +4062,7 @@ const DADOS = [
     }
   },
   {
-    linha: 198, deal: "impulseup & G2L - Calibração, Sucessão e Analytics (DHO)", empresa: "G2L Logística", closer: "Luis Fonseca", data: "2026-07-22",
+    linha: 198, deal: "impulseup & G2L - Calibração, Sucessão e Analytics (DHO)", empresa: "G2L Logística", key_account: true, closer: "Luis Fonseca", data: "2026-07-22",
     fase: "demo", etapa_negocio: "Buscando Solução", momento_jornada: "Buscando Solução",
     score_fase: 29, score_geral: 49, status: "critico", alerta_alto_risco: true, codigo_alerta: "A-D",
     flags: [
@@ -4234,6 +4242,7 @@ function matchesFilters(d, exclude) {
   const criterio = document.getElementById('f-criterio').value;
   const risco = document.getElementById('f-risco').value;
   const acessoTd = document.getElementById('f-acesso-td').value;
+  const keyAccount = document.getElementById('f-key-account').value;
   const dataDe = document.getElementById('f-data-de').value;
   const dataAte = document.getElementById('f-data-ate').value;
 
@@ -4248,6 +4257,10 @@ function matchesFilters(d, exclude) {
     if (risco === 'nao' && d.alerta_alto_risco) return false;
   }
   if (exclude !== 'acessoTd' && acessoTd && acessoTdStatus(d) !== acessoTd) return false;
+  if (exclude !== 'keyAccount') {
+    if (keyAccount === 'sim' && !d.key_account) return false;
+    if (keyAccount === 'nao' && d.key_account) return false;
+  }
   if (exclude !== 'data') {
     if (dataDe && d.data < dataDe) return false;
     if (dataAte && d.data > dataAte) return false;
@@ -4437,7 +4450,7 @@ function render() {
 function limparFiltros() {
   selectedClosers.clear();
   selectedEmpresas.clear();
-  ['f-etapa','f-momento','f-status','f-criterio','f-risco','f-acesso-td'].forEach(id => document.getElementById(id).value = '');
+  ['f-etapa','f-momento','f-status','f-criterio','f-risco','f-acesso-td','f-key-account'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('f-data-de').value = '';
   document.getElementById('f-data-ate').value = '';
   paginaAtual = 1;
