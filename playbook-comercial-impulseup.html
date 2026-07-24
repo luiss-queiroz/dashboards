@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playbook Comercial — impulseup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#FFFFFF;--bg-alt:#F4F2EF;--surface:#F9F8F6;--fg:#0C0C0C;--fg-muted:#666666;
+  --border:#E0E0E0;--border-md:#CCCCCC;--primary:#CC0088;--primary-h:#A3006D;--primary-d:#770055;
+  --primary-dim:rgba(204,0,136,0.08);--primary-glow:rgba(204,0,136,0.18);
+  --warn:#B47A00;--warn-dim:rgba(180,122,0,0.08);--warn-border:rgba(180,122,0,0.25);
+  --danger:#CC3322;--danger-dim:rgba(204,51,34,0.08);--danger-border:rgba(204,51,34,0.22);
+  --success:#1A8A44;--success-dim:rgba(26,138,68,0.08);--success-border:rgba(26,138,68,0.2);
+  --r:10px;--r-lg:16px;--font:'Poppins',sans-serif;
+}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font);background:var(--bg-alt);color:var(--fg);font-size:15px;line-height:1.7;min-height:100vh;-webkit-font-smoothing:antialiased;}
+a{color:var(--primary);text-decoration:none;}
+
+.layout{display:flex;min-height:100vh;}
+
+/* SIDEBAR */
+.sidebar{width:300px;flex-shrink:0;background:var(--bg);border-right:1px solid var(--border);padding:28px 16px;position:sticky;top:0;height:100vh;overflow-y:auto;}
+.brand{display:flex;align-items:center;gap:10px;margin-bottom:6px;padding:0 8px;}
+.brand-dot{width:10px;height:10px;border-radius:50%;background:var(--primary);box-shadow:0 0 8px var(--primary-glow);}
+.brand-name{font-weight:800;font-size:16px;letter-spacing:-0.02em;}
+.brand-sub{font-size:11px;color:var(--fg-muted);padding:0 8px 24px;font-weight:500;letter-spacing:0.03em;text-transform:uppercase;}
+.nav-group-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--fg-muted);padding:18px 8px 8px;}
+.nav-item{display:flex;align-items:center;gap:8px;padding:10px 10px;border-radius:var(--r);font-size:13px;font-weight:500;color:var(--fg);cursor:pointer;transition:all .15s;margin-bottom:2px;white-space:nowrap;}
+.nav-label{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;}
+.nav-item:hover{background:var(--primary-dim);color:var(--primary-h);}
+.nav-item.active{background:var(--primary);color:#fff;font-weight:600;box-shadow:0 2px 10px var(--primary-glow);}
+.nav-badge{font-size:9.5px;padding:2px 8px;border-radius:20px;background:var(--border);color:var(--fg-muted);font-weight:700;margin-left:auto;white-space:nowrap;flex-shrink:0;text-transform:uppercase;letter-spacing:0.02em;}
+.nav-item.active .nav-badge{background:rgba(255,255,255,0.25);color:#fff;}
+.nav-num{width:22px;height:22px;border-radius:6px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
+.nav-item.active .nav-num{background:rgba(255,255,255,0.2);border-color:transparent;color:#fff;}
+
+/* MAIN */
+.main{flex:1;padding:44px 64px 80px;max-width:1180px;}
+.section{display:none;}
+.section.active{display:block;animation:fadeIn .25s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+.eyebrow{font-size:12px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;}
+h1.page-title{font-size:32px;font-weight:800;letter-spacing:-0.02em;margin-bottom:10px;}
+.page-sub{color:var(--fg-muted);font-size:15px;margin-bottom:32px;max-width:760px;}
+h2{font-size:21px;font-weight:700;color:var(--primary);margin:38px 0 14px;padding-bottom:10px;border-bottom:2px solid var(--primary);}
+h2:first-of-type{margin-top:0;}
+h3{font-size:15.5px;font-weight:700;margin:22px 0 10px;}
+h4{font-size:13.5px;font-weight:700;color:var(--primary-h);margin:16px 0 8px;}
+p{margin-bottom:12px;color:#333;}
+ul.blt{margin:0 0 16px 0;padding:0;list-style:none;}
+ul.blt li{position:relative;padding-left:20px;margin-bottom:8px;color:#333;}
+ul.blt li::before{content:"";position:absolute;left:4px;top:9px;width:5px;height:5px;border-radius:50%;background:var(--primary);}
+.note{background:var(--surface);border-left:3px solid var(--primary);border-radius:8px;padding:12px 16px;font-size:13.5px;color:var(--fg-muted);margin:14px 0 20px;font-style:italic;}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:20px;}
+@media (max-width:760px){.grid2{grid-template-columns:1fr;}}
+.card{background:var(--bg);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;}
+.card-title{font-weight:700;font-size:14px;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--primary);flex-shrink:0;}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:13.5px;border-radius:var(--r);overflow:hidden;border:1px solid var(--border);}
+th{background:var(--primary);color:#fff;text-align:left;padding:10px 14px;font-weight:600;font-size:12.5px;}
+td{padding:10px 14px;border-bottom:1px solid var(--border);background:var(--bg);}
+tr:last-child td{border-bottom:none;}
+
+/* PHASE PILLS */
+.funnel{display:flex;flex-wrap:nowrap;align-items:center;gap:6px;margin-bottom:24px;overflow-x:auto;padding-bottom:4px;}
+.pill{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:7px 13px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:5px;white-space:nowrap;flex-shrink:0;}
+.pill b{color:var(--primary);margin-right:2px;}
+.arrow{color:var(--border-md);font-size:13px;align-self:center;flex-shrink:0;}
+
+/* CHECKLIST */
+.checklist{background:var(--bg);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 20px;margin-bottom:18px;}
+.check-item{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);font-size:13.5px;}
+.check-item:last-child{border-bottom:none;}
+.check-box{width:16px;height:16px;border:2px solid var(--border-md);border-radius:4px;flex-shrink:0;margin-top:2px;}
+.check-id{font-weight:700;color:var(--primary);margin-right:4px;}
+.risk-tag{display:inline-block;background:var(--danger-dim);color:var(--danger);border:1px solid var(--danger-border);font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:20px;margin-left:8px;}
+.meta-tag{font-size:11.5px;color:var(--fg-muted);font-weight:600;margin-bottom:12px;display:block;}
+
+/* STATUS BADGES for skills table */
+.status-pill{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;display:inline-block;}
+.status-ok{background:var(--success-dim);color:var(--success);border:1px solid var(--success-border);}
+.status-pending{background:var(--warn-dim);color:var(--warn);border:1px solid var(--warn-border);}
+
+/* HOME */
+.home-hero{background:linear-gradient(135deg,var(--primary) 0%,var(--primary-h) 100%);border-radius:var(--r-lg);padding:40px 36px;color:#fff;margin-bottom:36px;}
+.home-hero h1{font-size:28px;font-weight:800;margin-bottom:10px;}
+.home-hero p{color:rgba(255,255,255,0.85);max-width:560px;margin-bottom:0;}
+.module-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media (max-width:760px){.module-grid{grid-template-columns:1fr;}}
+.module-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;cursor:pointer;transition:all .15s;}
+.module-card:hover{border-color:var(--primary);box-shadow:0 4px 16px var(--primary-glow);transform:translateY(-2px);}
+.module-card .num{font-size:11px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;}
+.module-card h4{margin:0 0 6px;font-size:15px;color:var(--fg);}
+.module-card p{font-size:12.5px;color:var(--fg-muted);margin-bottom:0;}
+
+code{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-size:12px;font-family:monospace;color:var(--primary-h);}
+.footer-note{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-size:12px;color:var(--fg-muted);}
+
+/* TOC / MANUAL INDEX */
+.toc-intro{max-width:600px;color:var(--fg-muted);margin-bottom:36px;font-size:14.5px;}
+.toc-list{border-top:1px solid var(--border);}
+.toc-row{display:flex;align-items:center;gap:18px;padding:20px 4px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;}
+.toc-row:hover{background:var(--surface);}
+.toc-row:hover .toc-title{color:var(--primary-h);}
+.toc-num{width:38px;height:38px;border-radius:8px;border:1.5px solid var(--border-md);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:var(--fg-muted);flex-shrink:0;font-family:var(--font);}
+.toc-row:hover .toc-num{border-color:var(--primary);color:var(--primary);}
+.toc-body{flex:1;}
+.toc-title{font-weight:700;font-size:15.5px;margin-bottom:3px;transition:color .15s;}
+.toc-desc{font-size:12.5px;color:var(--fg-muted);}
+.toc-status{font-size:10.5px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;flex-shrink:0;text-transform:uppercase;letter-spacing:0.03em;}
+.toc-status.ready{background:var(--success-dim);color:var(--success);border:1px solid var(--success-border);}
+.toc-status.pending{background:var(--warn-dim);color:var(--warn);border:1px solid var(--warn-border);}
+.toc-chevron{color:var(--border-md);font-size:16px;flex-shrink:0;}
+
+/* PLACEHOLDER (manual em revisão) */
+.placeholder-box{border:1.5px dashed var(--border-md);border-radius:var(--r-lg);padding:56px 40px;text-align:center;margin-top:12px;}
+.placeholder-box .ic{font-size:13px;font-weight:700;color:var(--warn);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:10px;}
+.placeholder-box p{color:var(--fg-muted);max-width:420px;margin:0 auto;}
+</style>
+</head>
+<body>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="brand"><div class="brand-dot"></div><div class="brand-name">impulseup</div></div>
+    <div class="brand-sub">Playbook Comercial</div>
+
+    <div class="nav-item active" data-target="home"><span class="nav-num">•</span> Sumário</div>
+
+    <div class="nav-group-label">Manuais</div>
+    <div class="nav-item" data-target="mod1"><span class="nav-num">1</span><span class="nav-label">Fundamentos e Cultura</span><span class="nav-badge">em revisão</span></div>
+    <div class="nav-item" data-target="mod2"><span class="nav-num">2</span><span class="nav-label">Processo Comercial</span></div>
+    <div class="nav-item" data-target="mod3"><span class="nav-num">3</span><span class="nav-label">Playbooks por Categoria</span></div>
+    <div class="nav-item" data-target="mod7"><span class="nav-num">4</span><span class="nav-label">Piloto Guiado</span></div>
+    <div class="nav-item" data-target="mod6"><span class="nav-num">5</span><span class="nav-label">Battlecards</span></div>
+    <div class="nav-item" data-target="mod5"><span class="nav-num">6</span><span class="nav-label">Comissionamento</span></div>
+    <div class="nav-item" data-target="mod4"><span class="nav-num">7</span><span class="nav-label">Operação e SLAs</span><span class="nav-badge">em revisão</span></div>
+  </nav>
+
+  <main class="main">
+
+    <!-- HOME / SUMÁRIO -->
+    <section class="section active" id="home">
+      <div class="eyebrow">impulseup</div>
+      <h1 class="page-title">Coletânea de Manuais Comerciais</h1>
+      <p class="toc-intro">O playbook comercial deixou de ser um documento único e passou a ser uma coletânea de manuais independentes. Cada manual tem dono e frequência de atualização próprios — abra o que precisar, sem depender dos demais.</p>
+
+      <div class="toc-list">
+        <div class="toc-row" data-target="mod1">
+          <div class="toc-num">1</div>
+          <div class="toc-body">
+            <div class="toc-title">Fundamentos e Cultura impulseup</div>
+            <div class="toc-desc">Sobre a impulseup, valores, time, ICP, produto e planos.</div>
+          </div>
+          <div class="toc-status pending">Em revisão</div>
+          <div class="toc-chevron">›</div>
+        </div>
+        <div class="toc-row" data-target="mod2">
+          <div class="toc-num">2</div>
+          <div class="toc-body">
+            <div class="toc-title">Processo Comercial</div>
+            <div class="toc-desc">Funil C → CP → BS → N → PA, os 3 I's do Champion, habilidades por fase e Auditoria de Processo.</div>
+          </div>
+          <div class="toc-status ready">Publicado</div>
+          <div class="toc-chevron">›</div>
+        </div>
+        <div class="toc-row" data-target="mod3">
+          <div class="toc-num">3</div>
+          <div class="toc-body">
+            <div class="toc-title">Playbooks por Categoria</div>
+            <div class="toc-desc">Dores, motivadores e objeções das Categorias 1, 2, 4 e 5, com pontuação de risco em BS.</div>
+          </div>
+          <div class="toc-status ready">Publicado</div>
+          <div class="toc-chevron">›</div>
+        </div>
+        <div class="toc-row" data-target="mod7">
+          <div class="toc-num">4</div>
+          <div class="toc-body">
+            <div class="toc-title">Piloto Guiado</div>
+            <div class="toc-desc">Como oferecer, conduzir e fechar o teste real da plataforma com o cliente, do alinhamento pré-piloto ao cronograma de 10 dias úteis.</div>
+          </div>
+          <div class="toc-status ready">Publicado</div>
+          <div class="toc-chevron">›</div>
+        </div>
+        <div class="toc-row" data-target="mod6">
+          <div class="toc-num">5</div>
+          <div class="toc-body">
+            <div class="toc-title">Battlecards</div>
+            <div class="toc-desc">Resumo do posicionamento competitivo, com link para o site completo do battlecard.</div>
+          </div>
+          <div class="toc-status ready">Publicado</div>
+          <div class="toc-chevron">›</div>
+        </div>
+        <div class="toc-row" data-target="mod5">
+          <div class="toc-num">6</div>
+          <div class="toc-body">
+            <div class="toc-title">Comissionamento</div>
+            <div class="toc-desc">Tabela de comissão por meta, aceleradores, detratores, parcelas e fluxo operacional.</div>
+          </div>
+          <div class="toc-status ready">Publicado</div>
+          <div class="toc-chevron">›</div>
+        </div>
+        <div class="toc-row" data-target="mod4">
+          <div class="toc-num">7</div>
+          <div class="toc-body">
+            <div class="toc-title">Operação e SLAs</div>
+            <div class="toc-desc">Rotinas internas, itens de linha, férias, bench, integrações, cláusulas contratuais.</div>
+          </div>
+          <div class="toc-status pending">Em revisão</div>
+          <div class="toc-chevron">›</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MÓDULO 2 -->
+    <section class="section" id="mod2">
+      <div class="eyebrow">Módulo 2</div>
+      <h1 class="page-title">Processo Comercial</h1>
+      <p class="page-sub">Funil trabalhado ativamente pelo closer, do diagnóstico ao fechamento, mais os 3 I's do Champion e a Auditoria de Processo.</p>
+
+      <h2 style="margin-top:0;">Visão geral do funil</h2>
+      <div class="funnel">
+        <div class="pill"><b>C</b> Conexão</div><span class="arrow">→</span>
+        <div class="pill"><b>CP</b> Construindo Projeto</div><span class="arrow">→</span>
+        <div class="pill"><b>BS</b> Buscando Solução</div><span class="arrow">→</span>
+        <div class="pill"><b>N</b> Negociando</div><span class="arrow">→</span>
+        <div class="pill"><b>PA</b> Pendente de Assinatura</div><span class="arrow">→</span>
+        <div class="pill"><b>Won / Lost</b></div>
+      </div>
+      <div class="note">EP (Entendendo Problema) não é uma fase de trabalho ativo. É um estado técnico de CRM: aparece quando um projeto em standby retorna automaticamente ao pipe. Se uma conta chega com esse diagnóstico já na qualificação inicial, é qualificação incorreta, não uma fase válida.</div>
+
+      <h2>Os 3 I's do Champion</h2>
+      <p>Termômetro contínuo da posição competitiva junto ao champion — <b>não é critério de avanço de fase</b>, é observado do início ao fim do ciclo. Capturado na habilidade <code>conexao-call-planning</code>, na etapa de lateralização e mapeamento de stakeholders.</p>
+      <div class="grid2">
+        <div class="card"><div class="card-title"><span class="dot"></span>Influência</div>Capacidade real do champion de impactar a decisão internamente. É o indicador mais crítico dos três.</div>
+        <div class="card"><div class="card-title"><span class="dot"></span>Incentivo</div>Motivação pessoal ou profissional genuína com o projeto, além da demanda recebida.</div>
+        <div class="card"><div class="card-title"><span class="dot"></span>Informação</div>Conhecimento do processo interno de compra e aprovação.</div>
+      </div>
+
+      <h2>C — Conexão</h2>
+      <h3>Abertura</h3>
+      <ul class="blt">
+        <li>Reduzir ao máximo o pitch institucional. Não abrir com módulos, ano de fundação, portfólio de clientes</li>
+        <li>Pedir que o cliente se apresente primeiro. Deixar claro que a reunião não é uma demo</li>
+        <li>Usar o briefing de pré-vendas como calibrador da pergunta, nunca como roteiro literal</li>
+      </ul>
+      <h3>Diagnóstico calibrado por categoria</h3>
+      <ul class="blt">
+        <li>Categoria 1: focar em como as decisões ficam documentadas hoje</li>
+        <li>Categoria 2: focar na execução prática do processo atual (quem monta, quanto tempo leva)</li>
+        <li>Categoria 5: perguntar o que está funcionando hoje, deixando a insatisfação surgir naturalmente</li>
+      </ul>
+      <h3>Erros a evitar</h3>
+      <ul class="blt">
+        <li>Abrir catálogo de produto antes do diagnóstico completo</li>
+        <li>Apresentação institucional longa</li>
+        <li>Simplesmente recapitular o que o pré-vendas já levantou, sem aprofundar</li>
+      </ul>
+      <h3>Fechamento da Conexão</h3>
+      <ul class="blt">
+        <li>Mapear quem mais precisa estar envolvido para o projeto andar</li>
+        <li>Identificar quem pode ajudar a ganhar o projeto internamente</li>
+        <li>Perguntar o que o champion precisa ter em mãos para chegar à reunião com o TD com confiança</li>
+        <li>Conectar as dores levantadas a no máximo 2 ou 3 pilares, nunca aos seis pilares de forma genérica</li>
+      </ul>
+      <h3>Critério de avanço de C para CP</h3>
+      <ul class="blt">
+        <li>Champion identificado, mesmo que apenas demandado internamente, sabe minimamente o que precisa buscar</li>
+        <li>Dores mapeadas e conectadas a pilares</li>
+        <li>Orçamento ainda não aprovado</li>
+      </ul>
+
+      <h2>CP — Construindo Projeto</h2>
+      <p>Objetivo central: ajudar o champion a construir e aprovar o orçamento do projeto internamente. O champion não necessariamente acredita na solução neste ponto — muitas vezes foi apenas demandado a buscar um fornecedor.</p>
+      <h3>Demo (pré e pós)</h3>
+      <ul class="blt">
+        <li>Pré-demo: alinhar que o foco é mostrar como a impulseup resolve o que foi levantado na conexão. Proposta fica para outra agenda</li>
+        <li>Durante a demo: recapitular o desafio, mostrar a resolução, conectar ao pilar. Nunca uma demo genérica de funcionalidades</li>
+        <li>Pós-demo, perguntas obrigatórias de validação: se tivesse que escolher uma solução, escolheria a impulseup? O que faltou para se apaixonar / o que fez se apaixonar? Qual foi o diferencial percebido? O quanto esse diferencial pesa na decisão? Ficou faltando ver algo?</li>
+      </ul>
+      <h3>Proposta</h3>
+      <ul class="blt">
+        <li>Pré-requisito: champion saiu comprado da demo</li>
+        <li>Montar o Kit de Aprovação (habilidade <code>kit-aprovacao-cliente-impulseup</code>) com a identidade visual do cliente antes da reunião</li>
+        <li>Abrir a reunião apresentando o preço primeiro, para tirar essa variável da mesa e permitir calibrar escopo e objeções de orçamento de imediato</li>
+        <li>Nunca vender preço isolado: conectar o projeto à estratégia do negócio (framework VOI — por que a impulseup, qual o retorno, o que acontece depois, qual o risco de não agir agora)</li>
+        <li>Fechar sempre com data concreta, nunca com esperança. Perguntar: de 0 a 10, quão confiante está de que o projeto será aprovado?</li>
+        <li>Se o champion não tiver acesso direto ao TD e propuser apenas enviar por e-mail, a taxa de aprovação cai para 5 a 10 por cento. Posicionar-se como consultor e insistir em uma reunião de 30 minutos com o TD</li>
+      </ul>
+      <h3>Critério de avanço de CP para BS</h3>
+      <ul class="blt"><li>Orçamento do projeto aprovado internamente pelo cliente</li></ul>
+
+      <h2>BS — Buscando Solução</h2>
+      <p>Entrada: orçamento aprovado, cliente comparando fornecedores. O foco muda de aprovar o projeto para ser escolhido entre os concorrentes.</p>
+      <ul class="blt">
+        <li>Uso obrigatório da RFP (Comparativo Estratégico de Fornecedores) como apoio à diferenciação</li>
+        <li>Referência rápida de diferenciais por concorrente nomeado, com detalhe completo vivendo no battlecard (Módulo 6)</li>
+        <li>Teste/TI costuma ocorrer nesta fase, quando o cliente valida tecnicamente antes de decidir. Recorrente em contas acima de 500 colaboradores, mas não é regra fixa</li>
+        <li>Demo e pós-demo seguem a mesma lógica de validação, com o filtro adicional de comparação direta com concorrentes nomeados</li>
+      </ul>
+      <h3>Critério de avanço de BS para N</h3>
+      <ul class="blt">
+        <li>Impulseup escolhida como fornecedora</li>
+        <li>Conversa entra na etapa de discutir condições e valor do investimento</li>
+      </ul>
+
+      <h2>N — Negociando</h2>
+      <p>Princípio geral: negociar não é ceder. O plano de projeto (BP) é a âncora da negociação. Quando o cliente questiona o preço, a resposta parte do retorno, não do preço.</p>
+      <h3>Regras de conduta</h3>
+      <ul class="blt">
+        <li>Nunca oferecer desconto antes de ser pedido</li>
+        <li>Quando pedido, perguntar antes: o que está impedindo a decisão, sendo o preço o único fator?</li>
+        <li><b>Alçada do closer: até 20% de desconto.</b> Acima disso, alinhamento obrigatório com a liderança comercial antes de qualquer promessa ao cliente</li>
+      </ul>
+      <h3>Contas vindas de BS Categoria 5 (troca de fornecedor concorrente)</h3>
+      <ul class="blt">
+        <li>Nunca entrar em guerra de preço direto com o fornecedor atual</li>
+        <li>Deslocar a conversa do preço para o retorno, evidenciando o gap gerado pelo fornecedor atual e o tempo de retorno do investimento adicional</li>
+        <li>Se o pedido de desconto for para viabilizar a troca, diagnosticar a causa antes de responder: risco percebido da mudança pede garantias (piloto, implantação faseada), não desconto; restrição de fluxo de caixa pede condições de pagamento antes de reduzir valor; questão de valor total pede negociação de escopo antes de negociação de preço</li>
+      </ul>
+      <h3>Critério de avanço de N para PA</h3>
+      <ul class="blt">
+        <li>Condições comerciais fechadas e aceitas pelo cliente</li>
+        <li>Contrato pronto para envio</li>
+      </ul>
+
+      <h2>PA — Pendente de Assinatura</h2>
+      <p>PA começa no momento em que o contrato é enviado ao cliente. Não é um intervalo passivo.</p>
+      <ul class="blt">
+        <li>Acompanhar de perto a revisão do contrato pelo cliente, incluindo jurídico do cliente quando houver</li>
+        <li>Fazer follow-up ativo até a assinatura, sem deixar esfriar</li>
+        <li>Identificar e resolver travas de aprovação antes que se tornem motivo de perda</li>
+      </ul>
+      <h3>Critério de avanço de PA para Won</h3>
+      <ul class="blt"><li>Contrato assinado por ambas as partes</li></ul>
+
+      <h2>Habilidades por momento da jornada</h2>
+      <table>
+        <tr><th>Momento</th><th>Habilidade</th><th>Status</th><th>Função</th></tr>
+        <tr><td>Antes da Conexão</td><td>conexao-call-planning</td><td><span class="status-pill status-ok">Oficial</span></td><td>Call planning, SPIN/MEDDIC, 3 I's</td></tr>
+        <tr><td>Após a Conexão</td><td>email-conexao-champion-impulseup</td><td><span class="status-pill status-ok">Oficial</span></td><td>E-mail de follow-up</td></tr>
+        <tr><td>Antes da Demo</td><td>demo-preparacao-impulseup</td><td><span class="status-pill status-ok">Oficial</span></td><td>PPTX de preparação</td></tr>
+        <tr><td>Após a Demo</td><td>email-demo-champion-impulseup</td><td><span class="status-pill status-ok">Oficial</span></td><td>E-mail de follow-up</td></tr>
+        <tr><td>Antes da Proposta</td><td>kit-aprovacao-cliente-impulseup</td><td><span class="status-pill status-ok">Oficial</span></td><td>Material com a cara do cliente</td></tr>
+        <tr><td>Após a Proposta</td><td>email-proposta-champion-impulseup</td><td><span class="status-pill status-ok">Oficial</span></td><td>E-mail de follow-up</td></tr>
+        <tr><td>No Won</td><td>handoff-cs-impulseup</td><td><span class="status-pill status-ok">Oficial</span></td><td>Passagem de bastão ao CS</td></tr>
+        <tr><td>Contínuo</td><td>plugin auditoria-processo-iup</td><td><span class="status-pill status-ok">Oficial</span></td><td>Audita aderência semanalmente</td></tr>
+        <tr><td>Discussão interna</td><td>dossie-conta-impulseup</td><td><span class="status-pill status-pending">Em validação</span></td><td>Consolidação da conta</td></tr>
+        <tr><td>Apresentação alternativa</td><td>material-cliente-impulseup</td><td><span class="status-pill status-pending">Em validação</span></td><td>Formato alternativo em HTML</td></tr>
+      </table>
+
+      <h2>Auditoria de Processo</h2>
+      <p>Verificação automática e semanal de aderência ao playbook, feita a partir das transcrições do Salesbud. Toda sexta-feira ao meio-dia, o sistema classifica cada reunião por fase e avalia contra o checklist da fase mais um checklist geral. Cada critério só é marcado como atendido com evidência real na transcrição.</p>
+      <ul class="blt">
+        <li>80% do score vem do checklist da fase, 20% do checklist geral</li>
+        <li>70% ou mais: aderente · 50% a 69%: atenção · abaixo de 50%: crítico</li>
+        <li>Alertas de alto risco aparecem em destaque independentemente do score</li>
+      </ul>
+      <div class="note">O acesso ao TD é avaliado à parte do score, de forma transversal a todas as fases, para diferenciar falha de processo de situação do deal.</div>
+
+      <h3>Checklist de Conexão <span class="meta-tag" style="display:inline">— 12 critérios, meta ≥ 70%</span></h3>
+      <div class="checklist">
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C01</span>Deixou claro na abertura que é diagnóstico, não demo</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C02</span>Pediu ao cliente para se apresentar antes de falar da impulseup</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C03a</span>Não navegou na plataforma antes do diagnóstico completo</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C03b</span>Manteve o produto como "cheiro", sem virar produto a conversa</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C04</span>Pergunta de abertura calibrada pelo contexto do lead</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C05</span>Cliente falou pelo menos 50% do tempo</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C06</span>Instigou o cliente a aprofundar respostas rasas</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C07</span>Diagnosticou implicações no negócio, não só o sintoma</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C08</span>Mapeou stakeholders com nomes, não só cargos</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C09</span>Entendeu o caminho real de aprovação interna e riscos</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C10</span>Conectou pilares às dores nos últimos 20% da reunião</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C11</span>Plantou a semente do ROI e cronograma</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C12</span>Saiu com data de demo definida na reunião <span class="risk-tag">alto risco</span></div></div>
+      </div>
+
+      <h3>Checklist de Demo <span class="meta-tag" style="display:inline">— 11 critérios, meta ≥ 70%</span></h3>
+      <div class="checklist">
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D01</span>Executou o pré-demo, recapitulando os desafios mapeados</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D02</span>Alinhou a agenda: proposta vem depois</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D03</span>Manteve o foco no slide "como a impulseup resolve"</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D04</span>Apresentou benefício antes da feature</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D05</span>Reforçou diferenciais vinculados às dores do cliente</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D06</span>Aplicou o termômetro pós-demo (escolheria a impulseup?) <span class="risk-tag">alto risco</span></div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D07</span>Validou o diferencial percebido e o peso na decisão</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D08</span>Verificou se faltou algo que o cliente esperava ver</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D09</span>Tratou objeções e lacunas, todas com encaminhamento</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D10</span>Saiu com data da proposta definida</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D11</span>Verificou se há dores de negócio não cobertas</div></div>
+      </div>
+
+      <h3>Checklist de Proposta <span class="meta-tag" style="display:inline">— 9 critérios, meta ≥ 70%</span></h3>
+      <div class="checklist">
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">P01</span>Usou material de aprovação que prepara o champion</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">P02</span>Apresentou o valor logo na abertura</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">P03</span>Conectou o projeto à estratégia do negócio</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">P04</span>Treinou o champion para as perguntas do TD</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">P05</span>Incluiu o risco de não agir agora</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">P06</span>Apresentou cronograma de implantação</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">P07</span>Mediu a confiança do champion de 0 a 10</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">P08</span>Saiu com data concreta com o TD <span class="risk-tag">alto risco</span></div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">P09</span>Avaliou se o champion tem acesso real ao TD <span class="risk-tag">alto risco</span></div></div>
+      </div>
+
+      <h3>Checklist Geral <span class="meta-tag" style="display:inline">— 5 critérios, toda reunião, meta ≥ 70%</span></h3>
+      <div class="checklist">
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">G01</span>Reunião gravada e registrada no Salesbud</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">G02</span>Material refletiu as dores reais daquele cliente</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">G03</span>Conduziu a conversa ativamente</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">G04</span>Não antecipou detalhes comerciais prematuros</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">G05</span>Mencionou ou confirmou envio de e-mail pós-reunião</div></div>
+      </div>
+    </section>
+
+    <!-- MÓDULO 3 -->
+    <section class="section" id="mod3">
+      <div class="eyebrow">Módulo 3</div>
+      <h1 class="page-title">Playbooks por Categoria</h1>
+      <p class="page-sub">Dores, motivadores e objeções específicos de cada categoria de cliente, para calibrar discurso, ritmo e prioridade de energia do closer.</p>
+
+      <h2 style="margin-top:0;">Categoria 1 — Nunca realizou avaliação formal</h2>
+      <h3>Perfil</h3>
+      <p>RH ainda não estruturou nenhum processo de gestão de desempenho. Decisões de promoção, desligamento e desenvolvimento acontecem de forma informal, na cabeça do gestor.</p>
+      <h3>Dores prováveis</h3>
+      <ul class="blt">
+        <li>Decisões de pessoas sem critério documentado ou defensável</li>
+        <li>Falta de visibilidade da liderança sobre quem entrega e quem não entrega</li>
+        <li>Dificuldade em justificar promoções, desligamentos ou aumentos</li>
+        <li>RH sem voz na estratégia, tratado como área de custo, não de investimento</li>
+      </ul>
+      <h3>Motivadores para agir agora</h3>
+      <ul class="blt">
+        <li>Pressão da diretoria por profissionalizar a gestão de pessoas</li>
+        <li>Evento gatilho: crescimento acelerado, rodada de investimento, chegada de liderança mais madura</li>
+        <li>Desejo do RH de ganhar relevância estratégica dentro da empresa</li>
+      </ul>
+      <h3>Pergunta-chave de diagnóstico</h3>
+      <p>Perguntar se as decisões ficam documentadas ou apenas na cabeça de quem decidiu.</p>
+      <h3>Objeções e cenários de resistência</h3>
+      <h4>O verdadeiro concorrente é o "não vamos fazer nada"</h4>
+      <p>Diferente de BS, onde se compete com outro fornecedor nomeado, em Categoria 1 o projeto compete com a inércia, e a inércia vence com frequência.</p>
+      <ul class="blt">
+        <li>Prioridade é volátil: sem processo formal, também não existe compromisso formal com a mudança. Uma prioridade de hoje pode se tornar irrelevante em duas semanas</li>
+        <li>Muitas contas chegam motivadas por modismo (ouviram falar em evento, LinkedIn, mercado), não por dor real madura. Esse tipo de motivação nasce e morre rápido</li>
+        <li>Consequência prática: tratar Categoria 1 com o ritmo de uma conta madura costuma resultar em perda por esquecimento, não por concorrência</li>
+      </ul>
+      <h3>Abordagem recomendada</h3>
+      <ul class="blt">
+        <li>Diagnosticar a origem do projeto já na Conexão, perguntando o que fez a empresa decidir buscar isso agora. Resposta vaga é sinal de motivação frágil; resposta ligada a evento de negócio concreto é sinal de motivação sólida</li>
+        <li>Converter modismo em compromisso executivo o mais rápido possível, buscando alguém com orçamento e prioridade real antes que a motivação inicial esfrie</li>
+        <li>Criar urgência real quando ainda não existe, trazendo o custo de continuar sem processo (risco em decisões, risco jurídico em desligamentos, perda de visibilidade)</li>
+        <li>Vigiar sinais de enfraquecimento de prioridade (respostas mais lentas ou evasivas) e agir rápido em vez de esperar</li>
+        <li>Não investir energia desproporcional em contas sem sponsor real identificado, mesmo após esforço de ativação</li>
+        <li>Nunca tratar como venda de ferramenta: tratar como apoio à primeira estruturação de um processo, com a impulseup como parceira de implementação</li>
+      </ul>
+
+      <h2>Categoria 2 — Usa planilhas ou processos manuais</h2>
+      <h3>Perfil</h3>
+      <p>Já existe um processo de avaliação rodando, mas de forma manual, geralmente em planilha. Há histórico e alguma maturidade de processo, mas a execução é operacional e desgastante.</p>
+      <h3>Dores prováveis</h3>
+      <ul class="blt">
+        <li>Processo consome tempo excessivo do RH (consolidação de dados, comitês, devolutivas manuais)</li>
+        <li>Falta de padronização entre áreas ou lideranças na hora de avaliar</li>
+        <li>Dificuldade em cruzar dados de performance com decisões de promoção, sucessão ou desligamento</li>
+        <li>Risco de erro humano e inconsistência entre ciclos</li>
+        <li>Baixa adesão de gestores, que veem o processo em planilha como burocracia extra</li>
+      </ul>
+      <h3>Motivadores para agir agora</h3>
+      <ul class="blt">
+        <li>Crescimento de headcount tornando a planilha insustentável</li>
+        <li>Chegada de nova liderança de RH ou de negócio exigindo mais rigor e visibilidade</li>
+        <li>Pressão para profissionalizar depois de um ciclo que deu errado (dado perdido, prazo estourado, decisão contestada)</li>
+      </ul>
+      <h3>Pergunta-chave de diagnóstico</h3>
+      <p>Perguntar como o processo funciona na prática (quem monta, quanto tempo leva por ciclo), em vez de afirmar que é manual. Isso faz o próprio cliente verbalizar o desgaste.</p>
+      <h3>Objeções e cenários de resistência</h3>
+      <ul class="blt">
+        <li>"Já temos um processo, só precisamos de uma ferramenta mais bonita" — o cliente subestima o problema, tratando como questão de layout, não de estrutura</li>
+        <li>"A planilha já está pronta, trocar dá trabalho de novo"</li>
+        <li>"O time já está acostumado com esse jeito, mudar vai gerar resistência"</li>
+        <li>Comparação direta de custo: "planilha é de graça, o sistema tem mensalidade"</li>
+      </ul>
+      <h4>Sub-padrão: avaliação para "dar check"</h4>
+      <p>Existem clientes em Categoria 2 que realizam o ciclo todo ano sem conexão real com decisões de negócio. O processo é feito porque "sempre foi feito", não porque o resultado é usado para promover, desenvolver ou desligar com critério.</p>
+      <ul class="blt">
+        <li>Sinais: ninguém sabe dizer o que foi feito com o resultado do último ciclo; nota de desempenho não conversa com aumento, promoção ou PDI; baixo engajamento das lideranças, preenchimento apressado perto do prazo</li>
+        <li>Risco para o closer: vender eficiência operacional (fazer o mesmo processo mais rápido) para um cliente cujo problema de fundo é a ausência total de impacto do processo</li>
+      </ul>
+      <h3>Abordagem recomendada</h3>
+      <ul class="blt">
+        <li>Fazer o cliente quantificar o tempo/esforço gasto hoje no processo manual, para transformar isso em ROI de tempo economizado</li>
+        <li>Reforçar que a mudança é evolução de operacional para estratégico, não troca de planilha por sistema</li>
+        <li>Conectar com os pilares de Facilidade (redução de fricção operacional) e Inteligente (dados consolidados para decisão)</li>
+        <li>No sub-padrão "dar check": não focar em facilitar o processo atual, isso reforça a lógica de fazer por fazer, só mais rápido</li>
+        <li>Provocar o diagnóstico correto com perguntas como "o que mudou na empresa depois do último ciclo?" ou "quem foi promovido com base direta no resultado da última avaliação?"</li>
+        <li>Reposicionar o projeto como a chance de a avaliação finalmente virar instrumento de decisão, aproximando o pitch do usado em Categoria 1</li>
+        <li>Testar se o próprio champion enxerga o problema antes de investir energia, já que champion satisfeito com o "fazer por fazer" indica motivação de compra fraca</li>
+      </ul>
+
+      <h2>Categoria 4 — Usa ferramenta ativa, mas com resultados insuficientes</h2>
+      <h3>Perfil</h3>
+      <p>O cliente já tem uma solução implementada — módulo de RH dentro de um ERP, ferramenta genérica de gestão, ou até uma plataforma de performance que não entrega o prometido —, mas os resultados não satisfazem. Diferente da Categoria 5, o problema aqui não é necessariamente um concorrente direto de performance management.</p>
+      <h3>Dores prováveis</h3>
+      <ul class="blt">
+        <li>Ferramenta atual rígida, sem adaptação à cultura ou ao processo real da empresa</li>
+        <li>Falta de profundidade analítica (relatórios genéricos, sem inteligência de dados)</li>
+        <li>Baixa adesão de lideranças e colaboradores por experiência de uso ruim</li>
+        <li>Suporte fraco ou inexistente</li>
+        <li>Sensação de pagar por algo que não devolve valor proporcional</li>
+      </ul>
+      <h3>Motivadores para agir agora</h3>
+      <ul class="blt">
+        <li>Frustração acumulada ao longo de ciclos, não um evento único</li>
+        <li>Renovação de contrato se aproximando</li>
+        <li>Pressão interna por resultado que a ferramenta atual não ajuda a demonstrar</li>
+        <li>Troca de liderança de RH trazendo novos padrões de exigência</li>
+      </ul>
+      <h3>Objeções e cenários de resistência</h3>
+      <ul class="blt">
+        <li>"Já investimos tempo implementando essa ferramenta, trocar de novo é desgastante"</li>
+        <li>"O contrato ainda não venceu, não é o momento"</li>
+        <li>"É só um módulo dentro do sistema que já usamos para tudo, trocar parece redundante"</li>
+        <li>Medo de repetir uma migração de sistema já vivida como dolorosa</li>
+      </ul>
+      <h4>Cenário transversal 1: sponsor fora do front acha que trocar é besteira</h4>
+      <p>O champion (geralmente RH) pode estar convencido, mas quem aprova orçamento e prioridade não sente o desgaste operacional no dia a dia e enxerga a troca como risco e custo, não como ganho. Migrações anteriores de qualquer sistema deixam cicatriz institucional e viés automático contra qualquer troca.</p>
+      <ul class="blt">
+        <li>O closer precisa ajudar a montar o argumento para o sponsor, não só para o RH, conectando com Kit de Aprovação e com o "I" de Influência do champion</li>
+        <li>Trocar o enquadramento de "mudar de sistema" para "parar de pagar por um problema não resolvido": o custo atual já inclui o problema, só não aparece separado na fatura</li>
+        <li>Trazer o custo oculto para números concretos: horas de RH em retrabalho, decisões sem dado confiável, turnover não endereçado</li>
+        <li>Reduzir o risco percebido da nova migração de forma explícita: tempo real de setup, suporte dedicado, prova social de migração parecida</li>
+      </ul>
+      <h4>Cenário transversal 2: cliente avaliando soluções all-in-one que não resolvem o problema real</h4>
+      <p>O cliente já reconhece a dor, mas busca resolver com uma ferramenta genérica de RH (recrutamento, ponto, folha, e também um módulo de avaliação), em vez de uma solução especializada.</p>
+      <ul class="blt">
+        <li>O módulo de performance dentro de uma suíte generalista raramente tem a profundidade necessária (analytics robusto, nine box, flexibilidade de processo)</li>
+        <li>Risco para o closer: tratar isso como objeção de preço ou funcionalidade pontual, quando é uma escolha estratégica equivocada sobre o tipo de solução</li>
+      </ul>
+      <div class="note">Os dois cenários transversais podem aparecer em qualquer fase da jornada, inclusive em BS com orçamento já aprovado, já que a troca de fornecedor costuma passar por uma camada de aprovação acima do RH.</div>
+      <h3>Abordagem recomendada</h3>
+      <ul class="blt">
+        <li>Diagnosticar com precisão o que exatamente frustra no uso atual antes de posicionar a impulseup, para não repetir a mesma promessa que já falhou</li>
+        <li>Se a ferramenta atual for módulo de um ERP (ex: TOTVS, LG), reforçar especialização: ferramenta de propósito único versus módulo genérico dentro de uma suíte</li>
+        <li>Validar o desejo de simplificação do cliente que olha all-in-one, e reposicionar o caminho: profundidade e simplicidade não são a mesma coisa dentro de uma suíte genérica</li>
+        <li>Perguntar diretamente o que o cliente espera resolver com a troca, testando se o all-in-one de fato endereça isso ou apenas move o problema de lugar</li>
+        <li>Usar a RFP como ferramenta de comparação objetiva módulo a módulo</li>
+        <li>Usar prova social de clientes que migraram de ferramentas parecidas, quando disponível</li>
+      </ul>
+
+      <h2>Categoria 5 — Usa solução de um concorrente direto de performance management</h2>
+      <h3>Perfil</h3>
+      <p>Cliente já usa uma solução especializada em gestão de desempenho de um concorrente direto. Diferente da Categoria 4, não há questionamento sobre a necessidade de uma ferramenta especializada — isso já está resolvido. A disputa é sobre qual especialista é melhor.</p>
+      <h3>Dores prováveis</h3>
+      <ul class="blt">
+        <li>Insatisfação específica com o fornecedor atual: suporte, limitação de customização, falta de profundidade analítica, experiência de uso</li>
+        <li>Sensação de estagnação: a ferramenta não evoluiu no ritmo que a empresa precisava</li>
+        <li>Contrato caro para o que entrega, ou reajuste recente que gerou fricção</li>
+      </ul>
+      <h3>Motivadores para agir agora</h3>
+      <ul class="blt">
+        <li>Renovação de contrato se aproximando</li>
+        <li>Evento de insatisfação recente (queda de suporte, bug, mudança de equipe do fornecedor)</li>
+        <li>Troca de liderança de RH com experiência positiva prévia com a impulseup, ou já conhecedora do mercado de fornecedores</li>
+      </ul>
+      <h3>Pergunta-chave de diagnóstico</h3>
+      <p>Perguntar o que está funcionando bem hoje, deixando a insatisfação aparecer organicamente, em vez de assumir descontentamento.</p>
+      <h3>Objeções e cenários de resistência</h3>
+      <ul class="blt">
+        <li>"Já treinamos o time inteiro na ferramenta atual, trocar de novo é desgastante" — cicatriz de migração ainda mais forte do que na Categoria 4, por ser fornecedor especializado</li>
+        <li>"O fornecedor atual está tentando corrigir os problemas, vamos dar mais uma chance"</li>
+        <li>Guerra de preço direta: o concorrente reduz valor para reter o cliente</li>
+        <li>"Já temos histórico de dados na plataforma atual, migrar parece arriscado"</li>
+      </ul>
+      <h4>Cenário 3: cliente na eminência de iniciar um novo ciclo de avaliação</h4>
+      <p>Não há tempo hábil para migração completa antes do próximo ciclo começar. Prometer velocidade que a operação não sustenta é o erro mais caro possível, pois o cliente testará a impulseup no momento de maior pressão.</p>
+      <ul class="blt">
+        <li>Rota 1: acelerar uma implementação enxuta para rodar o ciclo já na impulseup</li>
+        <li>Rota 2: alinhar expectativa de que a migração ocorre no ciclo seguinte, usando o momento para fechar o contrato com antecedência</li>
+      </ul>
+      <h4>Cenário 4: cliente em fase avaliativa, ciclo já em andamento</h4>
+      <p>Antes de qualquer avanço, entender com clareza: quando termina o contrato vigente; o que o ciclo em andamento precisa entregar, para não gerar buraco de continuidade; e o que o cliente busca resolver de fato com a troca.</p>
+      <h4>Alerta de risco: BS "de fachada" para pressionar renovação</h4>
+      <p>Alguns clientes usam a cotação com a impulseup como instrumento de negociação com o fornecedor atual, sem intenção real de trocar. Padrão recorrente perto da data de renovação do contrato vigente.</p>
+      <ul class="blt">
+        <li>Sinais combinados: timing próximo à renovação, pedido rápido de proposta formal com pouco interesse em diagnóstico, resistência a avançar em etapas custosas (TD, teste técnico, mais stakeholders), champion pouco disponível para reunião mas rápido para pedir valores por escrito</li>
+        <li>Ação: testar comprometimento antes de entregar proposta completa; perguntar diretamente sobre o momento de renovação; nunca entregar valores e condições completas sem avanço real no funil</li>
+        <li>O alerta é para o padrão de sinais combinados, não para a categoria como um todo — a maioria das contas Cat. 5 é legítima</li>
+      </ul>
+      <h3>Abordagem recomendada</h3>
+      <ul class="blt">
+        <li>Focar no conforto do cliente com a mudança: detalhar concretamente como a migração vai acontecer, etapas, tempo de setup, o que ocorre com o histórico de dados, quem apoia o processo</li>
+        <li>Reforçar os ganhos reais de trabalhar com a impulseup frente ao que já foi mapeado como insatisfação</li>
+        <li>Reforçar o custo de não migrar: continuar com o fornecedor atual é pagar de novo por um problema já conhecido, não uma escolha neutra</li>
+        <li>Usar a RFP desde o início de BS para estruturar a comparação de forma objetiva</li>
+        <li>Nunca competir em guerra de preço direto (mesmo princípio do Módulo 2, fase Negociando): deslocar a conversa para o retorno e o gap que o fornecedor atual não resolve</li>
+        <li>Se o cliente mencionar concorrente fora da lista de battlecards conhecidos, confirmar o nome exato antes de qualquer posicionamento competitivo</li>
+      </ul>
+
+      <h3>Pontuação de risco — Categoria 5</h3>
+      <table>
+        <tr><th>Sinal</th><th>0 pontos</th><th>1 ponto</th><th>2 pontos</th></tr>
+        <tr><td>Timing de renovação</td><td>Vence em +6 meses</td><td>Vence entre 2 e 6 meses</td><td>Vence em menos de 2 meses</td></tr>
+        <tr><td>Disposição a avançar em etapas custosas</td><td>Aceita facilmente TD, teste técnico, stakeholders</td><td>Aceita com hesitação ou adiamento</td><td>Evita ou posterga repetidamente</td></tr>
+        <tr><td>Resposta sobre renovação</td><td>Responde com transparência</td><td>Responde de forma evasiva</td><td>Evita responder ou nega sem necessidade</td></tr>
+        <tr><td>Urgência por proposta vs. profundidade</td><td>Aceita diagnóstico completo antes de valores</td><td>Pede valores em paralelo ao diagnóstico</td><td>Pede valores antes de qualquer diagnóstico real</td></tr>
+        <tr><td>Disponibilidade do champion</td><td>Disponível e engajado</td><td>Disponível, mas lento</td><td>Pouco disponível, rápido para pedir preço por escrito</td></tr>
+      </table>
+      <ul class="blt">
+        <li><b>0 a 2 pontos:</b> sinais saudáveis, seguir o funil normalmente</li>
+        <li><b>3 a 5 pontos:</b> atenção. Testar comprometimento antes de entregar proposta completa, sem tratar como má-fé ainda</li>
+        <li><b>6 a 10 pontos:</b> alerta alto. Não entregar proposta comercial completa sem avanço real (reunião com TD confirmada, teste técnico agendado). Se a conta não sair desse padrão em uma ou duas interações, tratar como baixa prioridade de forecast</li>
+      </ul>
+    </section>
+
+    <!-- MÓDULO 5 -->
+    <section class="section" id="mod5">
+      <div class="eyebrow">Módulo 6</div>
+      <h1 class="page-title">Comissionamento</h1>
+      <p class="page-sub">Plano de comissão vigente: alíquotas por meta, parcelamento, bônus e fluxo operacional entre Comercial, CSI e Financeiro.</p>
+
+      <h2 style="margin-top:0;">Comissão por atingimento de meta mensal</h2>
+      <table>
+        <tr><th>% Meta</th><th>CP</th><th>BS</th><th>Observação</th></tr>
+        <tr><td>Abaixo de 70%</td><td>Não recebe</td><td>Não recebe</td><td>Sem elegibilidade</td></tr>
+        <tr><td>70%</td><td>7,5%</td><td>5,5%</td><td>—</td></tr>
+        <tr><td>100%</td><td>10%</td><td>8%</td><td>—</td></tr>
+        <tr><td>Acima de 150%</td><td>12%</td><td>10%</td><td>—</td></tr>
+      </table>
+      <div class="grid2">
+        <div class="card"><div class="card-title"><span class="dot"></span>Aceleradores</div>+1% em Social Selling, LR ou indicação via prospecção · +3% em contratos bianuais ou mais</div>
+        <div class="card"><div class="card-title"><span class="dot"></span>Detratores</div>Desconto 20-30% no contrato → −2% na comissão · Desconto 30-40% → −3% na comissão</div>
+      </div>
+      <div class="note">Conecta com a alçada de desconto do Módulo 2: até 20% está na alçada do closer, mas já a partir de 20% a comissão é reduzida. Acima de 20%, alinhamento prévio obrigatório com a liderança.</div>
+
+      <h2>Pagamento em 2 parcelas</h2>
+      <div class="grid2">
+        <div class="card"><div class="card-title"><span class="dot"></span>1ª Parcela (50%) — Fechamento</div>Contrato assinado e inserido no CRM · Pagamento da 1ª parcela do cliente confirmado no banco</div>
+        <div class="card"><div class="card-title"><span class="dot"></span>2ª Parcela (50%) — Go-Live</div>Cliente finaliza a implantação de 1 módulo (média 60 dias) · Cliente não cancela nos primeiros 45 dias</div>
+      </div>
+      <ul class="blt">
+        <li>Pagamento à vista pelo cliente: comissão única e integral</li>
+        <li>Churn pós-2ª parcela: desconto nas comissões futuras do valor já pago</li>
+        <li>CSI em stand-by: parcela restante paga só no final da vigência do contrato</li>
+      </ul>
+
+      <h2>Bônus</h2>
+      <ul class="blt">
+        <li>Fechamento e aquisição: pagamento via benefício, modalidade premiação</li>
+        <li>Meta trimestral batida: bonificação de meio salário na categoria premiação</li>
+      </ul>
+
+      <h2>Fluxo operacional interno</h2>
+      <table>
+        <tr><th>Etapa</th><th>Responsável</th><th>Quando</th></tr>
+        <tr><td>Envio da planilha de vendas fechadas do mês</td><td>Comercial</td><td>Até o dia 5</td></tr>
+        <tr><td>Validação da 1ª parcela e preenchimento</td><td>Financeiro</td><td>Retorno ao vendedor até dia 15</td></tr>
+        <tr><td>Verificação de status "Implementado"</td><td>CSI</td><td>Contínuo</td></tr>
+        <tr><td>Consolidação de vendas, Go-Lives e churn</td><td>Financeiro</td><td>Dia 12 (ou data definida)</td></tr>
+      </table>
+      <div class="note">Datas de corte: o check da 1ª parcela precisa ocorrer até o último dia do mês, com corte no dia 15 do pagamento do cliente, para que a comissão seja paga no mês subsequente.</div>
+
+      <h3>Matriz de responsabilidade (RACI simplificado)</h3>
+      <table>
+        <tr><th>Atividade</th><th>Vendas</th><th>CSI</th><th>Financeiro</th></tr>
+        <tr><td>Anexar contrato e reportar vendas fechadas</td><td>Responsável</td><td>—</td><td>Informado</td></tr>
+        <tr><td>Validar recebimento do pagamento do cliente</td><td>—</td><td>—</td><td>Responsável</td></tr>
+        <tr><td>Atualizar status "Implementado"</td><td>—</td><td>Responsável</td><td>Informado</td></tr>
+        <tr><td>Monitorar churn nos primeiros 45 dias</td><td>Informado</td><td>Responsável</td><td>Responsável</td></tr>
+        <tr><td>Cálculo do pagamento da comissão</td><td>—</td><td>—</td><td>Responsável</td></tr>
+      </table>
+
+      <h3>Resumo de gatilhos por tipo de venda</h3>
+      <table>
+        <tr><th>Tipo de venda</th><th>Gatilho Parcela 1</th><th>Gatilho Parcela 2</th></tr>
+        <tr><td>À vista</td><td>100% após compensação do pagamento</td><td>Não se aplica</td></tr>
+        <tr><td>Parcelada</td><td>Assinatura do contrato + 1ª parcela paga</td><td>Go-Live: 1 módulo com status Implementado</td></tr>
+        <tr><td>CSI em stand-by</td><td>Assinatura do contrato + 1ª parcela paga</td><td>Fim da vigência do contrato</td></tr>
+      </table>
+    </section>
+
+    <!-- MÓDULO 6 -->
+    <section class="section" id="mod6">
+      <div class="eyebrow">Módulo 5</div>
+      <h1 class="page-title">Battlecards</h1>
+      <p class="page-sub">Resumo do posicionamento competitivo. O conteúdo completo, com discovery, pitch e pontos de ataque detalhados por concorrente, vive no site dedicado do battlecard.</p>
+
+      <a href="https://sites.google.com/impulseup.com/battlecard/in%C3%ADcio" target="_blank" style="display:flex;align-items:center;justify-content:space-between;background:var(--primary);color:#fff;border-radius:var(--r-lg);padding:16px 22px;margin-bottom:28px;font-weight:600;font-size:14px;">
+        <span>Abrir o site completo do Battlecard</span>
+        <span style="font-size:18px;">↗</span>
+      </a>
+
+      <h2 style="margin-top:0;">Concorrentes com battlecard oficial</h2>
+
+      <h3>Qulture.Rocks (QR)</h3>
+      <ul class="blt">
+        <li>Discovery consultivo, pitch centrado em "somos especialistas"</li>
+        <li>Maior ponto de ataque: analytics é o calcanhar de Aquiles deles; suporte responde com FAQ; configuração complexa</li>
+        <li>Calibragem em massa: QR tem, impulseup ainda não — ser honesto sobre esse ponto na call</li>
+      </ul>
+
+      <h3>Gupy</h3>
+      <ul class="blt">
+        <li>Discovery focado em turnover; demo na ordem Clima → Pesquisa → Avaliação; não tocam em metas/OKRs</li>
+        <li>Maior ponto de ataque: não tem módulo de metas/OKRs; performance é produto novo (lançado em fev/2024); cada módulo tem mínimo de licenças separado (três contratos, não um produto só)</li>
+        <li>9box sem configuração real: sem cores, sem regras por quadrante, sem sucessão associada</li>
+      </ul>
+
+      <h3>Elofy</h3>
+      <ul class="blt">
+        <li>Discovery bem executado, cria urgência a partir da própria dor do prospect; posicionamento "não engessada" contra Sólides</li>
+        <li>Maior ponto de ataque: sem nível requerido por competência (sem régua de atingimento por cargo); calibração só no resultado final, não por seção; RV com acelerador/redutor só via planilha do suporte, não na plataforma</li>
+        <li>IA deles é decorativa (sugestão de perguntas), não analítica</li>
+      </ul>
+
+      <h3>SmartLeader</h3>
+      <ul class="blt">
+        <li>Vende para o líder, não para o RH ("deixe de ser um RH cobrador"); LMS nativo e gamificação como diferenciais visuais fortes</li>
+        <li>Maior ponto de ataque: SIA é ChatGPT genérico, não analisa dados do ciclo de avaliação; LMS e gamificação não entram no plano base, só a partir do Plano 03; sem RV combinado no plano base</li>
+        <li>Engajamento na ferramenta (gamificação) não é o mesmo que qualidade de análise</li>
+      </ul>
+
+      <div class="note">Demais concorrentes mapeados pela impulseup (Feedz, TOTVS, Sólides, Mindsight, Mereo, Menvie, LG, Team Guide, Efficient, Team Culture, YouRH, Pin People) ainda não têm battlecard, por falta de material real que sustente pontos de ataque confiáveis. Fica registrado como pendência aberta, não como lacuna a preencher artificialmente.</div>
+    </section>
+
+    <!-- MÓDULO 7 -->
+    <section class="section" id="mod7">
+      <div class="eyebrow">Módulo 4</div>
+      <h1 class="page-title">Piloto Guiado</h1>
+      <p class="page-sub">Como oferecer, conduzir e fechar o teste real da plataforma com o cliente, transformando a diferenciação da impulseup frente à concorrência em prova concreta de experiência de uso.</p>
+
+      <h2 style="margin-top:0;">1. Quando oferecer</h2>
+      <p>A decisão de oferecer o Piloto Guiado é do closer, com base na leitura do projeto. É a principal alavanca de diferenciação frente a concorrentes que só oferecem apresentação, sem degustação real da solução.</p>
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-title">Momento ideal</div>
+        Logo após a reunião de Demo, quando o cliente já entendeu <b>o quê</b> a impulseup entrega e demonstra interesse em entender <b>como</b> isso funciona na prática, para os usuários finais dele.
+      </div>
+      <p>Existem dois formatos possíveis, e o closer escolhe qual usar:</p>
+      <table>
+        <tr><th>Formato</th><th>Quando usar</th></tr>
+        <tr><td><b>Piloto Guiado completo</b></td><td>Ciclo de 10 dias úteis, com ambiente configurado, participantes reais e critérios de sucesso formais</td></tr>
+        <tr><td><b>Degustação ao vivo (in-demo)</b></td><td>Teste imediato e pontual, dentro da própria Demo: o closer envia a avaliação ou pesquisa ao vivo para o cliente experimentar como usuário final, sem necessidade de agenda paralela</td></tr>
+      </table>
+
+      <h2>2. Levantamento de requisitos</h2>
+      <p>Não há sistema externo nem integração envolvida no piloto. O levantamento junto ao cliente é enxuto, feito na reunião de alinhamento pré-piloto:</p>
+      <ul class="blt">
+        <li>Lista de participantes do teste (nomes e e-mails)</li>
+        <li>Estrutura organizacional mínima envolvida, quando aplicável (quem avalia quem)</li>
+        <li>Modelo de avaliação ou pesquisa que o cliente quer simular, alinhado ao desafio mapeado na Conexão</li>
+        <li>Confirmação se haverá NDA (nesse caso, o fluxo jurídico corre à parte, fora do cronograma dos 10 dias)</li>
+      </ul>
+
+      <h2>3. Reunião de alinhamento pré-piloto</h2>
+      <p>Reunião nova e separada, realizada logo após a Demo, antes do cliente enviar qualquer material. É nela que o closer e o Champion definem, juntos, os critérios de sucesso do piloto.</p>
+      <p><b>Os critérios de sucesso não ficam por conta do cliente.</b> A experiência mostra que o cliente costuma não saber o que precisa avaliar. Por isso, o closer sempre parte do pool fixo de indicadores abaixo, escolhendo de 3 a 5 com o Champion.</p>
+      <table>
+        <tr><th>Indicador</th><th>O que mede</th><th>Como coletar</th></tr>
+        <tr><td>Taxa de adesão</td><td>% de participantes convidados que efetivamente responderam</td><td>Automático na plataforma</td></tr>
+        <tr><td>Tempo médio de resposta</td><td>Quanto tempo o usuário final levou para completar a avaliação</td><td>Automático na plataforma</td></tr>
+        <tr><td>Taxa de conclusão sem abandono</td><td>% que iniciou e terminou sem sair no meio</td><td>Automático na plataforma</td></tr>
+        <tr><td>Clareza percebida</td><td>Nota de 1 a 5 sobre entendimento das perguntas</td><td>Pergunta final da própria pesquisa</td></tr>
+        <tr><td>Satisfação com a experiência</td><td>Nota de 1 a 5 sobre a experiência de uso geral</td><td>Pergunta final da própria pesquisa</td></tr>
+        <tr><td>NPS de uso</td><td>Probabilidade de recomendar a experiência a um colega</td><td>Pergunta final, escala de 0 a 10</td></tr>
+        <tr><td>Qualidade qualitativa das respostas</td><td>Se as respostas abertas geraram insumo real e utilizável</td><td>Leitura conjunta na reunião de fechamento</td></tr>
+      </table>
+      <div class="note">Saídas desta reunião: indicadores escolhidos (3 a 5 do pool acima), lista de participantes e prazo combinado com o cliente.</div>
+
+      <h2>4. Cronograma padrão</h2>
+      <p>Duração máxima de <b>10 dias úteis</b> (aproximadamente 2 semanas), para não dilatar o tempo de venda. O relógio começa a contar a partir do recebimento efetivo dos materiais do cliente, não da reunião de alinhamento.</p>
+      <table>
+        <tr><th>Quando</th><th>O que acontece</th></tr>
+        <tr><td>Dias 1 a 3</td><td><b>Configuração do ambiente</b> — closer monta o ambiente de teste com os dados recebidos do cliente</td></tr>
+        <tr><td>Dia 4</td><td><b>Sensibilização dos participantes</b> — Champion, com apoio do closer, comunica o teste aos participantes</td></tr>
+        <tr><td>Dias 5 a 9</td><td><b>Janela de respostas</b> — participantes do cliente respondem na plataforma</td></tr>
+        <tr><td>Dia 10</td><td><b>Coleta e leitura de resultados</b> — closer e Champion leem juntos os indicadores definidos na etapa 3</td></tr>
+      </table>
+
+      <h2>5. Sensibilização dos participantes</h2>
+      <p>Um piloto sem sensibilização adequada nasce contaminado: participantes respondem sem entender o motivo, e isso distorce os próprios indicadores de qualidade. O closer sempre chega à etapa 4 com dois materiais de apoio prontos:</p>
+      <div class="grid2">
+        <div class="card"><div class="card-title"><span class="dot"></span>Roteiro de sensibilização</div>Script curto de 3 a 4 pontos, para o closer usar caso o Champion prefira que a impulseup fale diretamente com os participantes.</div>
+        <div class="card"><div class="card-title"><span class="dot"></span>Comunicado pré-formatado</div>Texto curto, pronto para o Champion colar em e-mail ou canal interno, explicando o que é o teste, quanto tempo leva e por que a participação importa.</div>
+      </div>
+
+      <h2>6. Fechamento e leitura de resultados</h2>
+      <p>No dia 10, closer e Champion leem juntos, em reunião, os indicadores escolhidos na etapa 3, agora com números reais. Essa leitura alimenta diretamente a fase seguinte do funil (BS ou N) e vira conteúdo da aba "Piloto Guiado" no site do cliente, dando transparência ao processo para quem o Champion reportar internamente.</p>
+
+      <h2>7. Escopo das entregas</h2>
+      <div class="card" style="background:var(--fg);color:#fff;border:none;">
+        As entregas do Piloto Guiado são restritas a cliente e closer. Não há repasse de dados do piloto para outras áreas fora dessa relação direta.
+      </div>
+    </section>
+
+    <!-- MÓDULO 1 (placeholder) -->
+    <section class="section" id="mod1">
+      <div class="eyebrow">Módulo 1</div>
+      <h1 class="page-title">Fundamentos e Cultura impulseup</h1>
+      <p class="page-sub">Sobre a impulseup, valores, time, ICP, produto e planos.</p>
+      <div class="placeholder-box">
+        <div class="ic">Em revisão</div>
+        <p>Este manual ainda está em processo de revisão de conteúdo e será publicado aqui em breve.</p>
+      </div>
+    </section>
+
+    <!-- MÓDULO 4 (placeholder) -->
+    <section class="section" id="mod4">
+      <div class="eyebrow">Módulo 7</div>
+      <h1 class="page-title">Operação e SLAs</h1>
+      <p class="page-sub">Rotinas internas, itens de linha, férias, bench, integrações, cláusulas contratuais.</p>
+      <div class="placeholder-box">
+        <div class="ic">Em revisão</div>
+        <p>Este manual ainda está em processo de revisão de conteúdo e será publicado aqui em breve.</p>
+      </div>
+    </section>
+
+    <div class="footer-note">Playbook Comercial impulseup · Documento vivo, atualizado por módulo · Versão de revisão em andamento</div>
+  </main>
+</div>
+
+<script>
+document.querySelectorAll('[data-target]').forEach(el => {
+  el.addEventListener('click', () => {
+    const target = el.getAttribute('data-target');
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(target).classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.querySelectorAll('.nav-item[data-target="'+target+'"]').forEach(n => n.classList.add('active'));
+    document.querySelector('.main').scrollTo(0,0);
+    window.scrollTo(0,0);
+  });
+});
+</script>
+
+</body>
+</html>
