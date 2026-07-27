@@ -650,11 +650,11 @@ function populateClosers() {
   });
 }
 
-async function loadDeals(stages, afterDate) {
+async function loadDeals(stages, afterDate, dateField) {
   stages = stages || OPEN;
-  const props=['dealname','dealstage','num_associated_contacts','visao_comercial_status_geral_da_conta','quais_i_s_nosso_champion_tem_','hubspot_owner_id','createdate','acessamos_td_','e_key_account_'];
+  const props=['dealname','dealstage','num_associated_contacts','visao_comercial_status_geral_da_conta','quais_i_s_nosso_champion_tem_','hubspot_owner_id','createdate','acessamos_td_','e_key_account_','data_da_primeira_reuniao'];
   const baseFilters=[{propertyName:'dealstage',operator:'IN',values:stages}];
-  if(afterDate) baseFilters.push({propertyName:'createdate',operator:'GTE',value:String(afterDate)});
+  if(afterDate) baseFilters.push({propertyName:dateField||'createdate',operator:'GTE',value:String(afterDate)});
   let results=[],offset=0;
   while(true){
     const r=await window.cowork.callMcpTool('mcp__9b6f0d6f-2b47-4d2e-abb7-d9d93cd88cde__search_crm_objects',{
@@ -674,10 +674,10 @@ async function loadDeals(stages, afterDate) {
 }
 
 async function loadAllForTodos() {
-  const sixMonthsAgo = Date.now() - 180*24*60*60*1000;
+  const jan2026 = new Date('2026-01-01T00:00:00Z').getTime();
   const [active, closed] = await Promise.all([
     loadDeals(OPEN),
-    loadDeals(['closedwon','closedlost'], sixMonthsAgo)
+    loadDeals(['closedwon','closedlost'], jan2026, 'data_da_primeira_reuniao')
   ]);
   const seen = new Set();
   return [...active, ...closed].filter(d=>{ if(seen.has(d.id))return false; seen.add(d.id); return true; });
