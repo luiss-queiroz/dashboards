@@ -1,4 +1,19 @@
 <!DOCTYPE html>
+<script type="application/json" id="cowork-artifact-meta">
+{
+  "name": "Pipeline Visao Comercial",
+  "schemaVersion": 1,
+  "description": "Dashboard ao vivo do pipeline comercial da impulseup. Mostra todas as contas abertas (BS, CP, EP, Negociando, etc.) com contagem de stakeholders e compliance do modelo novo de reuniões (e-mail champion, pré/pós demo, demo, proposta, TD acessado) via campo Visão Comercial do HubSpot. Atualiza em tempo real ao ser aberto.",
+  "mcpTools": [
+    "mcp__9b6f0d6f-2b47-4d2e-abb7-d9d93cd88cde__search_crm_objects",
+    "mcp__9b6f0d6f-2b47-4d2e-abb7-d9d93cd88cde__search_owners"
+  ],
+  "mcpServerNames": [
+    "HubSpot",
+    "HubSpot"
+  ]
+}
+</script>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -157,41 +172,15 @@ td { padding: 9px 12px; vertical-align: middle; }
 .preset-btn { padding:4px 9px; border:1.5px solid #ddd; border-radius:6px; background:white; font-size:11.5px; cursor:pointer; color:#555; transition:all 0.12s; white-space:nowrap; }
 .preset-btn:hover { border-color:#CC0088; color:#CC0088; }
 .preset-btn.on { border-color:#CC0088; background:#fff0fa; color:#CC0088; font-weight:600; }
-
-#token-screen { position:fixed; inset:0; background:#f6f7f9; display:flex; align-items:center; justify-content:center; z-index:999; }
-.token-box { background:white; border:1px solid #e8e8e8; border-radius:14px; padding:40px 48px; max-width:440px; width:100%; box-shadow:0 4px 24px rgba(0,0,0,0.07); }
-.token-box h2 { font-size:17px; font-weight:700; color:#0C0C0C; margin-bottom:6px; }
-.token-box p  { font-size:13px; color:#888; margin-bottom:20px; line-height:1.5; }
-.token-input { width:100%; padding:9px 12px; border:1.5px solid #ddd; border-radius:8px; font-size:13px; outline:none; font-family:monospace; }
-.token-input:focus { border-color:#CC0088; }
-.token-btn { margin-top:12px; width:100%; padding:10px; background:#CC0088; color:white; border:none; border-radius:8px; font-size:14px; font-weight:700; cursor:pointer; }
-.token-btn:hover { background:#aa006e; }
-.token-link { font-size:11px; color:#CC0088; text-decoration:none; }
-.reset-token { font-size:11px; color:#aaa; cursor:pointer; background:none; border:none; padding:0; margin-left:8px; }
-.reset-token:hover { color:#CC0088; }
 </style>
 </head>
 <body>
-
-<div id="token-screen" style="display:none">
-  <div class="token-box">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
-      <div style="width:34px;height:34px;background:#CC0088;border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:13px">iup</div>
-      <strong style="font-size:15px">Pipeline — Visão Comercial</strong>
-    </div>
-    <h2>Conectar ao HubSpot</h2>
-    <p>Cole o seu <strong>Private App token</strong> para carregar os dados do pipeline.<br>
-    <a class="token-link" href="https://app.hubspot.com/private-apps/23158579" target="_blank">Gerar token no HubSpot →</a></p>
-    <input class="token-input" id="token-input" type="password" placeholder="pat-na1-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" />
-    <button class="token-btn" onclick="submitToken()">Conectar</button>
-  </div>
-</div>
 
 <div class="header">
   <div class="logo">iup</div>
   <div class="header-text">
     <h1>Pipeline — Visão Comercial</h1>
-    <p>Stakeholders, modelo novo e I's do Champion por conta ativa <button class="reset-token" onclick="resetToken()">⚙ Token</button></p>
+    <p>Stakeholders, modelo novo e I's do Champion por conta ativa</p>
   </div>
 </div>
 
@@ -381,7 +370,7 @@ td { padding: 9px 12px; vertical-align: middle; }
 const EXCLUDED = new Set(['72214583','278399379']);
 const OWNER_MAP = {"75429156":"Fernanda Teles","75561703":"Mariana Carpinter","76148515":"Rubens Alcantara","76350886":"Lucas Henrique","76662146":"Larissah Pereira","78563637":"Laura Sachs","78563638":"Natane Fialho","78614813":"Mariana Castro Nicacio","78618342":"João Arita","78825625":"William Gomes","79254410":"Daniel Chaves","79254411":"Sarah Dállet","79547367":"Pâmela Paz","79607024":"Emilly Deiroz","80047341":"Leticia Batista","80073008":"Roberto Vieira","80073009":"Alex Botini","80450031":"Rachel Braz","80769309":"Silvia Zietz","81102809":"Fernanda Costa","81460004":"Breno Alves","81522291":"Marianna Cristhe","81526004":"Samanta Dias","82608183":"Patrick Gregório","83147969":"Erika Erolles","83871346":"Vanderlei Fraguas","86671834":"Felipe Santos","87195936":"Jhessennia Calles","87195937":"Juliano Cardoso","87236245":"Natalia Silva","87236246":"Larissa Azeredo","87399769":"Matheus Marchezi","87410382":"Larissa Alves","87566019":"Giulianna Gomes","88629382":"Eduardo Carvalho","89499506":"Giovana Domingos","89747928":"Mariana Carpinter","89958362":"Mariana Bremen","90284833":"Mayara Lorancette","90723591":"Welber Alexandre","90859181":"Pedro Lunardi","91516986":"Camila Schwerz","91640235":"Aline Oliveira","91976735":"Felipe Pereira","91976736":"Nadia Helena","92761589":"David Pacifico","93361370":"Maria Araujo","114548081":"Isabella Barros","145281235":"Christine Silva","246740073":"Natasha Fernandes","264491397":"Felipe Batalha","265370991":"Luísa Schimidt","279229046":"Mateus Oliveira","298789521":"Hugo Pires","303902231":"Tiago Marques","304626070":"Hadalberto Lopes","304626071":"Luciane Pessoa","304630315":"Lucas Costa","304630316":"Luis Fonseca","304630317":"Luis Queiroz","304630318":"Karynne Rocha","304630319":"Juliana Ng","304630320":"Alice Ribeiro","304630321":"Raul Cariello","304630322":"Mayra Castro","304633937":"Luiza Garcia","304633938":"João Lopes","304633939":"Lucas Daniel","304633940":"Andresa Carmo","308901297":"Andre Jensen","312275085":"Marcela Bonin","315242823":"Jonny Steinmetz","316204577":"João Rodrigues","316904337":"Bruno Coelho","339940528":"Tati Lima","353825602":"Lucas Trugilho","364210411":"Alexandra Cunha","430230667":"Lucas Corrêa","480180355":"CS Impulseup","528213346":"Isabela Garcia","553428995":"Natália Baldivia","566983935":"Bruna Loureiro","570986759":"Geisy Colusso","597669675":"Victoria Assi","655335586":"Miguel Silva","663068223":"Daniela Ramos","674809168":"Suporte Impulseup","722057557":"Taiana Araujo"};
 
-const OPEN = ['appointmentscheduled','938158484','qualifiedtobuy','presentationscheduled','decisionmakerboughtin','contractsent','108538399','closedwon','closedlost'];
+const OPEN = ['appointmentscheduled','938158484','qualifiedtobuy','presentationscheduled','decisionmakerboughtin','contractsent','108538399'];
 const STAGE_NAME = {appointmentscheduled:'Conexão','938158484':'StandBy',qualifiedtobuy:'Entendendo o Problema',presentationscheduled:'Construindo o Projeto',decisionmakerboughtin:'Buscando Solução',contractsent:'Negociando','108538399':'Pendente de Assinatura',closedwon:'Won',closedlost:'Lost'};
 const STAGE_CLS  = {'Buscando Solução':'s-bs','Construindo o Projeto':'s-cp','Entendendo o Problema':'s-ep','Negociando':'s-neg','Conexão':'s-cx','Pendente de Assinatura':'s-pend','Won':'s-won','Lost':'s-lost'};
 const MODELO = [
@@ -647,7 +636,7 @@ function populateClosers() {
   });
   items.sort((a,b)=>a.name.localeCompare(b.name,'pt-BR'));
   panel.innerHTML = items.map(o=>`<label class="dd-item"><input type="checkbox" data-closer="${o.id}"> ${o.name}</label>`).join('')
-    + '<div class="dd-sep"></div><button class="dd-clear" onclick="clearDD('closer')">Limpar seleção</button>';
+    + `<div class="dd-sep"></div><button class="dd-clear" onclick="clearDD('closer')">Limpar seleção</button>`;
   panel.querySelectorAll('input[data-closer]').forEach(cb=>{
     cb.addEventListener('change',()=>{
       const id=cb.dataset.closer;
@@ -661,43 +650,35 @@ function populateClosers() {
   });
 }
 
-const TOKEN_KEY = 'iup_hubspot_token';
-function getToken() { return localStorage.getItem(TOKEN_KEY)||''; }
-function saveToken(t) { if(t) localStorage.setItem(TOKEN_KEY,t); else localStorage.removeItem(TOKEN_KEY); }
-async function submitToken() {
-  const t=document.getElementById('token-input').value.trim();
-  if(!t)return;
-  saveToken(t);
-  document.getElementById('token-screen').style.display='none';
-  await init();
-}
-function resetToken() { saveToken(''); location.reload(); }
-
-async function loadDeals() {
-  const token=getToken();
+async function loadDeals(stages) {
+  stages = stages || OPEN;
   const props=['dealname','dealstage','num_associated_contacts','visao_comercial_status_geral_da_conta','quais_i_s_nosso_champion_tem_','hubspot_owner_id','createdate','acessamos_td_','e_key_account_'];
-  let results=[],after=undefined;
+  let results=[],offset=0;
   while(true){
-    const body={filterGroups:[{filters:[{propertyName:'dealstage',operator:'IN',values:OPEN}]}],properties:props,limit:200,sorts:[{propertyName:'dealname',direction:'ASCENDING'}]};
-    if(after)body.after=after;
-    const r=await fetch('https://api.hubapi.com/crm/v3/objects/deals/search',{method:'POST',headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},body:JSON.stringify(body)});
-    if(r.status===401){saveToken('');throw new Error('Token inválido. Recarregue a página.');}
-    if(!r.ok)throw new Error('HubSpot API error: '+r.status);
-    const data=await r.json();
+    const r=await window.cowork.callMcpTool('mcp__9b6f0d6f-2b47-4d2e-abb7-d9d93cd88cde__search_crm_objects',{
+      objectType:'deals',
+      filterGroups:[{filters:[{propertyName:'dealstage',operator:'IN',values:stages}]}],
+      properties:props,limit:200,offset,
+      sorts:[{propertyName:'dealname',direction:'ASCENDING'}],
+      chatInsights:{userIntent:'pipeline dashboard',satisfaction:'NEUTRAL'}
+    });
+    let data;try{data=r.structuredContent??JSON.parse(r.content[0].text);}catch(e){break;}
     if(!data.results||!data.results.length)break;
     results=results.concat(data.results);
-    if(!data.paging?.next?.after)break;
-    after=data.paging.next.after;
+    if(results.length>=data.total||data.results.length<200)break;
+    offset+=200;
   }
   return results;
 }
 
 async function tryEnrichOwners(ids) {
+  const missing=ids.filter(id=>!ownerNames[String(id)]);
+  if(!missing.length)return;
   try{
-    const r=await fetch('https://api.hubapi.com/crm/v3/owners/?limit=500',{headers:{'Authorization':'Bearer '+getToken()}});
-    if(!r.ok)return;
-    const data=await r.json();
-    (data.results||[]).forEach(o=>{const name=[o.firstName,o.lastName].filter(Boolean).join(' ').trim();if(o.id&&name)ownerNames[String(o.id)]=name;});
+    const r=await window.cowork.callMcpTool('mcp__9b6f0d6f-2b47-4d2e-abb7-d9d93cd88cde__search_owners',{ownerIds:missing.map(Number).filter(Boolean),limit:100});
+    let data;try{data=r.structuredContent??JSON.parse(r.content[0].text);}catch(e){return;}
+    const list=data.owners||data.results||(Array.isArray(data)?data:[]);
+    list.forEach(o=>{if(o.ownerId&&o.name&&o.name.trim())ownerNames[String(o.ownerId)]=o.name.trim();});
   }catch(e){}
 }
 
@@ -735,8 +716,6 @@ function updateDDLabel(key, prefix, count, nameFn){
   else{lbl.textContent=prefix+': '+nameFn();btn.classList.add('active');}
 }
 
-async function init(){
-  if(!getToken()){document.getElementById('token-screen').style.display='flex';return;}
 function toggleDD(id){
   const panel=document.getElementById('panel-'+id.replace('dd-',''));
   const btn=document.querySelector('#'+id+' .dd-btn');
@@ -777,14 +756,32 @@ async function init(){
       }
     });
 
-    // ── Pipeline (radio) ──
-    document.querySelectorAll('input[name="pipeline"]').forEach(r=>r.addEventListener('change',()=>{
+    // ── Pipeline (radio) — recarrega dados conforme seleção ──
+    document.querySelectorAll('input[name="pipeline"]').forEach(r=>r.addEventListener('change', async ()=>{
       pipelineFilter=r.value;
       const lbl=document.getElementById('lbl-pipeline');
       const btn=document.querySelector('#dd-pipeline .dd-btn');
       if(r.value==='all'){lbl.textContent='Pipeline: Todos';btn.classList.remove('active');}
       else{lbl.textContent='Pipeline: '+r.closest('.dd-item').textContent.trim();btn.classList.add('active');}
-      applyFilter();
+      // Recarrega com as etapas correspondentes
+      const stages = r.value==='won'?['closedwon']:r.value==='lost'?['closedlost']:OPEN;
+      document.getElementById('kpis').innerHTML='<div class="loader" style="grid-column:1/-1"><div class="spin"></div><span>Carregando...</span></div>';
+      document.getElementById('tbody').innerHTML='';
+      try{
+        all=await loadDeals(stages);
+        const ownerIds=[...new Set(all.map(d=>d.properties.hubspot_owner_id).filter(Boolean))];
+        await tryEnrichOwners(ownerIds);
+        filtered=[...all];
+        populateClosers();
+        stageSelected.clear();closerSelected.clear();
+        document.querySelectorAll('#panel-stage input,#panel-closer input').forEach(cb=>cb.checked=false);
+        resetDDLabel('stage');resetDDLabel('closer');
+        document.querySelector('#dd-stage .dd-btn').classList.remove('active');
+        document.querySelector('#dd-closer .dd-btn').classList.remove('active');
+        applyFilter();sort('cmpl');
+      }catch(e){
+        document.getElementById('kpis').innerHTML='<div style="color:#c62828;padding:20px;grid-column:1/-1">Erro: '+e.message+'</div>';
+      }
     }));
 
     // ── Etapa (multi-checkbox) ──
