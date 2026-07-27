@@ -138,7 +138,26 @@ td { padding: 9px 12px; vertical-align: middle; }
 @media (max-width: 1100px) { .kpi-grid { grid-template-columns: repeat(4, 1fr); } }
 @media (max-width: 700px)  { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
 
-/* Token screen */
+/* ── Custom Dropdowns ── */
+.dd-wrap { position:relative; display:inline-block; }
+.dd-btn { display:inline-flex; align-items:center; gap:5px; padding:5px 10px; border:1.5px solid #ddd; border-radius:8px; background:white; cursor:pointer; font-size:12px; color:#555; white-space:nowrap; transition:all 0.12s; user-select:none; }
+.dd-btn:hover { border-color:#CC0088; color:#CC0088; }
+.dd-btn.open  { border-color:#CC0088; color:#CC0088; }
+.dd-btn.active { border-color:#CC0088; background:#fff0fa; color:#CC0088; font-weight:600; }
+.dd-caret { font-size:8px; opacity:0.55; }
+.dd-panel { position:absolute; top:calc(100% + 5px); left:0; background:white; border:1.5px solid #e0e0e0; border-radius:10px; padding:5px 0; min-width:170px; box-shadow:0 6px 20px rgba(0,0,0,0.10); z-index:200; display:none; }
+.dd-panel.open { display:block; }
+.dd-item { display:flex; align-items:center; gap:8px; padding:7px 14px; cursor:pointer; font-size:12.5px; color:#333; transition:background 0.08s; white-space:nowrap; }
+.dd-item:hover { background:#fdf4f9; }
+.dd-item input { accent-color:#CC0088; width:13px; height:13px; flex-shrink:0; cursor:pointer; }
+.dd-sep { height:1px; background:#f0f0f0; margin:4px 0; }
+.dd-clear { display:block; width:100%; text-align:center; font-size:11px; color:#aaa; cursor:pointer; padding:5px 0 3px; border:none; background:none; }
+.dd-clear:hover { color:#CC0088; }
+/* ── Preset period buttons ── */
+.preset-btn { padding:4px 9px; border:1.5px solid #ddd; border-radius:6px; background:white; font-size:11.5px; cursor:pointer; color:#555; transition:all 0.12s; white-space:nowrap; }
+.preset-btn:hover { border-color:#CC0088; color:#CC0088; }
+.preset-btn.on { border-color:#CC0088; background:#fff0fa; color:#CC0088; font-weight:600; }
+
 #token-screen { position:fixed; inset:0; background:#f6f7f9; display:flex; align-items:center; justify-content:center; z-index:999; }
 .token-box { background:white; border:1px solid #e8e8e8; border-radius:14px; padding:40px 48px; max-width:440px; width:100%; box-shadow:0 4px 24px rgba(0,0,0,0.07); }
 .token-box h2 { font-size:17px; font-weight:700; color:#0C0C0C; margin-bottom:6px; }
@@ -181,82 +200,160 @@ td { padding: 9px 12px; vertical-align: middle; }
 </div>
 
 <div id="toolbar" class="toolbar" style="display:none">
-  <!-- Row 1: Stage + search -->
-  <div class="toolbar-row">
-    <span class="tlabel">Etapa</span>
-    <button class="fb on" data-s="all">Todas</button>
-    <button class="fb" data-s="Buscando Solução">BS</button>
-    <button class="fb" data-s="Construindo o Projeto">CP</button>
-    <button class="fb" data-s="Entendendo o Problema">EP</button>
-    <button class="fb" data-s="Negociando">Negociando</button>
-    <button class="fb" data-s="Conexão">Conexão</button>
-    <button class="fb" data-s="Pendente de Assinatura">Pendente</button>
-    <button class="fb" data-s="StandBy">StandBy</button>
-    <button class="fb" data-s="Won" style="color:#1b5e20;border-color:#a5d6a7">Won ✅</button>
-    <button class="fb" data-s="Lost" style="color:#880e4f;border-color:#f48fb1">Lost ❌</button>
-    <div class="search-wrap">
+  <!-- Row 1: Pipeline + filtros principais + busca -->
+  <div class="toolbar-row" style="flex-wrap:wrap;gap:6px">
+
+    <!-- Pipeline status -->
+    <div class="dd-wrap" id="dd-pipeline">
+      <button class="dd-btn" onclick="toggleDD('dd-pipeline')">
+        <span id="lbl-pipeline">Pipeline: Todos</span><span class="dd-caret">▼</span>
+      </button>
+      <div class="dd-panel" id="panel-pipeline">
+        <label class="dd-item"><input type="radio" name="pipeline" value="all" checked> Todos</label>
+        <label class="dd-item"><input type="radio" name="pipeline" value="ativo"> 🟢 Ativo (em andamento)</label>
+        <label class="dd-item"><input type="radio" name="pipeline" value="won"> ✅ Won</label>
+        <label class="dd-item"><input type="radio" name="pipeline" value="lost"> ❌ Lost</label>
+      </div>
+    </div>
+
+    <!-- Etapa multi -->
+    <div class="dd-wrap" id="dd-stage">
+      <button class="dd-btn" onclick="toggleDD('dd-stage')">
+        <span id="lbl-stage">Etapa: Todas</span><span class="dd-caret">▼</span>
+      </button>
+      <div class="dd-panel" id="panel-stage">
+        <label class="dd-item"><input type="checkbox" data-stage="Conexão"> Conexão</label>
+        <label class="dd-item"><input type="checkbox" data-stage="StandBy"> StandBy</label>
+        <label class="dd-item"><input type="checkbox" data-stage="Entendendo o Problema"> Entendendo o Problema</label>
+        <label class="dd-item"><input type="checkbox" data-stage="Construindo o Projeto"> Construindo o Projeto</label>
+        <label class="dd-item"><input type="checkbox" data-stage="Buscando Solução"> Buscando Solução</label>
+        <label class="dd-item"><input type="checkbox" data-stage="Negociando"> Negociando</label>
+        <label class="dd-item"><input type="checkbox" data-stage="Pendente de Assinatura"> Pendente de Assinatura</label>
+        <label class="dd-item"><input type="checkbox" data-stage="Won"> ✅ Won</label>
+        <label class="dd-item"><input type="checkbox" data-stage="Lost"> ❌ Lost</label>
+        <div class="dd-sep"></div>
+        <button class="dd-clear" onclick="clearDD('stage')">Limpar seleção</button>
+      </div>
+    </div>
+
+    <!-- Closer multi -->
+    <div class="dd-wrap" id="dd-closer">
+      <button class="dd-btn" onclick="toggleDD('dd-closer')">
+        <span id="lbl-closer">Closer: Todos</span><span class="dd-caret">▼</span>
+      </button>
+      <div class="dd-panel" id="panel-closer" style="max-height:240px;overflow-y:auto">
+        <!-- populado via JS -->
+      </div>
+    </div>
+
+    <!-- I's multi -->
+    <div class="dd-wrap" id="dd-is">
+      <button class="dd-btn" onclick="toggleDD('dd-is')">
+        <span id="lbl-is">I's: Todos</span><span class="dd-caret">▼</span>
+      </button>
+      <div class="dd-panel" id="panel-is">
+        <label class="dd-item"><input type="checkbox" data-iv="Todos os I's (Champion Ideal)"> 🌟 Todos os I's (Ideal)</label>
+        <label class="dd-item"><input type="checkbox" data-iv="Incentivo + Informação"> ⚡ Incentivo + Informação</label>
+        <label class="dd-item"><input type="checkbox" data-iv="Incentivo + Influência"> ⚡ Incentivo + Influência</label>
+        <label class="dd-item"><input type="checkbox" data-iv="Informação + Influência"> ⚡ Informação + Influência</label>
+        <label class="dd-item"><input type="checkbox" data-iv="Apenas Incentivo"> ◑ Apenas Incentivo</label>
+        <label class="dd-item"><input type="checkbox" data-iv="Apenas Informação"> ◑ Apenas Informação</label>
+        <label class="dd-item"><input type="checkbox" data-iv="Apenas Influência"> ◑ Apenas Influência</label>
+        <label class="dd-item"><input type="checkbox" data-iv="Nenhum I"> — Nenhum I</label>
+        <label class="dd-item"><input type="checkbox" data-iv="__empty__"> ✗ Não informado</label>
+        <div class="dd-sep"></div>
+        <button class="dd-clear" onclick="clearDD('is')">Limpar seleção</button>
+      </div>
+    </div>
+
+    <!-- Stk multi -->
+    <div class="dd-wrap" id="dd-stk">
+      <button class="dd-btn" onclick="toggleDD('dd-stk')">
+        <span id="lbl-stk">Stk.: Todos</span><span class="dd-caret">▼</span>
+      </button>
+      <div class="dd-panel" id="panel-stk">
+        <label class="dd-item"><input type="checkbox" data-stk="0"> 0 stakeholders</label>
+        <label class="dd-item"><input type="checkbox" data-stk="1"> 1 stakeholder</label>
+        <label class="dd-item"><input type="checkbox" data-stk="2"> 2 stakeholders</label>
+        <label class="dd-item"><input type="checkbox" data-stk="3+"> 3+ stakeholders</label>
+        <div class="dd-sep"></div>
+        <button class="dd-clear" onclick="clearDD('stk')">Limpar seleção</button>
+      </div>
+    </div>
+
+    <!-- Search + clear -->
+    <div class="search-wrap" style="margin-left:auto">
       <span class="count-lbl" id="count-lbl"></span>
       <input class="search-box" id="search" placeholder="🔍  Buscar conta..." />
+      <button class="clear-btn" id="clear-btn">✕ Limpar filtros</button>
     </div>
   </div>
-  <!-- Row 2: Closer + date + clear -->
-  <div class="toolbar-row">
-    <span class="tlabel">Closer</span>
-    <select class="filter-select" id="closer-sel"><option value="all">Todos os closers</option></select>
-    <span class="tlabel" style="margin-left:10px">Criado</span>
+
+  <!-- Row 2: Período + filtros secundários -->
+  <div class="toolbar-row" style="flex-wrap:wrap;gap:6px;align-items:center">
+    <span class="tlabel">Período</span>
+    <button class="preset-btn" data-preset="week">Esta semana</button>
+    <button class="preset-btn" data-preset="month">Este mês</button>
+    <button class="preset-btn" data-preset="quarter">Este trimestre</button>
     <input class="date-input" type="date" id="date-from" />
-    <span class="date-sep">até</span>
+    <span class="date-sep">—</span>
     <input class="date-input" type="date" id="date-to" />
-    <button class="clear-btn" id="clear-btn">✕ Limpar filtros</button>
-  </div>
-  <!-- Row 3: Stk. + M. Novo (combined) -->
-  <div class="toolbar-row">
-    <span class="tlabel">Stk.</span>
-    <button class="fb on" data-stk="all">Todos</button>
-    <button class="fb" data-stk="1">1</button>
-    <button class="fb" data-stk="2">2</button>
-    <button class="fb" data-stk="3+">3+</button>
-    <div class="filter-div"></div>
-    <span class="tlabel">M. Novo</span>
-    <button class="fb on" data-mn="all">Todos</button>
-    <button class="fb" data-mn="sim">✅ Sim</button>
-    <button class="fb" data-mn="nao">❌ Não</button>
-    <button class="fb" data-mn="vazio">— N/A</button>
-    <div class="filter-div"></div>
-    <span class="tlabel">Key Account</span>
-    <button class="fb on" data-ka="all">Todos</button>
-    <button class="fb" data-ka="sim">⭐ KA</button>
-    <button class="fb" data-ka="nao">Não KA</button>
-    <button class="fb" data-ka="vazio">— N/A</button>
-  </div>
-  <!-- Row 4: TD filters (combined) -->
-  <div class="toolbar-row">
-    <span class="tlabel" style="min-width:70px">Acessamos TD?</span>
-    <button class="fb on" data-tda="all">Todos</button>
-    <button class="fb" data-tda="sim">✅ Sim</button>
-    <button class="fb" data-tda="nao">❌ Não</button>
-    <button class="fb" data-tda="vazio">— N/A</button>
-    <div class="filter-div"></div>
-    <span class="tlabel" style="min-width:80px">TD Visão Com.</span>
-    <button class="fb on" data-tdv="all">Todos</button>
-    <button class="fb" data-tdv="sim">🤝 TD acessado</button>
-    <button class="fb" data-tdv="nao">❌ Sem TD</button>
-  </div>
-  <!-- Row 5: I's multi-select -->
-  <div class="toolbar-row" id="is-row">
-    <span class="tlabel">I's</span>
-    <button class="fb on" id="is-all-btn">Todos</button>
-    <button class="is-chip" data-iv="Todos os I's (Champion Ideal)">🌟 Todos os I's</button>
-    <button class="is-chip" data-iv="Incentivo + Informação">⚡ Inc. + Info.</button>
-    <button class="is-chip" data-iv="Incentivo + Influência">⚡ Inc. + Infl.</button>
-    <button class="is-chip" data-iv="Informação + Influência">⚡ Info. + Infl.</button>
-    <button class="is-chip" data-iv="Apenas Incentivo">◑ Incentivo</button>
-    <button class="is-chip" data-iv="Apenas Informação">◑ Informação</button>
-    <button class="is-chip" data-iv="Apenas Influência">◑ Influência</button>
-    <button class="is-chip" data-iv="Nenhum I">— Nenhum I</button>
-    <button class="is-chip" data-iv="__empty__">✗ N/I</button>
+
+    <div class="filter-div" style="height:20px"></div>
+
+    <!-- M. Novo -->
+    <div class="dd-wrap" id="dd-mn">
+      <button class="dd-btn" onclick="toggleDD('dd-mn')">
+        <span id="lbl-mn">M. Novo: Todos</span><span class="dd-caret">▼</span>
+      </button>
+      <div class="dd-panel" id="panel-mn">
+        <label class="dd-item"><input type="radio" name="mn" value="all" checked> Todos</label>
+        <label class="dd-item"><input type="radio" name="mn" value="sim"> ✅ Sim</label>
+        <label class="dd-item"><input type="radio" name="mn" value="nao"> ❌ Não</label>
+        <label class="dd-item"><input type="radio" name="mn" value="vazio"> — Não marcado</label>
+      </div>
+    </div>
+
+    <!-- Key Account -->
+    <div class="dd-wrap" id="dd-ka">
+      <button class="dd-btn" onclick="toggleDD('dd-ka')">
+        <span id="lbl-ka">Key Account: Todos</span><span class="dd-caret">▼</span>
+      </button>
+      <div class="dd-panel" id="panel-ka">
+        <label class="dd-item"><input type="radio" name="ka" value="all" checked> Todos</label>
+        <label class="dd-item"><input type="radio" name="ka" value="sim"> ⭐ Key Account</label>
+        <label class="dd-item"><input type="radio" name="ka" value="nao"> Não KA</label>
+        <label class="dd-item"><input type="radio" name="ka" value="vazio"> — Não marcado</label>
+      </div>
+    </div>
+
+    <!-- Acessamos TD? -->
+    <div class="dd-wrap" id="dd-tda">
+      <button class="dd-btn" onclick="toggleDD('dd-tda')">
+        <span id="lbl-tda">Acessamos TD?: Todos</span><span class="dd-caret">▼</span>
+      </button>
+      <div class="dd-panel" id="panel-tda">
+        <label class="dd-item"><input type="radio" name="tda" value="all" checked> Todos</label>
+        <label class="dd-item"><input type="radio" name="tda" value="sim"> ✅ Sim</label>
+        <label class="dd-item"><input type="radio" name="tda" value="nao"> ❌ Não</label>
+        <label class="dd-item"><input type="radio" name="tda" value="vazio"> — Não marcado</label>
+      </div>
+    </div>
+
+    <!-- TD Visão Com. -->
+    <div class="dd-wrap" id="dd-tdv">
+      <button class="dd-btn" onclick="toggleDD('dd-tdv')">
+        <span id="lbl-tdv">TD Visão Com.: Todos</span><span class="dd-caret">▼</span>
+      </button>
+      <div class="dd-panel" id="panel-tdv">
+        <label class="dd-item"><input type="radio" name="tdv" value="all" checked> Todos</label>
+        <label class="dd-item"><input type="radio" name="tdv" value="sim"> 🤝 TD acessado</label>
+        <label class="dd-item"><input type="radio" name="tdv" value="nao"> ❌ Sem TD</label>
+      </div>
+    </div>
   </div>
 </div>
+
 
 <div class="table-wrap">
   <table>
@@ -299,8 +396,13 @@ const COMMENT_PREFIX = 'iup_pipeline_comment_';
 // ── State ──
 let all = [], filtered = [];
 let ownerNames = Object.assign({}, OWNER_MAP);
-let stageFilter = 'all', closerFilter = 'all', stkFilter = 'all', mnFilter = 'all', tdAcessamosFilter = 'all', tdVisaoFilter = 'all', kaFilter = 'all', searchVal = '', dateFrom = '', dateTo = '';
-let isSelected = new Set();
+let pipelineFilter = 'all';
+let stageSelected  = new Set();
+let closerSelected = new Set();
+let stkSelected    = new Set();
+let isSelected     = new Set();
+let mnFilter = 'all', tdAcessamosFilter = 'all', tdVisaoFilter = 'all', kaFilter = 'all';
+let searchVal = '', dateFrom = '', dateTo = '', activePreset = '';
 let sortCol = 'cmpl', sortDir = -1;
 
 // ── Helpers ──
@@ -428,19 +530,27 @@ function isMatchesFilter(val) {
 function applyFilter() {
   const fromTs = dateFrom?new Date(dateFrom).getTime():null;
   const toTs   = dateTo?new Date(dateTo+'T23:59:59').getTime():null;
+  const OPEN_STAGES = new Set(['appointmentscheduled','938158484','qualifiedtobuy','presentationscheduled','decisionmakerboughtin','contractsent','108538399']);
   filtered = all.filter(d=>{
     const p  = d.properties;
     const sn = STAGE_NAME[p.dealstage]||'';
     const ctc= parseInt(p.num_associated_contacts)||0;
-    if(stageFilter!=='all'&&sn!==stageFilter)return false;
-    if(closerFilter!=='all'&&p.hubspot_owner_id!==closerFilter)return false;
-    if(stkFilter==='1'&&ctc!==1)return false;
-    if(stkFilter==='2'&&ctc!==2)return false;
-    if(stkFilter==='3+'&&ctc<3)return false;
+    // Pipeline ativo filter
+    if(pipelineFilter==='ativo'&&!OPEN_STAGES.has(p.dealstage))return false;
+    if(pipelineFilter==='won'&&p.dealstage!=='closedwon')return false;
+    if(pipelineFilter==='lost'&&p.dealstage!=='closedlost')return false;
+    // Multi-select filters
+    if(stageSelected.size>0&&!stageSelected.has(sn))return false;
+    if(closerSelected.size>0&&!closerSelected.has(p.hubspot_owner_id))return false;
+    if(stkSelected.size>0){
+      const key=ctc>=3?'3+':String(ctc);
+      if(!stkSelected.has(key))return false;
+    }
     if(!isMatchesFilter(p.quais_i_s_nosso_champion_tem_))return false;
+    // Single-select filters
     if(mnFilter!=='all'){
       const mn1=getMN(d.id,'prepós'), mn2=getMN(d.id,'proposta');
-      const cur = (mn1==='sim'&&mn2==='sim') ? 'sim' : (mn1==='nao'&&mn2==='nao') ? 'nao' : 'vazio';
+      const cur=(mn1==='sim'&&mn2==='sim')?'sim':(mn1==='nao'&&mn2==='nao')?'nao':'vazio';
       if(cur!==mnFilter)return false;
     }
     if(kaFilter!=='all'){
@@ -525,54 +635,54 @@ function sort(col) {
 }
 
 function populateClosers() {
-  const sel=document.getElementById('closer-sel');
+  const panel=document.getElementById('panel-closer');
   const seen=new Set();
+  const items=[];
   all.forEach(d=>{
     const oid=d.properties.hubspot_owner_id;
     if(oid&&!seen.has(oid)&&!EXCLUDED.has(String(oid))){
       seen.add(oid);
-      const opt=document.createElement('option');
-      opt.value=oid;opt.textContent=ownerName(oid);
-      sel.appendChild(opt);
+      items.push({id:oid, name:ownerName(oid)});
     }
   });
-  const opts=Array.from(sel.options).slice(1).sort((a,b)=>a.text.localeCompare(b.text,'pt-BR'));
-  while(sel.options.length>1)sel.remove(1);
-  opts.forEach(o=>sel.appendChild(o));
+  items.sort((a,b)=>a.name.localeCompare(b.name,'pt-BR'));
+  panel.innerHTML = items.map(o=>`<label class="dd-item"><input type="checkbox" data-closer="${o.id}"> ${o.name}</label>`).join('')
+    + '<div class="dd-sep"></div><button class="dd-clear" onclick="clearDD('closer')">Limpar seleção</button>';
+  panel.querySelectorAll('input[data-closer]').forEach(cb=>{
+    cb.addEventListener('change',()=>{
+      const id=cb.dataset.closer;
+      if(cb.checked)closerSelected.add(id); else closerSelected.delete(id);
+      updateDDLabel('closer','Closer',closerSelected.size,()=>{
+        const names=[...closerSelected].map(id=>ownerName(id));
+        return names.length===1?names[0]:names.length+' closers';
+      });
+      applyFilter();
+    });
+  });
 }
 
 const TOKEN_KEY = 'iup_hubspot_token';
 function getToken() { return localStorage.getItem(TOKEN_KEY)||''; }
 function saveToken(t) { if(t) localStorage.setItem(TOKEN_KEY,t); else localStorage.removeItem(TOKEN_KEY); }
-
 async function submitToken() {
-  const t = document.getElementById('token-input').value.trim();
-  if(!t) return;
+  const t=document.getElementById('token-input').value.trim();
+  if(!t)return;
   saveToken(t);
   document.getElementById('token-screen').style.display='none';
   await init();
 }
-
 function resetToken() { saveToken(''); location.reload(); }
 
 async function loadDeals() {
-  const token = getToken();
+  const token=getToken();
   const props=['dealname','dealstage','num_associated_contacts','visao_comercial_status_geral_da_conta','quais_i_s_nosso_champion_tem_','hubspot_owner_id','createdate','acessamos_td_','e_key_account_'];
-  let results=[], after=undefined;
+  let results=[],after=undefined;
   while(true){
-    const body={
-      filterGroups:[{filters:[{propertyName:'dealstage',operator:'IN',values:OPEN}]}],
-      properties:props, limit:200,
-      sorts:[{propertyName:'dealname',direction:'ASCENDING'}]
-    };
-    if(after) body.after=after;
-    const r=await fetch('https://api.hubapi.com/crm/v3/objects/deals/search',{
-      method:'POST',
-      headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},
-      body:JSON.stringify(body)
-    });
+    const body={filterGroups:[{filters:[{propertyName:'dealstage',operator:'IN',values:OPEN}]}],properties:props,limit:200,sorts:[{propertyName:'dealname',direction:'ASCENDING'}]};
+    if(after)body.after=after;
+    const r=await fetch('https://api.hubapi.com/crm/v3/objects/deals/search',{method:'POST',headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},body:JSON.stringify(body)});
     if(r.status===401){saveToken('');throw new Error('Token inválido. Recarregue a página.');}
-    if(!r.ok) throw new Error('HubSpot API error: '+r.status);
+    if(!r.ok)throw new Error('HubSpot API error: '+r.status);
     const data=await r.json();
     if(!data.results||!data.results.length)break;
     results=results.concat(data.results);
@@ -584,42 +694,69 @@ async function loadDeals() {
 
 async function tryEnrichOwners(ids) {
   try{
-    const r=await fetch('https://api.hubapi.com/crm/v3/owners/?limit=500',{
-      headers:{'Authorization':'Bearer '+getToken()}
-    });
+    const r=await fetch('https://api.hubapi.com/crm/v3/owners/?limit=500',{headers:{'Authorization':'Bearer '+getToken()}});
     if(!r.ok)return;
     const data=await r.json();
-    (data.results||[]).forEach(o=>{
-      const name=[o.firstName,o.lastName].filter(Boolean).join(' ').trim();
-      if(o.id&&name)ownerNames[String(o.id)]=name;
-    });
+    (data.results||[]).forEach(o=>{const name=[o.firstName,o.lastName].filter(Boolean).join(' ').trim();if(o.id&&name)ownerNames[String(o.id)]=name;});
   }catch(e){}
 }
 
 function resetFilters(){
-  stageFilter='all';closerFilter='all';stkFilter='all';mnFilter='all';tdAcessamosFilter='all';tdVisaoFilter='all';isSelected.clear();searchVal='';dateFrom='';dateTo='';
-  document.querySelectorAll('.fb[data-mn]').forEach(b=>b.classList.remove('on'));
-  document.querySelector('.fb[data-mn="all"]').classList.add('on');
-  document.querySelectorAll('.fb[data-tda]').forEach(b=>b.classList.remove('on'));
-  document.querySelector('.fb[data-tda="all"]').classList.add('on');
-  document.querySelectorAll('.fb[data-tdv]').forEach(b=>b.classList.remove('on'));
-  document.querySelector('.fb[data-tdv="all"]').classList.add('on');
-  document.querySelectorAll('.fb[data-ka]').forEach(b=>b.classList.remove('on'));
-  document.querySelector('.fb[data-ka="all"]').classList.add('on');
-  document.querySelectorAll('.fb[data-s]').forEach(b=>b.classList.remove('on'));
-  document.querySelector('.fb[data-s="all"]').classList.add('on');
-  document.querySelectorAll('.fb[data-stk]').forEach(b=>b.classList.remove('on'));
-  document.querySelector('.fb[data-stk="all"]').classList.add('on');
-  document.querySelectorAll('.is-chip').forEach(b=>b.classList.remove('on'));
-  document.getElementById('is-all-btn').classList.add('on');
-  document.getElementById('closer-sel').value='all';
+  pipelineFilter='all'; stageSelected.clear(); closerSelected.clear(); stkSelected.clear();
+  isSelected.clear(); mnFilter='all'; tdAcessamosFilter='all'; tdVisaoFilter='all'; kaFilter='all';
+  searchVal=''; dateFrom=''; dateTo=''; activePreset='';
+  // Reset radio groups
+  document.querySelectorAll('input[name="pipeline"]').forEach(r=>r.checked=(r.value==='all'));
+  document.querySelectorAll('input[name="mn"]').forEach(r=>r.checked=(r.value==='all'));
+  document.querySelectorAll('input[name="ka"]').forEach(r=>r.checked=(r.value==='all'));
+  document.querySelectorAll('input[name="tda"]').forEach(r=>r.checked=(r.value==='all'));
+  document.querySelectorAll('input[name="tdv"]').forEach(r=>r.checked=(r.value==='all'));
+  // Reset checkboxes
+  document.querySelectorAll('#panel-stage input,#panel-closer input,#panel-stk input,#panel-is input').forEach(cb=>cb.checked=false);
+  // Reset preset buttons
+  document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('on'));
+  // Reset date inputs
   document.getElementById('date-from').value='';
   document.getElementById('date-to').value='';
   document.getElementById('search').value='';
+  // Reset labels
+  ['pipeline','stage','closer','stk','is','mn','ka','tda','tdv'].forEach(resetDDLabel);
+  document.querySelectorAll('.dd-btn').forEach(b=>{b.classList.remove('active','open');});
+  document.querySelectorAll('.dd-panel').forEach(p=>p.classList.remove('open'));
+}
+
+const DD_DEFAULTS = {pipeline:'Pipeline: Todos',stage:'Etapa: Todas',closer:'Closer: Todos',stk:'Stk.: Todos',is:"I's: Todos",mn:'M. Novo: Todos',ka:'Key Account: Todos',tda:'Acessamos TD?: Todos',tdv:'TD Visão Com.: Todos'};
+function resetDDLabel(key){document.getElementById('lbl-'+key).textContent=DD_DEFAULTS[key];}
+
+function updateDDLabel(key, prefix, count, nameFn){
+  const lbl=document.getElementById('lbl-'+key);
+  const btn=document.querySelector('#dd-'+key+' .dd-btn');
+  if(count===0){lbl.textContent=DD_DEFAULTS[key];btn.classList.remove('active');}
+  else{lbl.textContent=prefix+': '+nameFn();btn.classList.add('active');}
 }
 
 async function init(){
   if(!getToken()){document.getElementById('token-screen').style.display='flex';return;}
+function toggleDD(id){
+  const panel=document.getElementById('panel-'+id.replace('dd-',''));
+  const btn=document.querySelector('#'+id+' .dd-btn');
+  const isOpen=panel.classList.contains('open');
+  document.querySelectorAll('.dd-panel.open').forEach(p=>p.classList.remove('open'));
+  document.querySelectorAll('.dd-btn.open').forEach(b=>b.classList.remove('open'));
+  if(!isOpen){panel.classList.add('open');btn.classList.add('open');}
+}
+function clearDD(key){
+  if(key==='stage')stageSelected.clear();
+  else if(key==='closer')closerSelected.clear();
+  else if(key==='stk')stkSelected.clear();
+  else if(key==='is')isSelected.clear();
+  document.querySelectorAll('#panel-'+key+' input[type=checkbox]').forEach(cb=>cb.checked=false);
+  resetDDLabel(key);
+  document.querySelector('#dd-'+key+' .dd-btn').classList.remove('active');
+  applyFilter();
+}
+
+async function init(){
   try{
     all=await loadDeals();
     const ownerIds=[...new Set(all.map(d=>d.properties.hubspot_owner_id).filter(Boolean))];
@@ -632,49 +769,104 @@ async function init(){
     sort('cmpl');
     document.getElementById('footer').textContent='Dados do HubSpot — atualizado em '+new Date().toLocaleString('pt-BR');
 
-    document.querySelectorAll('.fb[data-s]').forEach(btn=>btn.addEventListener('click',()=>{
-      document.querySelectorAll('.fb[data-s]').forEach(b=>b.classList.remove('on'));
-      btn.classList.add('on'); stageFilter=btn.dataset.s; applyFilter();
-    }));
-    document.querySelectorAll('.fb[data-stk]').forEach(btn=>btn.addEventListener('click',()=>{
-      document.querySelectorAll('.fb[data-stk]').forEach(b=>b.classList.remove('on'));
-      btn.classList.add('on'); stkFilter=btn.dataset.stk; applyFilter();
-    }));
-    document.getElementById('is-all-btn').addEventListener('click',()=>{
-      isSelected.clear();
-      document.querySelectorAll('.is-chip').forEach(b=>b.classList.remove('on'));
-      document.getElementById('is-all-btn').classList.add('on');
-      applyFilter();
+    // ── Dropdown toggle & click-outside ──
+    document.addEventListener('click', e=>{
+      if(!e.target.closest('.dd-wrap')){
+        document.querySelectorAll('.dd-panel.open').forEach(p=>p.classList.remove('open'));
+        document.querySelectorAll('.dd-btn.open').forEach(b=>b.classList.remove('open'));
+      }
     });
-    document.querySelectorAll('.is-chip').forEach(chip=>chip.addEventListener('click',()=>{
-      const val=chip.dataset.iv;
-      if(isSelected.has(val)){isSelected.delete(val);chip.classList.remove('on');}
-      else{isSelected.add(val);chip.classList.add('on');}
-      if(isSelected.size===0){document.getElementById('is-all-btn').classList.add('on');}
-      else{document.getElementById('is-all-btn').classList.remove('on');}
+
+    // ── Pipeline (radio) ──
+    document.querySelectorAll('input[name="pipeline"]').forEach(r=>r.addEventListener('change',()=>{
+      pipelineFilter=r.value;
+      const lbl=document.getElementById('lbl-pipeline');
+      const btn=document.querySelector('#dd-pipeline .dd-btn');
+      if(r.value==='all'){lbl.textContent='Pipeline: Todos';btn.classList.remove('active');}
+      else{lbl.textContent='Pipeline: '+r.closest('.dd-item').textContent.trim();btn.classList.add('active');}
       applyFilter();
     }));
-    document.getElementById('closer-sel').addEventListener('change',e=>{closerFilter=e.target.value;applyFilter();});
-    document.getElementById('date-from').addEventListener('change',e=>{dateFrom=e.target.value;applyFilter();});
-    document.getElementById('date-to').addEventListener('change',  e=>{dateTo=e.target.value;applyFilter();});
-    document.getElementById('search').addEventListener('input',    e=>{searchVal=e.target.value;applyFilter();});
+
+    // ── Etapa (multi-checkbox) ──
+    document.querySelectorAll('#panel-stage input[data-stage]').forEach(cb=>cb.addEventListener('change',()=>{
+      const sn=cb.dataset.stage;
+      if(cb.checked)stageSelected.add(sn); else stageSelected.delete(sn);
+      updateDDLabel('stage','Etapa',stageSelected.size,()=>stageSelected.size===1?[...stageSelected][0]:stageSelected.size+' etapas');
+      applyFilter();
+    }));
+
+    // ── I's (multi-checkbox) ──
+    document.querySelectorAll('#panel-is input[data-iv]').forEach(cb=>cb.addEventListener('change',()=>{
+      const val=cb.dataset.iv;
+      if(cb.checked)isSelected.add(val); else isSelected.delete(val);
+      updateDDLabel('is',"I's",isSelected.size,()=>isSelected.size===1?[...isSelected][0]:isSelected.size+' opções');
+      applyFilter();
+    }));
+
+    // ── Stk (multi-checkbox) ──
+    document.querySelectorAll('#panel-stk input[data-stk]').forEach(cb=>cb.addEventListener('change',()=>{
+      const val=cb.dataset.stk;
+      if(cb.checked)stkSelected.add(val); else stkSelected.delete(val);
+      updateDDLabel('stk','Stk.',stkSelected.size,()=>[...stkSelected].sort().join(', '));
+      applyFilter();
+    }));
+
+    // ── Radio dropdowns (M. Novo, KA, TDA, TDV) ──
+    const radioMap={mn:['mnFilter','M. Novo','lbl-mn'],ka:['kaFilter','Key Account','lbl-ka'],
+                    tda:['tdAcessamosFilter','Acessamos TD?','lbl-tda'],tdv:['tdVisaoFilter','TD Visão Com.','lbl-tdv']};
+    Object.entries(radioMap).forEach(([name,[varRef,prefix]])=>{
+      document.querySelectorAll('input[name="'+name+'"]').forEach(r=>r.addEventListener('change',()=>{
+        if(name==='mn')mnFilter=r.value;
+        else if(name==='ka')kaFilter=r.value;
+        else if(name==='tda')tdAcessamosFilter=r.value;
+        else if(name==='tdv')tdVisaoFilter=r.value;
+        const lbl=document.getElementById('lbl-'+name);
+        const btn=document.querySelector('#dd-'+name+' .dd-btn');
+        if(r.value==='all'){lbl.textContent=prefix+': Todos';btn.classList.remove('active');}
+        else{lbl.textContent=prefix+': '+r.closest('.dd-item').textContent.trim();btn.classList.add('active');}
+        applyFilter();
+      }));
+    });
+
+    // ── Date inputs ──
+    document.getElementById('date-from').addEventListener('change',e=>{dateFrom=e.target.value;activePreset='';document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('on'));applyFilter();});
+    document.getElementById('date-to').addEventListener('change',  e=>{dateTo=e.target.value;activePreset='';document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('on'));applyFilter();});
+
+    // ── Preset period buttons ──
+    document.querySelectorAll('.preset-btn').forEach(btn=>btn.addEventListener('click',()=>{
+      const p=btn.dataset.preset;
+      if(activePreset===p){
+        activePreset='';dateFrom='';dateTo='';
+        document.getElementById('date-from').value='';document.getElementById('date-to').value='';
+        document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('on'));
+        applyFilter();return;
+      }
+      const now=new Date();
+      let from,to=new Date();
+      if(p==='week'){
+        const day=now.getDay()||7;
+        from=new Date(now);from.setDate(now.getDate()-day+1);
+        to=new Date(from);to.setDate(from.getDate()+6);
+      } else if(p==='month'){
+        from=new Date(now.getFullYear(),now.getMonth(),1);
+        to=new Date(now.getFullYear(),now.getMonth()+1,0);
+      } else if(p==='quarter'){
+        const q=Math.floor(now.getMonth()/3);
+        from=new Date(now.getFullYear(),q*3,1);
+        to=new Date(now.getFullYear(),q*3+3,0);
+      }
+      dateFrom=from.toISOString().slice(0,10);
+      dateTo=to.toISOString().slice(0,10);
+      document.getElementById('date-from').value=dateFrom;
+      document.getElementById('date-to').value=dateTo;
+      activePreset=p;
+      document.querySelectorAll('.preset-btn').forEach(b=>b.classList.toggle('on',b.dataset.preset===p));
+      applyFilter();
+    }));
+
+    // ── Search & clear ──
+    document.getElementById('search').addEventListener('input',e=>{searchVal=e.target.value;applyFilter();});
     document.getElementById('clear-btn').addEventListener('click',()=>{resetFilters();applyFilter();});
-    document.querySelectorAll('.fb[data-mn]').forEach(btn=>btn.addEventListener('click',()=>{
-      document.querySelectorAll('.fb[data-mn]').forEach(b=>b.classList.remove('on'));
-      btn.classList.add('on'); mnFilter=btn.dataset.mn; applyFilter();
-    }));
-    document.querySelectorAll('.fb[data-tda]').forEach(btn=>btn.addEventListener('click',()=>{
-      document.querySelectorAll('.fb[data-tda]').forEach(b=>b.classList.remove('on'));
-      btn.classList.add('on'); tdAcessamosFilter=btn.dataset.tda; applyFilter();
-    }));
-    document.querySelectorAll('.fb[data-tdv]').forEach(btn=>btn.addEventListener('click',()=>{
-      document.querySelectorAll('.fb[data-tdv]').forEach(b=>b.classList.remove('on'));
-      btn.classList.add('on'); tdVisaoFilter=btn.dataset.tdv; applyFilter();
-    }));
-    document.querySelectorAll('.fb[data-ka]').forEach(btn=>btn.addEventListener('click',()=>{
-      document.querySelectorAll('.fb[data-ka]').forEach(b=>b.classList.remove('on'));
-      btn.classList.add('on'); kaFilter=btn.dataset.ka; applyFilter();
-    }));
 
   }catch(e){
     document.getElementById('kpis').innerHTML=`<div style="color:#c62828;padding:20px;grid-column:1/-1">Erro: ${e.message}</div>`;
