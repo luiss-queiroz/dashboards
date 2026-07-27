@@ -22,7 +22,7 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f6f7f9; colo
 .kpi-label { font-size: 11px; color: #999; margin-top: 4px; line-height: 1.3; }
 
 /* Toolbar */
-.toolbar { background: white; border: 1px solid #e8e8e8; border-radius: 10px; padding: 13px 16px; margin-bottom: 14px; display: flex; flex-direction: column; gap: 11px; }
+.toolbar { background: white; border: 1px solid #e8e8e8; border-radius: 10px; padding: 10px 14px; margin-bottom: 14px; display: flex; flex-direction: column; gap: 7px; }
 .toolbar-row { display: flex; gap: 7px; flex-wrap: wrap; align-items: center; }
 .tlabel { font-size: 10.5px; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: 0.4px; min-width: 50px; flex-shrink: 0; }
 
@@ -80,6 +80,9 @@ td { padding: 9px 12px; vertical-align: middle; }
 .s-ep { background:#e3f2fd; color:#0d47a1; } .s-neg { background:#ede7f6; color:#4a148c; }
 .s-cx { background:#fce4ec; color:#880e4f; } .s-pend { background:#e8eaf6; color:#1a237e; }
 .s-other { background:#f5f5f5; color:#555; }
+.s-won  { background:#e8f5e9; color:#1b5e20; }
+.s-lost { background:#fce4ec; color:#880e4f; }
+.filter-div { width:1px; background:#ebebeb; align-self:stretch; margin:0 4px; flex-shrink:0; }
 
 .owner-name { font-size: 12px; color: #555; white-space: nowrap; }
 .stk { font-weight: 800; font-size: 15px; }
@@ -144,7 +147,6 @@ td { padding: 9px 12px; vertical-align: middle; }
 .token-input:focus { border-color:#CC0088; }
 .token-btn { margin-top:12px; width:100%; padding:10px; background:#CC0088; color:white; border:none; border-radius:8px; font-size:14px; font-weight:700; cursor:pointer; }
 .token-btn:hover { background:#aa006e; }
-.token-err { margin-top:8px; font-size:12px; color:#c62828; display:none; }
 .token-link { font-size:11px; color:#CC0088; text-decoration:none; }
 .reset-token { font-size:11px; color:#aaa; cursor:pointer; background:none; border:none; padding:0; margin-left:8px; }
 .reset-token:hover { color:#CC0088; }
@@ -162,7 +164,6 @@ td { padding: 9px 12px; vertical-align: middle; }
     <p>Cole o seu <strong>Private App token</strong> para carregar os dados do pipeline.<br>
     <a class="token-link" href="https://app.hubspot.com/private-apps/23158579" target="_blank">Gerar token no HubSpot →</a></p>
     <input class="token-input" id="token-input" type="password" placeholder="pat-na1-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" />
-    <div class="token-err" id="token-err">Token inválido ou sem permissão. Verifique e tente novamente.</div>
     <button class="token-btn" onclick="submitToken()">Conectar</button>
   </div>
 </div>
@@ -171,7 +172,7 @@ td { padding: 9px 12px; vertical-align: middle; }
   <div class="logo">iup</div>
   <div class="header-text">
     <h1>Pipeline — Visão Comercial</h1>
-    <p>Stakeholders, modelo novo e I's do Champion por conta ativa <button class="reset-token" onclick="resetToken()" title="Trocar token">⚙ Token</button></p>
+    <p>Stakeholders, modelo novo e I's do Champion por conta ativa <button class="reset-token" onclick="resetToken()">⚙ Token</button></p>
   </div>
 </div>
 
@@ -190,73 +191,70 @@ td { padding: 9px 12px; vertical-align: middle; }
     <button class="fb" data-s="Negociando">Negociando</button>
     <button class="fb" data-s="Conexão">Conexão</button>
     <button class="fb" data-s="Pendente de Assinatura">Pendente</button>
+    <button class="fb" data-s="StandBy">StandBy</button>
+    <button class="fb" data-s="Won" style="color:#1b5e20;border-color:#a5d6a7">Won ✅</button>
+    <button class="fb" data-s="Lost" style="color:#880e4f;border-color:#f48fb1">Lost ❌</button>
     <div class="search-wrap">
       <span class="count-lbl" id="count-lbl"></span>
       <input class="search-box" id="search" placeholder="🔍  Buscar conta..." />
     </div>
   </div>
-  <!-- Row 2: Closer + date -->
+  <!-- Row 2: Closer + date + clear -->
   <div class="toolbar-row">
     <span class="tlabel">Closer</span>
     <select class="filter-select" id="closer-sel"><option value="all">Todos os closers</option></select>
-    <span class="tlabel" style="margin-left:12px">Criado</span>
+    <span class="tlabel" style="margin-left:10px">Criado</span>
     <input class="date-input" type="date" id="date-from" />
     <span class="date-sep">até</span>
     <input class="date-input" type="date" id="date-to" />
     <button class="clear-btn" id="clear-btn">✕ Limpar filtros</button>
   </div>
-  <!-- Row 3: Stakeholders -->
+  <!-- Row 3: Stk. + M. Novo (combined) -->
   <div class="toolbar-row">
     <span class="tlabel">Stk.</span>
     <button class="fb on" data-stk="all">Todos</button>
-    <button class="fb" data-stk="1">1 stakeholder</button>
-    <button class="fb" data-stk="2">2 stakeholders</button>
-    <button class="fb" data-stk="3+">3+ stakeholders</button>
-  </div>
-  <!-- Row 4: I's multi-select -->
-  <div class="toolbar-row" id="is-row">
-    <span class="tlabel">I's</span>
-    <button class="fb on" id="is-all-btn">Todos</button>
-    <button class="is-chip" data-iv="Todos os I's (Champion Ideal)">🌟 Todos os I's</button>
-    <button class="is-chip" data-iv="Incentivo + Informação">⚡ Incentivo + Informação</button>
-    <button class="is-chip" data-iv="Incentivo + Influência">⚡ Incentivo + Influência</button>
-    <button class="is-chip" data-iv="Informação + Influência">⚡ Informação + Influência</button>
-    <button class="is-chip" data-iv="Apenas Incentivo">◑ Apenas Incentivo</button>
-    <button class="is-chip" data-iv="Apenas Informação">◑ Apenas Informação</button>
-    <button class="is-chip" data-iv="Apenas Influência">◑ Apenas Influência</button>
-    <button class="is-chip" data-iv="Nenhum I">— Nenhum I</button>
-    <button class="is-chip" data-iv="__empty__">✗ Não informado</button>
-  </div>
-  <!-- Row 5: Modelo Novo -->
-  <div class="toolbar-row">
+    <button class="fb" data-stk="1">1</button>
+    <button class="fb" data-stk="2">2</button>
+    <button class="fb" data-stk="3+">3+</button>
+    <div class="filter-div"></div>
     <span class="tlabel">M. Novo</span>
     <button class="fb on" data-mn="all">Todos</button>
     <button class="fb" data-mn="sim">✅ Sim</button>
     <button class="fb" data-mn="nao">❌ Não</button>
-    <button class="fb" data-mn="vazio">— Não marcado</button>
+    <button class="fb" data-mn="vazio">— N/A</button>
+    <div class="filter-div"></div>
+    <span class="tlabel">Key Account</span>
+    <button class="fb on" data-ka="all">Todos</button>
+    <button class="fb" data-ka="sim">⭐ KA</button>
+    <button class="fb" data-ka="nao">Não KA</button>
+    <button class="fb" data-ka="vazio">— N/A</button>
   </div>
-  <!-- Row 6: Acessamos TD? -->
+  <!-- Row 4: TD filters (combined) -->
   <div class="toolbar-row">
-    <span class="tlabel">Acessamos TD?</span>
+    <span class="tlabel" style="min-width:70px">Acessamos TD?</span>
     <button class="fb on" data-tda="all">Todos</button>
     <button class="fb" data-tda="sim">✅ Sim</button>
     <button class="fb" data-tda="nao">❌ Não</button>
-    <button class="fb" data-tda="vazio">— Não marcado</button>
-  </div>
-  <!-- Row 7: TD Visão Comercial -->
-  <div class="toolbar-row">
-    <span class="tlabel">TD (Visão Com.)</span>
+    <button class="fb" data-tda="vazio">— N/A</button>
+    <div class="filter-div"></div>
+    <span class="tlabel" style="min-width:80px">TD Visão Com.</span>
     <button class="fb on" data-tdv="all">Todos</button>
     <button class="fb" data-tdv="sim">🤝 TD acessado</button>
     <button class="fb" data-tdv="nao">❌ Sem TD</button>
   </div>
-  <!-- Row 8: Key Account -->
-  <div class="toolbar-row">
-    <span class="tlabel">Key Account</span>
-    <button class="fb on" data-ka="all">Todos</button>
-    <button class="fb" data-ka="sim">⭐ Key Account</button>
-    <button class="fb" data-ka="nao">Não KA</button>
-    <button class="fb" data-ka="vazio">— Não marcado</button>
+  <!-- Row 5: I's multi-select -->
+  <div class="toolbar-row" id="is-row">
+    <span class="tlabel">I's</span>
+    <button class="fb on" id="is-all-btn">Todos</button>
+    <button class="is-chip" data-iv="Todos os I's (Champion Ideal)">🌟 Todos os I's</button>
+    <button class="is-chip" data-iv="Incentivo + Informação">⚡ Inc. + Info.</button>
+    <button class="is-chip" data-iv="Incentivo + Influência">⚡ Inc. + Infl.</button>
+    <button class="is-chip" data-iv="Informação + Influência">⚡ Info. + Infl.</button>
+    <button class="is-chip" data-iv="Apenas Incentivo">◑ Incentivo</button>
+    <button class="is-chip" data-iv="Apenas Informação">◑ Informação</button>
+    <button class="is-chip" data-iv="Apenas Influência">◑ Influência</button>
+    <button class="is-chip" data-iv="Nenhum I">— Nenhum I</button>
+    <button class="is-chip" data-iv="__empty__">✗ N/I</button>
   </div>
 </div>
 
@@ -286,9 +284,9 @@ td { padding: 9px 12px; vertical-align: middle; }
 const EXCLUDED = new Set(['72214583','278399379']);
 const OWNER_MAP = {"75429156":"Fernanda Teles","75561703":"Mariana Carpinter","76148515":"Rubens Alcantara","76350886":"Lucas Henrique","76662146":"Larissah Pereira","78563637":"Laura Sachs","78563638":"Natane Fialho","78614813":"Mariana Castro Nicacio","78618342":"João Arita","78825625":"William Gomes","79254410":"Daniel Chaves","79254411":"Sarah Dállet","79547367":"Pâmela Paz","79607024":"Emilly Deiroz","80047341":"Leticia Batista","80073008":"Roberto Vieira","80073009":"Alex Botini","80450031":"Rachel Braz","80769309":"Silvia Zietz","81102809":"Fernanda Costa","81460004":"Breno Alves","81522291":"Marianna Cristhe","81526004":"Samanta Dias","82608183":"Patrick Gregório","83147969":"Erika Erolles","83871346":"Vanderlei Fraguas","86671834":"Felipe Santos","87195936":"Jhessennia Calles","87195937":"Juliano Cardoso","87236245":"Natalia Silva","87236246":"Larissa Azeredo","87399769":"Matheus Marchezi","87410382":"Larissa Alves","87566019":"Giulianna Gomes","88629382":"Eduardo Carvalho","89499506":"Giovana Domingos","89747928":"Mariana Carpinter","89958362":"Mariana Bremen","90284833":"Mayara Lorancette","90723591":"Welber Alexandre","90859181":"Pedro Lunardi","91516986":"Camila Schwerz","91640235":"Aline Oliveira","91976735":"Felipe Pereira","91976736":"Nadia Helena","92761589":"David Pacifico","93361370":"Maria Araujo","114548081":"Isabella Barros","145281235":"Christine Silva","246740073":"Natasha Fernandes","264491397":"Felipe Batalha","265370991":"Luísa Schimidt","279229046":"Mateus Oliveira","298789521":"Hugo Pires","303902231":"Tiago Marques","304626070":"Hadalberto Lopes","304626071":"Luciane Pessoa","304630315":"Lucas Costa","304630316":"Luis Fonseca","304630317":"Luis Queiroz","304630318":"Karynne Rocha","304630319":"Juliana Ng","304630320":"Alice Ribeiro","304630321":"Raul Cariello","304630322":"Mayra Castro","304633937":"Luiza Garcia","304633938":"João Lopes","304633939":"Lucas Daniel","304633940":"Andresa Carmo","308901297":"Andre Jensen","312275085":"Marcela Bonin","315242823":"Jonny Steinmetz","316204577":"João Rodrigues","316904337":"Bruno Coelho","339940528":"Tati Lima","353825602":"Lucas Trugilho","364210411":"Alexandra Cunha","430230667":"Lucas Corrêa","480180355":"CS Impulseup","528213346":"Isabela Garcia","553428995":"Natália Baldivia","566983935":"Bruna Loureiro","570986759":"Geisy Colusso","597669675":"Victoria Assi","655335586":"Miguel Silva","663068223":"Daniela Ramos","674809168":"Suporte Impulseup","722057557":"Taiana Araujo"};
 
-const OPEN = ['appointmentscheduled','938158484','qualifiedtobuy','presentationscheduled','decisionmakerboughtin','contractsent','108538399'];
-const STAGE_NAME = {appointmentscheduled:'Conexão','938158484':'StandBy',qualifiedtobuy:'Entendendo o Problema',presentationscheduled:'Construindo o Projeto',decisionmakerboughtin:'Buscando Solução',contractsent:'Negociando','108538399':'Pendente de Assinatura'};
-const STAGE_CLS  = {'Buscando Solução':'s-bs','Construindo o Projeto':'s-cp','Entendendo o Problema':'s-ep','Negociando':'s-neg','Conexão':'s-cx','Pendente de Assinatura':'s-pend'};
+const OPEN = ['appointmentscheduled','938158484','qualifiedtobuy','presentationscheduled','decisionmakerboughtin','contractsent','108538399','closedwon','closedlost'];
+const STAGE_NAME = {appointmentscheduled:'Conexão','938158484':'StandBy',qualifiedtobuy:'Entendendo o Problema',presentationscheduled:'Construindo o Projeto',decisionmakerboughtin:'Buscando Solução',contractsent:'Negociando','108538399':'Pendente de Assinatura',closedwon:'Won',closedlost:'Lost'};
+const STAGE_CLS  = {'Buscando Solução':'s-bs','Construindo o Projeto':'s-cp','Entendendo o Problema':'s-ep','Negociando':'s-neg','Conexão':'s-cx','Pendente de Assinatura':'s-pend','Won':'s-won','Lost':'s-lost'};
 const MODELO = [
   {key:'Enviou e-mail champion da conexão',      icon:'📧',label:'E-mail'},
   {key:'Apresentou material de pré e pós Demo',  icon:'🎯',label:'Pré/Pós'},
@@ -549,16 +547,13 @@ function saveToken(t) { if(t) localStorage.setItem(TOKEN_KEY,t); else localStora
 
 async function submitToken() {
   const t = document.getElementById('token-input').value.trim();
-  if(!t){document.getElementById('token-err').style.display='block';return;}
+  if(!t) return;
   saveToken(t);
   document.getElementById('token-screen').style.display='none';
   await init();
 }
 
-function resetToken() {
-  saveToken('');
-  location.reload();
-}
+function resetToken() { saveToken(''); location.reload(); }
 
 async function loadDeals() {
   const token = getToken();
@@ -576,7 +571,7 @@ async function loadDeals() {
       headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},
       body:JSON.stringify(body)
     });
-    if(r.status===401){saveToken('');throw new Error('Token inválido. Recarregue a página e insira um token válido.');}
+    if(r.status===401){saveToken('');throw new Error('Token inválido. Recarregue a página.');}
     if(!r.ok) throw new Error('HubSpot API error: '+r.status);
     const data=await r.json();
     if(!data.results||!data.results.length)break;
@@ -589,9 +584,8 @@ async function loadDeals() {
 
 async function tryEnrichOwners(ids) {
   try{
-    const token=getToken();
     const r=await fetch('https://api.hubapi.com/crm/v3/owners/?limit=500',{
-      headers:{'Authorization':'Bearer '+token}
+      headers:{'Authorization':'Bearer '+getToken()}
     });
     if(!r.ok)return;
     const data=await r.json();
@@ -625,10 +619,7 @@ function resetFilters(){
 }
 
 async function init(){
-  if(!getToken()){
-    document.getElementById('token-screen').style.display='flex';
-    return;
-  }
+  if(!getToken()){document.getElementById('token-screen').style.display='flex';return;}
   try{
     all=await loadDeals();
     const ownerIds=[...new Set(all.map(d=>d.properties.hubspot_owner_id).filter(Boolean))];
