@@ -1,4 +1,19 @@
 <!DOCTYPE html>
+<script type="application/json" id="cowork-artifact-meta">
+{
+  "name": "Pipeline Visao Comercial",
+  "schemaVersion": 1,
+  "description": "Dashboard ao vivo do pipeline comercial da impulseup. Mostra todas as contas abertas (BS, CP, EP, Negociando, etc.) com contagem de stakeholders e compliance do modelo novo de reuniões (e-mail champion, pré/pós demo, demo, proposta, TD acessado) via campo Visão Comercial do HubSpot. Atualiza em tempo real ao ser aberto.",
+  "mcpTools": [
+    "mcp__9b6f0d6f-2b47-4d2e-abb7-d9d93cd88cde__search_crm_objects",
+    "mcp__9b6f0d6f-2b47-4d2e-abb7-d9d93cd88cde__search_owners"
+  ],
+  "mcpServerNames": [
+    "HubSpot",
+    "HubSpot"
+  ]
+}
+</script>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -22,7 +37,7 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f6f7f9; colo
 .kpi-label { font-size: 11px; color: #999; margin-top: 4px; line-height: 1.3; }
 
 /* Toolbar */
-.toolbar { background: white; border: 1px solid #e8e8e8; border-radius: 10px; padding: 13px 16px; margin-bottom: 14px; display: flex; flex-direction: column; gap: 11px; }
+.toolbar { background: white; border: 1px solid #e8e8e8; border-radius: 10px; padding: 10px 14px; margin-bottom: 14px; display: flex; flex-direction: column; gap: 7px; }
 .toolbar-row { display: flex; gap: 7px; flex-wrap: wrap; align-items: center; }
 .tlabel { font-size: 10.5px; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: 0.4px; min-width: 50px; flex-shrink: 0; }
 
@@ -80,6 +95,9 @@ td { padding: 9px 12px; vertical-align: middle; }
 .s-ep { background:#e3f2fd; color:#0d47a1; } .s-neg { background:#ede7f6; color:#4a148c; }
 .s-cx { background:#fce4ec; color:#880e4f; } .s-pend { background:#e8eaf6; color:#1a237e; }
 .s-other { background:#f5f5f5; color:#555; }
+.s-won  { background:#e8f5e9; color:#1b5e20; }
+.s-lost { background:#fce4ec; color:#880e4f; }
+.filter-div { width:1px; background:#ebebeb; align-self:stretch; margin:0 4px; flex-shrink:0; }
 
 .owner-name { font-size: 12px; color: #555; white-space: nowrap; }
 .stk { font-weight: 800; font-size: 15px; }
@@ -135,43 +153,34 @@ td { padding: 9px 12px; vertical-align: middle; }
 @media (max-width: 1100px) { .kpi-grid { grid-template-columns: repeat(4, 1fr); } }
 @media (max-width: 700px)  { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
 
-/* Token screen */
-#token-screen { position:fixed; inset:0; background:#f6f7f9; display:flex; align-items:center; justify-content:center; z-index:999; }
-.token-box { background:white; border:1px solid #e8e8e8; border-radius:14px; padding:40px 48px; max-width:440px; width:100%; box-shadow:0 4px 24px rgba(0,0,0,0.07); }
-.token-box h2 { font-size:17px; font-weight:700; color:#0C0C0C; margin-bottom:6px; }
-.token-box p  { font-size:13px; color:#888; margin-bottom:20px; line-height:1.5; }
-.token-input { width:100%; padding:9px 12px; border:1.5px solid #ddd; border-radius:8px; font-size:13px; outline:none; font-family:monospace; }
-.token-input:focus { border-color:#CC0088; }
-.token-btn { margin-top:12px; width:100%; padding:10px; background:#CC0088; color:white; border:none; border-radius:8px; font-size:14px; font-weight:700; cursor:pointer; }
-.token-btn:hover { background:#aa006e; }
-.token-err { margin-top:8px; font-size:12px; color:#c62828; display:none; }
-.token-link { font-size:11px; color:#CC0088; text-decoration:none; }
-.reset-token { font-size:11px; color:#aaa; cursor:pointer; background:none; border:none; padding:0; margin-left:8px; }
-.reset-token:hover { color:#CC0088; }
+/* ── Custom Dropdowns ── */
+.dd-wrap { position:relative; display:inline-block; }
+.dd-btn { display:inline-flex; align-items:center; gap:5px; padding:5px 10px; border:1.5px solid #ddd; border-radius:8px; background:white; cursor:pointer; font-size:12px; color:#555; white-space:nowrap; transition:all 0.12s; user-select:none; }
+.dd-btn:hover { border-color:#CC0088; color:#CC0088; }
+.dd-btn.open  { border-color:#CC0088; color:#CC0088; }
+.dd-btn.active { border-color:#CC0088; background:#fff0fa; color:#CC0088; font-weight:600; }
+.dd-caret { font-size:8px; opacity:0.55; }
+.dd-panel { position:absolute; top:calc(100% + 5px); left:0; background:white; border:1.5px solid #e0e0e0; border-radius:10px; padding:5px 0; min-width:170px; box-shadow:0 6px 20px rgba(0,0,0,0.10); z-index:200; display:none; }
+.dd-panel.open { display:block; }
+.dd-item { display:flex; align-items:center; gap:8px; padding:7px 14px; cursor:pointer; font-size:12.5px; color:#333; transition:background 0.08s; white-space:nowrap; }
+.dd-item:hover { background:#fdf4f9; }
+.dd-item input { accent-color:#CC0088; width:13px; height:13px; flex-shrink:0; cursor:pointer; }
+.dd-sep { height:1px; background:#f0f0f0; margin:4px 0; }
+.dd-clear { display:block; width:100%; text-align:center; font-size:11px; color:#aaa; cursor:pointer; padding:5px 0 3px; border:none; background:none; }
+.dd-clear:hover { color:#CC0088; }
+/* ── Preset period buttons ── */
+.preset-btn { padding:4px 9px; border:1.5px solid #ddd; border-radius:6px; background:white; font-size:11.5px; cursor:pointer; color:#555; transition:all 0.12s; white-space:nowrap; }
+.preset-btn:hover { border-color:#CC0088; color:#CC0088; }
+.preset-btn.on { border-color:#CC0088; background:#fff0fa; color:#CC0088; font-weight:600; }
 </style>
 </head>
 <body>
-
-<div id="token-screen" style="display:none">
-  <div class="token-box">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
-      <div style="width:34px;height:34px;background:#CC0088;border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:13px">iup</div>
-      <strong style="font-size:15px">Pipeline — Visão Comercial</strong>
-    </div>
-    <h2>Conectar ao HubSpot</h2>
-    <p>Cole o seu <strong>Private App token</strong> para carregar os dados do pipeline.<br>
-    <a class="token-link" href="https://app.hubspot.com/private-apps/23158579" target="_blank">Gerar token no HubSpot →</a></p>
-    <input class="token-input" id="token-input" type="password" placeholder="pat-na1-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" />
-    <div class="token-err" id="token-err">Token inválido ou sem permissão. Verifique e tente novamente.</div>
-    <button class="token-btn" onclick="submitToken()">Conectar</button>
-  </div>
-</div>
 
 <div class="header">
   <div class="logo">iup</div>
   <div class="header-text">
     <h1>Pipeline — Visão Comercial</h1>
-    <p>Stakeholders, modelo novo e I's do Champion por conta ativa <button class="reset-token" onclick="resetToken()" title="Trocar token">⚙ Token</button></p>
+    <p>Stakeholders, modelo novo e I's do Champion por conta ativa</p>
   </div>
 </div>
 
@@ -180,85 +189,160 @@ td { padding: 9px 12px; vertical-align: middle; }
 </div>
 
 <div id="toolbar" class="toolbar" style="display:none">
-  <!-- Row 1: Stage + search -->
-  <div class="toolbar-row">
-    <span class="tlabel">Etapa</span>
-    <button class="fb on" data-s="all">Todas</button>
-    <button class="fb" data-s="Buscando Solução">BS</button>
-    <button class="fb" data-s="Construindo o Projeto">CP</button>
-    <button class="fb" data-s="Entendendo o Problema">EP</button>
-    <button class="fb" data-s="Negociando">Negociando</button>
-    <button class="fb" data-s="Conexão">Conexão</button>
-    <button class="fb" data-s="Pendente de Assinatura">Pendente</button>
-    <div class="search-wrap">
+  <!-- Row 1: Pipeline + filtros principais + busca -->
+  <div class="toolbar-row" style="flex-wrap:wrap;gap:6px">
+
+    <!-- Pipeline status -->
+    <div class="dd-wrap" id="dd-pipeline">
+      <button class="dd-btn" onclick="toggleDD('dd-pipeline')">
+        <span id="lbl-pipeline">Pipeline: Todos</span><span class="dd-caret">▼</span>
+      </button>
+      <div class="dd-panel" id="panel-pipeline">
+        <label class="dd-item"><input type="radio" name="pipeline" value="all" checked> Todos</label>
+        <label class="dd-item"><input type="radio" name="pipeline" value="ativo"> 🟢 Ativo (em andamento)</label>
+        <label class="dd-item"><input type="radio" name="pipeline" value="won"> ✅ Won</label>
+        <label class="dd-item"><input type="radio" name="pipeline" value="lost"> ❌ Lost</label>
+      </div>
+    </div>
+
+    <!-- Etapa multi -->
+    <div class="dd-wrap" id="dd-stage">
+      <button class="dd-btn" onclick="toggleDD('dd-stage')">
+        <span id="lbl-stage">Etapa: Todas</span><span class="dd-caret">▼</span>
+      </button>
+      <div class="dd-panel" id="panel-stage">
+        <label class="dd-item"><input type="checkbox" data-stage="Conexão"> Conexão</label>
+        <label class="dd-item"><input type="checkbox" data-stage="StandBy"> StandBy</label>
+        <label class="dd-item"><input type="checkbox" data-stage="Entendendo o Problema"> Entendendo o Problema</label>
+        <label class="dd-item"><input type="checkbox" data-stage="Construindo o Projeto"> Construindo o Projeto</label>
+        <label class="dd-item"><input type="checkbox" data-stage="Buscando Solução"> Buscando Solução</label>
+        <label class="dd-item"><input type="checkbox" data-stage="Negociando"> Negociando</label>
+        <label class="dd-item"><input type="checkbox" data-stage="Pendente de Assinatura"> Pendente de Assinatura</label>
+        <label class="dd-item"><input type="checkbox" data-stage="Won"> ✅ Won</label>
+        <label class="dd-item"><input type="checkbox" data-stage="Lost"> ❌ Lost</label>
+        <div class="dd-sep"></div>
+        <button class="dd-clear" onclick="clearDD('stage')">Limpar seleção</button>
+      </div>
+    </div>
+
+    <!-- Closer multi -->
+    <div class="dd-wrap" id="dd-closer">
+      <button class="dd-btn" onclick="toggleDD('dd-closer')">
+        <span id="lbl-closer">Closer: Todos</span><span class="dd-caret">▼</span>
+      </button>
+      <div class="dd-panel" id="panel-closer" style="max-height:240px;overflow-y:auto">
+        <!-- populado via JS -->
+      </div>
+    </div>
+
+    <!-- I's multi -->
+    <div class="dd-wrap" id="dd-is">
+      <button class="dd-btn" onclick="toggleDD('dd-is')">
+        <span id="lbl-is">I's: Todos</span><span class="dd-caret">▼</span>
+      </button>
+      <div class="dd-panel" id="panel-is">
+        <label class="dd-item"><input type="checkbox" data-iv="Todos os I's (Champion Ideal)"> 🌟 Todos os I's (Ideal)</label>
+        <label class="dd-item"><input type="checkbox" data-iv="Incentivo + Informação"> ⚡ Incentivo + Informação</label>
+        <label class="dd-item"><input type="checkbox" data-iv="Incentivo + Influência"> ⚡ Incentivo + Influência</label>
+        <label class="dd-item"><input type="checkbox" data-iv="Informação + Influência"> ⚡ Informação + Influência</label>
+        <label class="dd-item"><input type="checkbox" data-iv="Apenas Incentivo"> ◑ Apenas Incentivo</label>
+        <label class="dd-item"><input type="checkbox" data-iv="Apenas Informação"> ◑ Apenas Informação</label>
+        <label class="dd-item"><input type="checkbox" data-iv="Apenas Influência"> ◑ Apenas Influência</label>
+        <label class="dd-item"><input type="checkbox" data-iv="Nenhum I"> — Nenhum I</label>
+        <label class="dd-item"><input type="checkbox" data-iv="__empty__"> ✗ Não informado</label>
+        <div class="dd-sep"></div>
+        <button class="dd-clear" onclick="clearDD('is')">Limpar seleção</button>
+      </div>
+    </div>
+
+    <!-- Stk multi -->
+    <div class="dd-wrap" id="dd-stk">
+      <button class="dd-btn" onclick="toggleDD('dd-stk')">
+        <span id="lbl-stk">Stk.: Todos</span><span class="dd-caret">▼</span>
+      </button>
+      <div class="dd-panel" id="panel-stk">
+        <label class="dd-item"><input type="checkbox" data-stk="0"> 0 stakeholders</label>
+        <label class="dd-item"><input type="checkbox" data-stk="1"> 1 stakeholder</label>
+        <label class="dd-item"><input type="checkbox" data-stk="2"> 2 stakeholders</label>
+        <label class="dd-item"><input type="checkbox" data-stk="3+"> 3+ stakeholders</label>
+        <div class="dd-sep"></div>
+        <button class="dd-clear" onclick="clearDD('stk')">Limpar seleção</button>
+      </div>
+    </div>
+
+    <!-- Search + clear -->
+    <div class="search-wrap" style="margin-left:auto">
       <span class="count-lbl" id="count-lbl"></span>
       <input class="search-box" id="search" placeholder="🔍  Buscar conta..." />
+      <button class="clear-btn" id="clear-btn">✕ Limpar filtros</button>
     </div>
   </div>
-  <!-- Row 2: Closer + date -->
-  <div class="toolbar-row">
-    <span class="tlabel">Closer</span>
-    <select class="filter-select" id="closer-sel"><option value="all">Todos os closers</option></select>
-    <span class="tlabel" style="margin-left:12px">Criado</span>
+
+  <!-- Row 2: Período + filtros secundários -->
+  <div class="toolbar-row" style="flex-wrap:wrap;gap:6px;align-items:center">
+    <span class="tlabel">Período</span>
+    <button class="preset-btn" data-preset="week">Esta semana</button>
+    <button class="preset-btn" data-preset="month">Este mês</button>
+    <button class="preset-btn" data-preset="quarter">Este trimestre</button>
     <input class="date-input" type="date" id="date-from" />
-    <span class="date-sep">até</span>
+    <span class="date-sep">—</span>
     <input class="date-input" type="date" id="date-to" />
-    <button class="clear-btn" id="clear-btn">✕ Limpar filtros</button>
-  </div>
-  <!-- Row 3: Stakeholders -->
-  <div class="toolbar-row">
-    <span class="tlabel">Stk.</span>
-    <button class="fb on" data-stk="all">Todos</button>
-    <button class="fb" data-stk="1">1 stakeholder</button>
-    <button class="fb" data-stk="2">2 stakeholders</button>
-    <button class="fb" data-stk="3+">3+ stakeholders</button>
-  </div>
-  <!-- Row 4: I's multi-select -->
-  <div class="toolbar-row" id="is-row">
-    <span class="tlabel">I's</span>
-    <button class="fb on" id="is-all-btn">Todos</button>
-    <button class="is-chip" data-iv="Todos os I's (Champion Ideal)">🌟 Todos os I's</button>
-    <button class="is-chip" data-iv="Incentivo + Informação">⚡ Incentivo + Informação</button>
-    <button class="is-chip" data-iv="Incentivo + Influência">⚡ Incentivo + Influência</button>
-    <button class="is-chip" data-iv="Informação + Influência">⚡ Informação + Influência</button>
-    <button class="is-chip" data-iv="Apenas Incentivo">◑ Apenas Incentivo</button>
-    <button class="is-chip" data-iv="Apenas Informação">◑ Apenas Informação</button>
-    <button class="is-chip" data-iv="Apenas Influência">◑ Apenas Influência</button>
-    <button class="is-chip" data-iv="Nenhum I">— Nenhum I</button>
-    <button class="is-chip" data-iv="__empty__">✗ Não informado</button>
-  </div>
-  <!-- Row 5: Modelo Novo -->
-  <div class="toolbar-row">
-    <span class="tlabel">M. Novo</span>
-    <button class="fb on" data-mn="all">Todos</button>
-    <button class="fb" data-mn="sim">✅ Sim</button>
-    <button class="fb" data-mn="nao">❌ Não</button>
-    <button class="fb" data-mn="vazio">— Não marcado</button>
-  </div>
-  <!-- Row 6: Acessamos TD? -->
-  <div class="toolbar-row">
-    <span class="tlabel">Acessamos TD?</span>
-    <button class="fb on" data-tda="all">Todos</button>
-    <button class="fb" data-tda="sim">✅ Sim</button>
-    <button class="fb" data-tda="nao">❌ Não</button>
-    <button class="fb" data-tda="vazio">— Não marcado</button>
-  </div>
-  <!-- Row 7: TD Visão Comercial -->
-  <div class="toolbar-row">
-    <span class="tlabel">TD (Visão Com.)</span>
-    <button class="fb on" data-tdv="all">Todos</button>
-    <button class="fb" data-tdv="sim">🤝 TD acessado</button>
-    <button class="fb" data-tdv="nao">❌ Sem TD</button>
-  </div>
-  <!-- Row 8: Key Account -->
-  <div class="toolbar-row">
-    <span class="tlabel">Key Account</span>
-    <button class="fb on" data-ka="all">Todos</button>
-    <button class="fb" data-ka="sim">⭐ Key Account</button>
-    <button class="fb" data-ka="nao">Não KA</button>
-    <button class="fb" data-ka="vazio">— Não marcado</button>
+
+    <div class="filter-div" style="height:20px"></div>
+
+    <!-- M. Novo -->
+    <div class="dd-wrap" id="dd-mn">
+      <button class="dd-btn" onclick="toggleDD('dd-mn')">
+        <span id="lbl-mn">M. Novo: Todos</span><span class="dd-caret">▼</span>
+      </button>
+      <div class="dd-panel" id="panel-mn">
+        <label class="dd-item"><input type="radio" name="mn" value="all" checked> Todos</label>
+        <label class="dd-item"><input type="radio" name="mn" value="sim"> ✅ Sim</label>
+        <label class="dd-item"><input type="radio" name="mn" value="nao"> ❌ Não</label>
+        <label class="dd-item"><input type="radio" name="mn" value="vazio"> — Não marcado</label>
+      </div>
+    </div>
+
+    <!-- Key Account -->
+    <div class="dd-wrap" id="dd-ka">
+      <button class="dd-btn" onclick="toggleDD('dd-ka')">
+        <span id="lbl-ka">Key Account: Todos</span><span class="dd-caret">▼</span>
+      </button>
+      <div class="dd-panel" id="panel-ka">
+        <label class="dd-item"><input type="radio" name="ka" value="all" checked> Todos</label>
+        <label class="dd-item"><input type="radio" name="ka" value="sim"> ⭐ Key Account</label>
+        <label class="dd-item"><input type="radio" name="ka" value="nao"> Não KA</label>
+        <label class="dd-item"><input type="radio" name="ka" value="vazio"> — Não marcado</label>
+      </div>
+    </div>
+
+    <!-- Acessamos TD? -->
+    <div class="dd-wrap" id="dd-tda">
+      <button class="dd-btn" onclick="toggleDD('dd-tda')">
+        <span id="lbl-tda">Acessamos TD?: Todos</span><span class="dd-caret">▼</span>
+      </button>
+      <div class="dd-panel" id="panel-tda">
+        <label class="dd-item"><input type="radio" name="tda" value="all" checked> Todos</label>
+        <label class="dd-item"><input type="radio" name="tda" value="sim"> ✅ Sim</label>
+        <label class="dd-item"><input type="radio" name="tda" value="nao"> ❌ Não</label>
+        <label class="dd-item"><input type="radio" name="tda" value="vazio"> — Não marcado</label>
+      </div>
+    </div>
+
+    <!-- TD Visão Com. -->
+    <div class="dd-wrap" id="dd-tdv">
+      <button class="dd-btn" onclick="toggleDD('dd-tdv')">
+        <span id="lbl-tdv">TD Visão Com.: Todos</span><span class="dd-caret">▼</span>
+      </button>
+      <div class="dd-panel" id="panel-tdv">
+        <label class="dd-item"><input type="radio" name="tdv" value="all" checked> Todos</label>
+        <label class="dd-item"><input type="radio" name="tdv" value="sim"> 🤝 TD acessado</label>
+        <label class="dd-item"><input type="radio" name="tdv" value="nao"> ❌ Sem TD</label>
+      </div>
+    </div>
   </div>
 </div>
+
 
 <div class="table-wrap">
   <table>
@@ -283,12 +367,12 @@ td { padding: 9px 12px; vertical-align: middle; }
 <div class="footer" id="footer"></div>
 
 <script>
-const EXCLUDED = new Set(['72214583','278399379']);
+const EXCLUDED = new Set(['72214583','278399379','88629382']);
 const OWNER_MAP = {"75429156":"Fernanda Teles","75561703":"Mariana Carpinter","76148515":"Rubens Alcantara","76350886":"Lucas Henrique","76662146":"Larissah Pereira","78563637":"Laura Sachs","78563638":"Natane Fialho","78614813":"Mariana Castro Nicacio","78618342":"João Arita","78825625":"William Gomes","79254410":"Daniel Chaves","79254411":"Sarah Dállet","79547367":"Pâmela Paz","79607024":"Emilly Deiroz","80047341":"Leticia Batista","80073008":"Roberto Vieira","80073009":"Alex Botini","80450031":"Rachel Braz","80769309":"Silvia Zietz","81102809":"Fernanda Costa","81460004":"Breno Alves","81522291":"Marianna Cristhe","81526004":"Samanta Dias","82608183":"Patrick Gregório","83147969":"Erika Erolles","83871346":"Vanderlei Fraguas","86671834":"Felipe Santos","87195936":"Jhessennia Calles","87195937":"Juliano Cardoso","87236245":"Natalia Silva","87236246":"Larissa Azeredo","87399769":"Matheus Marchezi","87410382":"Larissa Alves","87566019":"Giulianna Gomes","88629382":"Eduardo Carvalho","89499506":"Giovana Domingos","89747928":"Mariana Carpinter","89958362":"Mariana Bremen","90284833":"Mayara Lorancette","90723591":"Welber Alexandre","90859181":"Pedro Lunardi","91516986":"Camila Schwerz","91640235":"Aline Oliveira","91976735":"Felipe Pereira","91976736":"Nadia Helena","92761589":"David Pacifico","93361370":"Maria Araujo","114548081":"Isabella Barros","145281235":"Christine Silva","246740073":"Natasha Fernandes","264491397":"Felipe Batalha","265370991":"Luísa Schimidt","279229046":"Mateus Oliveira","298789521":"Hugo Pires","303902231":"Tiago Marques","304626070":"Hadalberto Lopes","304626071":"Luciane Pessoa","304630315":"Lucas Costa","304630316":"Luis Fonseca","304630317":"Luis Queiroz","304630318":"Karynne Rocha","304630319":"Juliana Ng","304630320":"Alice Ribeiro","304630321":"Raul Cariello","304630322":"Mayra Castro","304633937":"Luiza Garcia","304633938":"João Lopes","304633939":"Lucas Daniel","304633940":"Andresa Carmo","308901297":"Andre Jensen","312275085":"Marcela Bonin","315242823":"Jonny Steinmetz","316204577":"João Rodrigues","316904337":"Bruno Coelho","339940528":"Tati Lima","353825602":"Lucas Trugilho","364210411":"Alexandra Cunha","430230667":"Lucas Corrêa","480180355":"CS Impulseup","528213346":"Isabela Garcia","553428995":"Natália Baldivia","566983935":"Bruna Loureiro","570986759":"Geisy Colusso","597669675":"Victoria Assi","655335586":"Miguel Silva","663068223":"Daniela Ramos","674809168":"Suporte Impulseup","722057557":"Taiana Araujo"};
 
 const OPEN = ['appointmentscheduled','938158484','qualifiedtobuy','presentationscheduled','decisionmakerboughtin','contractsent','108538399'];
-const STAGE_NAME = {appointmentscheduled:'Conexão','938158484':'StandBy',qualifiedtobuy:'Entendendo o Problema',presentationscheduled:'Construindo o Projeto',decisionmakerboughtin:'Buscando Solução',contractsent:'Negociando','108538399':'Pendente de Assinatura'};
-const STAGE_CLS  = {'Buscando Solução':'s-bs','Construindo o Projeto':'s-cp','Entendendo o Problema':'s-ep','Negociando':'s-neg','Conexão':'s-cx','Pendente de Assinatura':'s-pend'};
+const STAGE_NAME = {appointmentscheduled:'Conexão','938158484':'StandBy',qualifiedtobuy:'Entendendo o Problema',presentationscheduled:'Construindo o Projeto',decisionmakerboughtin:'Buscando Solução',contractsent:'Negociando','108538399':'Pendente de Assinatura',closedwon:'Won',closedlost:'Lost'};
+const STAGE_CLS  = {'Buscando Solução':'s-bs','Construindo o Projeto':'s-cp','Entendendo o Problema':'s-ep','Negociando':'s-neg','Conexão':'s-cx','Pendente de Assinatura':'s-pend','Won':'s-won','Lost':'s-lost'};
 const MODELO = [
   {key:'Enviou e-mail champion da conexão',      icon:'📧',label:'E-mail'},
   {key:'Apresentou material de pré e pós Demo',  icon:'🎯',label:'Pré/Pós'},
@@ -301,8 +385,13 @@ const COMMENT_PREFIX = 'iup_pipeline_comment_';
 // ── State ──
 let all = [], filtered = [];
 let ownerNames = Object.assign({}, OWNER_MAP);
-let stageFilter = 'all', closerFilter = 'all', stkFilter = 'all', mnFilter = 'all', tdAcessamosFilter = 'all', tdVisaoFilter = 'all', kaFilter = 'all', searchVal = '', dateFrom = '', dateTo = '';
-let isSelected = new Set();
+let pipelineFilter = 'all';
+let stageSelected  = new Set();
+let closerSelected = new Set();
+let stkSelected    = new Set();
+let isSelected     = new Set();
+let mnFilter = 'all', tdAcessamosFilter = 'all', tdVisaoFilter = 'all', kaFilter = 'all';
+let searchVal = '', dateFrom = '', dateTo = '', activePreset = '';
 let sortCol = 'cmpl', sortDir = -1;
 
 // ── Helpers ──
@@ -430,19 +519,27 @@ function isMatchesFilter(val) {
 function applyFilter() {
   const fromTs = dateFrom?new Date(dateFrom).getTime():null;
   const toTs   = dateTo?new Date(dateTo+'T23:59:59').getTime():null;
+  const OPEN_STAGES = new Set(['appointmentscheduled','938158484','qualifiedtobuy','presentationscheduled','decisionmakerboughtin','contractsent','108538399']);
   filtered = all.filter(d=>{
     const p  = d.properties;
     const sn = STAGE_NAME[p.dealstage]||'';
     const ctc= parseInt(p.num_associated_contacts)||0;
-    if(stageFilter!=='all'&&sn!==stageFilter)return false;
-    if(closerFilter!=='all'&&p.hubspot_owner_id!==closerFilter)return false;
-    if(stkFilter==='1'&&ctc!==1)return false;
-    if(stkFilter==='2'&&ctc!==2)return false;
-    if(stkFilter==='3+'&&ctc<3)return false;
+    // Pipeline ativo filter
+    if(pipelineFilter==='ativo'&&!OPEN_STAGES.has(p.dealstage))return false;
+    if(pipelineFilter==='won'&&p.dealstage!=='closedwon')return false;
+    if(pipelineFilter==='lost'&&p.dealstage!=='closedlost')return false;
+    // Multi-select filters
+    if(stageSelected.size>0&&!stageSelected.has(sn))return false;
+    if(closerSelected.size>0&&!closerSelected.has(p.hubspot_owner_id))return false;
+    if(stkSelected.size>0){
+      const key=ctc>=3?'3+':String(ctc);
+      if(!stkSelected.has(key))return false;
+    }
     if(!isMatchesFilter(p.quais_i_s_nosso_champion_tem_))return false;
+    // Single-select filters
     if(mnFilter!=='all'){
       const mn1=getMN(d.id,'prepós'), mn2=getMN(d.id,'proposta');
-      const cur = (mn1==='sim'&&mn2==='sim') ? 'sim' : (mn1==='nao'&&mn2==='nao') ? 'nao' : 'vazio';
+      const cur=(mn1==='sim'&&mn2==='sim')?'sim':(mn1==='nao'&&mn2==='nao')?'nao':'vazio';
       if(cur!==mnFilter)return false;
     }
     if(kaFilter!=='all'){
@@ -527,110 +624,132 @@ function sort(col) {
 }
 
 function populateClosers() {
-  const sel=document.getElementById('closer-sel');
+  const panel=document.getElementById('panel-closer');
   const seen=new Set();
+  const items=[];
   all.forEach(d=>{
     const oid=d.properties.hubspot_owner_id;
     if(oid&&!seen.has(oid)&&!EXCLUDED.has(String(oid))){
       seen.add(oid);
-      const opt=document.createElement('option');
-      opt.value=oid;opt.textContent=ownerName(oid);
-      sel.appendChild(opt);
+      items.push({id:oid, name:ownerName(oid)});
     }
   });
-  const opts=Array.from(sel.options).slice(1).sort((a,b)=>a.text.localeCompare(b.text,'pt-BR'));
-  while(sel.options.length>1)sel.remove(1);
-  opts.forEach(o=>sel.appendChild(o));
-}
-
-const TOKEN_KEY = 'iup_hubspot_token';
-function getToken() { return localStorage.getItem(TOKEN_KEY)||''; }
-function saveToken(t) { if(t) localStorage.setItem(TOKEN_KEY,t); else localStorage.removeItem(TOKEN_KEY); }
-
-async function submitToken() {
-  const t = document.getElementById('token-input').value.trim();
-  if(!t){document.getElementById('token-err').style.display='block';return;}
-  saveToken(t);
-  document.getElementById('token-screen').style.display='none';
-  await init();
-}
-
-function resetToken() {
-  saveToken('');
-  location.reload();
-}
-
-async function loadDeals() {
-  const token = getToken();
-  const props=['dealname','dealstage','num_associated_contacts','visao_comercial_status_geral_da_conta','quais_i_s_nosso_champion_tem_','hubspot_owner_id','createdate','acessamos_td_','e_key_account_'];
-  let results=[], after=undefined;
-  while(true){
-    const body={
-      filterGroups:[{filters:[{propertyName:'dealstage',operator:'IN',values:OPEN}]}],
-      properties:props, limit:200,
-      sorts:[{propertyName:'dealname',direction:'ASCENDING'}]
-    };
-    if(after) body.after=after;
-    const r=await fetch('https://api.hubapi.com/crm/v3/objects/deals/search',{
-      method:'POST',
-      headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},
-      body:JSON.stringify(body)
+  items.sort((a,b)=>a.name.localeCompare(b.name,'pt-BR'));
+  panel.innerHTML = items.map(o=>`<label class="dd-item"><input type="checkbox" data-closer="${o.id}"> ${o.name}</label>`).join('')
+    + `<div class="dd-sep"></div><button class="dd-clear" onclick="clearDD('closer')">Limpar seleção</button>`;
+  panel.querySelectorAll('input[data-closer]').forEach(cb=>{
+    cb.addEventListener('change',()=>{
+      const id=cb.dataset.closer;
+      if(cb.checked)closerSelected.add(id); else closerSelected.delete(id);
+      updateDDLabel('closer','Closer',closerSelected.size,()=>{
+        const names=[...closerSelected].map(id=>ownerName(id));
+        return names.length===1?names[0]:names.length+' closers';
+      });
+      applyFilter();
     });
-    if(r.status===401){saveToken('');throw new Error('Token inválido. Recarregue a página e insira um token válido.');}
-    if(!r.ok) throw new Error('HubSpot API error: '+r.status);
-    const data=await r.json();
+  });
+}
+
+async function loadDeals(stages, afterDate, dateField) {
+  stages = stages || OPEN;
+  const props=['dealname','dealstage','num_associated_contacts','visao_comercial_status_geral_da_conta','quais_i_s_nosso_champion_tem_','hubspot_owner_id','createdate','acessamos_td_','e_key_account_','data_da_primeira_reuniao'];
+  const baseFilters=[{propertyName:'dealstage',operator:'IN',values:stages}];
+  if(afterDate) baseFilters.push({propertyName:dateField||'createdate',operator:'GTE',value:String(afterDate)});
+  let results=[],offset=0;
+  while(true){
+    const r=await window.cowork.callMcpTool('mcp__9b6f0d6f-2b47-4d2e-abb7-d9d93cd88cde__search_crm_objects',{
+      objectType:'deals',
+      filterGroups:[{filters:baseFilters}],
+      properties:props,limit:200,offset,
+      sorts:[{propertyName:'dealname',direction:'ASCENDING'}],
+      chatInsights:{userIntent:'pipeline dashboard',satisfaction:'NEUTRAL'}
+    });
+    let data;try{data=r.structuredContent??JSON.parse(r.content[0].text);}catch(e){break;}
     if(!data.results||!data.results.length)break;
     results=results.concat(data.results);
-    if(!data.paging?.next?.after)break;
-    after=data.paging.next.after;
+    if(results.length>=data.total||data.results.length<200)break;
+    offset+=200;
   }
   return results;
 }
 
+async function loadAllForTodos() {
+  const jan2026 = new Date('2026-01-01T00:00:00Z').getTime();
+  const [active, closed] = await Promise.all([
+    loadDeals(OPEN),
+    loadDeals(['closedwon','closedlost'], jan2026, 'data_da_primeira_reuniao')
+  ]);
+  const seen = new Set();
+  return [...active, ...closed].filter(d=>{ if(seen.has(d.id))return false; seen.add(d.id); return true; });
+}
+
 async function tryEnrichOwners(ids) {
+  const missing=ids.filter(id=>!ownerNames[String(id)]);
+  if(!missing.length)return;
   try{
-    const token=getToken();
-    const r=await fetch('https://api.hubapi.com/crm/v3/owners/?limit=500',{
-      headers:{'Authorization':'Bearer '+token}
-    });
-    if(!r.ok)return;
-    const data=await r.json();
-    (data.results||[]).forEach(o=>{
-      const name=[o.firstName,o.lastName].filter(Boolean).join(' ').trim();
-      if(o.id&&name)ownerNames[String(o.id)]=name;
-    });
+    const r=await window.cowork.callMcpTool('mcp__9b6f0d6f-2b47-4d2e-abb7-d9d93cd88cde__search_owners',{ownerIds:missing.map(Number).filter(Boolean),limit:100});
+    let data;try{data=r.structuredContent??JSON.parse(r.content[0].text);}catch(e){return;}
+    const list=data.owners||data.results||(Array.isArray(data)?data:[]);
+    list.forEach(o=>{if(o.ownerId&&o.name&&o.name.trim())ownerNames[String(o.ownerId)]=o.name.trim();});
   }catch(e){}
 }
 
 function resetFilters(){
-  stageFilter='all';closerFilter='all';stkFilter='all';mnFilter='all';tdAcessamosFilter='all';tdVisaoFilter='all';isSelected.clear();searchVal='';dateFrom='';dateTo='';
-  document.querySelectorAll('.fb[data-mn]').forEach(b=>b.classList.remove('on'));
-  document.querySelector('.fb[data-mn="all"]').classList.add('on');
-  document.querySelectorAll('.fb[data-tda]').forEach(b=>b.classList.remove('on'));
-  document.querySelector('.fb[data-tda="all"]').classList.add('on');
-  document.querySelectorAll('.fb[data-tdv]').forEach(b=>b.classList.remove('on'));
-  document.querySelector('.fb[data-tdv="all"]').classList.add('on');
-  document.querySelectorAll('.fb[data-ka]').forEach(b=>b.classList.remove('on'));
-  document.querySelector('.fb[data-ka="all"]').classList.add('on');
-  document.querySelectorAll('.fb[data-s]').forEach(b=>b.classList.remove('on'));
-  document.querySelector('.fb[data-s="all"]').classList.add('on');
-  document.querySelectorAll('.fb[data-stk]').forEach(b=>b.classList.remove('on'));
-  document.querySelector('.fb[data-stk="all"]').classList.add('on');
-  document.querySelectorAll('.is-chip').forEach(b=>b.classList.remove('on'));
-  document.getElementById('is-all-btn').classList.add('on');
-  document.getElementById('closer-sel').value='all';
+  pipelineFilter='all'; stageSelected.clear(); closerSelected.clear(); stkSelected.clear();
+  isSelected.clear(); mnFilter='all'; tdAcessamosFilter='all'; tdVisaoFilter='all'; kaFilter='all';
+  searchVal=''; dateFrom=''; dateTo=''; activePreset='';
+  // Reset radio groups
+  document.querySelectorAll('input[name="pipeline"]').forEach(r=>r.checked=(r.value==='all'));
+  document.querySelectorAll('input[name="mn"]').forEach(r=>r.checked=(r.value==='all'));
+  document.querySelectorAll('input[name="ka"]').forEach(r=>r.checked=(r.value==='all'));
+  document.querySelectorAll('input[name="tda"]').forEach(r=>r.checked=(r.value==='all'));
+  document.querySelectorAll('input[name="tdv"]').forEach(r=>r.checked=(r.value==='all'));
+  // Reset checkboxes
+  document.querySelectorAll('#panel-stage input,#panel-closer input,#panel-stk input,#panel-is input').forEach(cb=>cb.checked=false);
+  // Reset preset buttons
+  document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('on'));
+  // Reset date inputs
   document.getElementById('date-from').value='';
   document.getElementById('date-to').value='';
   document.getElementById('search').value='';
+  // Reset labels
+  ['pipeline','stage','closer','stk','is','mn','ka','tda','tdv'].forEach(resetDDLabel);
+  document.querySelectorAll('.dd-btn').forEach(b=>{b.classList.remove('active','open');});
+  document.querySelectorAll('.dd-panel').forEach(p=>p.classList.remove('open'));
+}
+
+const DD_DEFAULTS = {pipeline:'Pipeline: Todos',stage:'Etapa: Todas',closer:'Closer: Todos',stk:'Stk.: Todos',is:"I's: Todos",mn:'M. Novo: Todos',ka:'Key Account: Todos',tda:'Acessamos TD?: Todos',tdv:'TD Visão Com.: Todos'};
+function resetDDLabel(key){document.getElementById('lbl-'+key).textContent=DD_DEFAULTS[key];}
+
+function updateDDLabel(key, prefix, count, nameFn){
+  const lbl=document.getElementById('lbl-'+key);
+  const btn=document.querySelector('#dd-'+key+' .dd-btn');
+  if(count===0){lbl.textContent=DD_DEFAULTS[key];btn.classList.remove('active');}
+  else{lbl.textContent=prefix+': '+nameFn();btn.classList.add('active');}
+}
+
+function toggleDD(id){
+  const panel=document.getElementById('panel-'+id.replace('dd-',''));
+  const btn=document.querySelector('#'+id+' .dd-btn');
+  const isOpen=panel.classList.contains('open');
+  document.querySelectorAll('.dd-panel.open').forEach(p=>p.classList.remove('open'));
+  document.querySelectorAll('.dd-btn.open').forEach(b=>b.classList.remove('open'));
+  if(!isOpen){panel.classList.add('open');btn.classList.add('open');}
+}
+function clearDD(key){
+  if(key==='stage')stageSelected.clear();
+  else if(key==='closer')closerSelected.clear();
+  else if(key==='stk')stkSelected.clear();
+  else if(key==='is')isSelected.clear();
+  document.querySelectorAll('#panel-'+key+' input[type=checkbox]').forEach(cb=>cb.checked=false);
+  resetDDLabel(key);
+  document.querySelector('#dd-'+key+' .dd-btn').classList.remove('active');
+  applyFilter();
 }
 
 async function init(){
-  if(!getToken()){
-    document.getElementById('token-screen').style.display='flex';
-    return;
-  }
   try{
-    all=await loadDeals();
+    all=await loadAllForTodos();
     const ownerIds=[...new Set(all.map(d=>d.properties.hubspot_owner_id).filter(Boolean))];
     await tryEnrichOwners(ownerIds);
     filtered=[...all];
@@ -641,49 +760,122 @@ async function init(){
     sort('cmpl');
     document.getElementById('footer').textContent='Dados do HubSpot — atualizado em '+new Date().toLocaleString('pt-BR');
 
-    document.querySelectorAll('.fb[data-s]').forEach(btn=>btn.addEventListener('click',()=>{
-      document.querySelectorAll('.fb[data-s]').forEach(b=>b.classList.remove('on'));
-      btn.classList.add('on'); stageFilter=btn.dataset.s; applyFilter();
-    }));
-    document.querySelectorAll('.fb[data-stk]').forEach(btn=>btn.addEventListener('click',()=>{
-      document.querySelectorAll('.fb[data-stk]').forEach(b=>b.classList.remove('on'));
-      btn.classList.add('on'); stkFilter=btn.dataset.stk; applyFilter();
-    }));
-    document.getElementById('is-all-btn').addEventListener('click',()=>{
-      isSelected.clear();
-      document.querySelectorAll('.is-chip').forEach(b=>b.classList.remove('on'));
-      document.getElementById('is-all-btn').classList.add('on');
-      applyFilter();
+    // ── Dropdown toggle & click-outside ──
+    document.addEventListener('click', e=>{
+      if(!e.target.closest('.dd-wrap')){
+        document.querySelectorAll('.dd-panel.open').forEach(p=>p.classList.remove('open'));
+        document.querySelectorAll('.dd-btn.open').forEach(b=>b.classList.remove('open'));
+      }
     });
-    document.querySelectorAll('.is-chip').forEach(chip=>chip.addEventListener('click',()=>{
-      const val=chip.dataset.iv;
-      if(isSelected.has(val)){isSelected.delete(val);chip.classList.remove('on');}
-      else{isSelected.add(val);chip.classList.add('on');}
-      if(isSelected.size===0){document.getElementById('is-all-btn').classList.add('on');}
-      else{document.getElementById('is-all-btn').classList.remove('on');}
+
+    // ── Pipeline (radio) — recarrega dados conforme seleção ──
+    document.querySelectorAll('input[name="pipeline"]').forEach(r=>r.addEventListener('change', async ()=>{
+      pipelineFilter=r.value;
+      const lbl=document.getElementById('lbl-pipeline');
+      const btn=document.querySelector('#dd-pipeline .dd-btn');
+      if(r.value==='all'){lbl.textContent='Pipeline: Todos';btn.classList.remove('active');}
+      else{lbl.textContent='Pipeline: '+r.closest('.dd-item').textContent.trim();btn.classList.add('active');}
+      // Recarrega com as etapas correspondentes
+      const stages = r.value==='won'?['closedwon']:r.value==='lost'?['closedlost']:null;
+      document.getElementById('kpis').innerHTML='<div class="loader" style="grid-column:1/-1"><div class="spin"></div><span>Carregando...</span></div>';
+      document.getElementById('tbody').innerHTML='';
+      try{
+        all = r.value==='all' ? await loadAllForTodos() : await loadDeals(stages);
+        const ownerIds=[...new Set(all.map(d=>d.properties.hubspot_owner_id).filter(Boolean))];
+        await tryEnrichOwners(ownerIds);
+        filtered=[...all];
+        populateClosers();
+        stageSelected.clear();closerSelected.clear();
+        document.querySelectorAll('#panel-stage input,#panel-closer input').forEach(cb=>cb.checked=false);
+        resetDDLabel('stage');resetDDLabel('closer');
+        document.querySelector('#dd-stage .dd-btn').classList.remove('active');
+        document.querySelector('#dd-closer .dd-btn').classList.remove('active');
+        applyFilter();sort('cmpl');
+      }catch(e){
+        document.getElementById('kpis').innerHTML='<div style="color:#c62828;padding:20px;grid-column:1/-1">Erro: '+e.message+'</div>';
+      }
+    }));
+
+    // ── Etapa (multi-checkbox) ──
+    document.querySelectorAll('#panel-stage input[data-stage]').forEach(cb=>cb.addEventListener('change',()=>{
+      const sn=cb.dataset.stage;
+      if(cb.checked)stageSelected.add(sn); else stageSelected.delete(sn);
+      updateDDLabel('stage','Etapa',stageSelected.size,()=>stageSelected.size===1?[...stageSelected][0]:stageSelected.size+' etapas');
       applyFilter();
     }));
-    document.getElementById('closer-sel').addEventListener('change',e=>{closerFilter=e.target.value;applyFilter();});
-    document.getElementById('date-from').addEventListener('change',e=>{dateFrom=e.target.value;applyFilter();});
-    document.getElementById('date-to').addEventListener('change',  e=>{dateTo=e.target.value;applyFilter();});
-    document.getElementById('search').addEventListener('input',    e=>{searchVal=e.target.value;applyFilter();});
+
+    // ── I's (multi-checkbox) ──
+    document.querySelectorAll('#panel-is input[data-iv]').forEach(cb=>cb.addEventListener('change',()=>{
+      const val=cb.dataset.iv;
+      if(cb.checked)isSelected.add(val); else isSelected.delete(val);
+      updateDDLabel('is',"I's",isSelected.size,()=>isSelected.size===1?[...isSelected][0]:isSelected.size+' opções');
+      applyFilter();
+    }));
+
+    // ── Stk (multi-checkbox) ──
+    document.querySelectorAll('#panel-stk input[data-stk]').forEach(cb=>cb.addEventListener('change',()=>{
+      const val=cb.dataset.stk;
+      if(cb.checked)stkSelected.add(val); else stkSelected.delete(val);
+      updateDDLabel('stk','Stk.',stkSelected.size,()=>[...stkSelected].sort().join(', '));
+      applyFilter();
+    }));
+
+    // ── Radio dropdowns (M. Novo, KA, TDA, TDV) ──
+    const radioMap={mn:['mnFilter','M. Novo','lbl-mn'],ka:['kaFilter','Key Account','lbl-ka'],
+                    tda:['tdAcessamosFilter','Acessamos TD?','lbl-tda'],tdv:['tdVisaoFilter','TD Visão Com.','lbl-tdv']};
+    Object.entries(radioMap).forEach(([name,[varRef,prefix]])=>{
+      document.querySelectorAll('input[name="'+name+'"]').forEach(r=>r.addEventListener('change',()=>{
+        if(name==='mn')mnFilter=r.value;
+        else if(name==='ka')kaFilter=r.value;
+        else if(name==='tda')tdAcessamosFilter=r.value;
+        else if(name==='tdv')tdVisaoFilter=r.value;
+        const lbl=document.getElementById('lbl-'+name);
+        const btn=document.querySelector('#dd-'+name+' .dd-btn');
+        if(r.value==='all'){lbl.textContent=prefix+': Todos';btn.classList.remove('active');}
+        else{lbl.textContent=prefix+': '+r.closest('.dd-item').textContent.trim();btn.classList.add('active');}
+        applyFilter();
+      }));
+    });
+
+    // ── Date inputs ──
+    document.getElementById('date-from').addEventListener('change',e=>{dateFrom=e.target.value;activePreset='';document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('on'));applyFilter();});
+    document.getElementById('date-to').addEventListener('change',  e=>{dateTo=e.target.value;activePreset='';document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('on'));applyFilter();});
+
+    // ── Preset period buttons ──
+    document.querySelectorAll('.preset-btn').forEach(btn=>btn.addEventListener('click',()=>{
+      const p=btn.dataset.preset;
+      if(activePreset===p){
+        activePreset='';dateFrom='';dateTo='';
+        document.getElementById('date-from').value='';document.getElementById('date-to').value='';
+        document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('on'));
+        applyFilter();return;
+      }
+      const now=new Date();
+      let from,to=new Date();
+      if(p==='week'){
+        const day=now.getDay()||7;
+        from=new Date(now);from.setDate(now.getDate()-day+1);
+        to=new Date(from);to.setDate(from.getDate()+6);
+      } else if(p==='month'){
+        from=new Date(now.getFullYear(),now.getMonth(),1);
+        to=new Date(now.getFullYear(),now.getMonth()+1,0);
+      } else if(p==='quarter'){
+        const q=Math.floor(now.getMonth()/3);
+        from=new Date(now.getFullYear(),q*3,1);
+        to=new Date(now.getFullYear(),q*3+3,0);
+      }
+      dateFrom=from.toISOString().slice(0,10);
+      dateTo=to.toISOString().slice(0,10);
+      document.getElementById('date-from').value=dateFrom;
+      document.getElementById('date-to').value=dateTo;
+      activePreset=p;
+      document.querySelectorAll('.preset-btn').forEach(b=>b.classList.toggle('on',b.dataset.preset===p));
+      applyFilter();
+    }));
+
+    // ── Search & clear ──
+    document.getElementById('search').addEventListener('input',e=>{searchVal=e.target.value;applyFilter();});
     document.getElementById('clear-btn').addEventListener('click',()=>{resetFilters();applyFilter();});
-    document.querySelectorAll('.fb[data-mn]').forEach(btn=>btn.addEventListener('click',()=>{
-      document.querySelectorAll('.fb[data-mn]').forEach(b=>b.classList.remove('on'));
-      btn.classList.add('on'); mnFilter=btn.dataset.mn; applyFilter();
-    }));
-    document.querySelectorAll('.fb[data-tda]').forEach(btn=>btn.addEventListener('click',()=>{
-      document.querySelectorAll('.fb[data-tda]').forEach(b=>b.classList.remove('on'));
-      btn.classList.add('on'); tdAcessamosFilter=btn.dataset.tda; applyFilter();
-    }));
-    document.querySelectorAll('.fb[data-tdv]').forEach(btn=>btn.addEventListener('click',()=>{
-      document.querySelectorAll('.fb[data-tdv]').forEach(b=>b.classList.remove('on'));
-      btn.classList.add('on'); tdVisaoFilter=btn.dataset.tdv; applyFilter();
-    }));
-    document.querySelectorAll('.fb[data-ka]').forEach(btn=>btn.addEventListener('click',()=>{
-      document.querySelectorAll('.fb[data-ka]').forEach(b=>b.classList.remove('on'));
-      btn.classList.add('on'); kaFilter=btn.dataset.ka; applyFilter();
-    }));
 
   }catch(e){
     document.getElementById('kpis').innerHTML=`<div style="color:#c62828;padding:20px;grid-column:1/-1">Erro: ${e.message}</div>`;
