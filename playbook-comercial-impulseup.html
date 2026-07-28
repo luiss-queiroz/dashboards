@@ -144,6 +144,7 @@ code{background:var(--surface);border:1px solid var(--border);border-radius:4px;
     <div class="nav-item" data-target="mod6"><span class="nav-num">5</span><span class="nav-label">Battlecards</span></div>
     <div class="nav-item" data-target="mod5"><span class="nav-num">6</span><span class="nav-label">Comissionamento</span></div>
     <div class="nav-item" data-target="mod4"><span class="nav-num">7</span><span class="nav-label">Operação e SLAs</span><span class="nav-badge">em revisão</span></div>
+    <div class="nav-item" data-target="mod8"><span class="nav-num">8</span><span class="nav-label">Processo G</span></div>
   </nav>
 
   <main class="main">
@@ -216,6 +217,15 @@ code{background:var(--surface);border:1px solid var(--border);border-radius:4px;
             <div class="toc-desc">Rotinas internas, itens de linha, férias, bench, integrações, cláusulas contratuais.</div>
           </div>
           <div class="toc-status pending">Em revisão</div>
+          <div class="toc-chevron">›</div>
+        </div>
+        <div class="toc-row" data-target="mod8">
+          <div class="toc-num">8</div>
+          <div class="toc-body">
+            <div class="toc-title">Processo G</div>
+            <div class="toc-desc">Fluxo comercial para contas enterprise (500+ usuários): stakeholders, diferenciação, burocracias, marca, impacto, serviço e segurança.</div>
+          </div>
+          <div class="toc-status ready">Publicado</div>
           <div class="toc-chevron">›</div>
         </div>
       </div>
@@ -821,6 +831,105 @@ code{background:var(--surface);border:1px solid var(--border);border-radius:4px;
         <div class="ic">Em revisão</div>
         <p>Este manual ainda está em processo de revisão de conteúdo e será publicado aqui em breve.</p>
       </div>
+    </section>
+
+    <!-- MÓDULO 8 — PROCESSO G -->
+    <section class="section" id="mod8">
+      <div class="eyebrow">Módulo 8</div>
+      <h1 class="page-title">Processo G</h1>
+      <p class="page-sub">Fluxo comercial para contas enterprise (500+ usuários), liderado em conjunto com Érika. Diferente do processo CP padrão, em conta G a decisão nunca fica concentrada em uma pessoa.</p>
+
+      <h2 style="margin-top:0;">1. Acesso a múltiplos stakeholders</h2>
+      <h3>Diagnóstico do problema atual</h3>
+      <p>O closer hoje reage ao acesso em vez de provocá-lo: espera o RH abrir portas para outras áreas, em vez de mapear e buscar ativamente essas interfaces desde o início. Isso é agravado por um segundo problema: o próprio cliente muitas vezes não sabe todas as interfaces que precisará acionar para aprovar o projeto. Se o closer também não souber, o projeto trava em etapas que ninguém viu chegar.</p>
+      <h3>Mapa de stakeholders em conta G</h3>
+      <table>
+        <tr><th>Área</th><th>Papel no processo</th><th>Natureza do envolvimento</th></tr>
+        <tr><td>RH (analista/coordenador)</td><td>Ponto de entrada, geralmente o champion inicial</td><td>Uso e operação do dia a dia</td></tr>
+        <tr><td>RH — outras frentes (controladoria de metas, clima, employee experience, learning)</td><td>Cada frente tem processo próprio e pode gerar exigências específicas de módulo</td><td>Requisitos funcionais</td></tr>
+        <tr><td>TI do cliente</td><td>Validação de segurança, infraestrutura, integrações</td><td>Aprovação técnica (bloqueante)</td></tr>
+        <tr><td>Suprimentos/Compras</td><td>Validação de orçamento, processo de compra formal</td><td>Aprovação financeira/processual (bloqueante)</td></tr>
+        <tr><td>Jurídico</td><td>Validação do contrato</td><td>Aprovação legal (bloqueante)</td></tr>
+      </table>
+      <h3>Postura recomendada</h3>
+      <p>Proativa desde a Conexão, independentemente de confirmação formal de porte da conta. O closer deve deixar claro para o cliente que domina e já tem experiência em como esse tipo de projeto costuma funcionar, comunicando segurança para ser seguido.</p>
+      <ul class="blt">
+        <li>Já na Conexão, perguntar diretamente: "além do RH, quem mais costuma participar da aprovação de um projeto desse tipo aqui?", testando se o cliente sabe o caminho</li>
+        <li>Se o cliente não souber responder com clareza, o closer deve ensinar o caminho, apresentando de forma consultiva as interfaces que normalmente aparecem (TI, Suprimentos, Jurídico), antes que isso vire surpresa em CP ou BS</li>
+        <li>Buscar ativamente, junto ao champion do RH, os nomes das outras frentes de RH que podem ter requisitos próprios</li>
+        <li>Tratar TI, Suprimentos e Jurídico como frentes a serem acionadas proativamente pelo closer, nunca como etapas que "o cliente vai avisar quando chegar a hora"</li>
+      </ul>
+
+      <h2>2. Diferenciação</h2>
+      <p>Pesa predominantemente em Categoria 5 (concorrente ativo), mas nunca pode ser negligenciada mesmo em Categoria 1 e 2. Em conta G, o ciclo de decisão é longo o suficiente para que um concorrente apareça no meio do caminho, mesmo em contas que começaram sem nenhuma ferramenta ou apenas com planilha. Sem diferenciação sustentada desde o início, o closer corre o risco real de ter feito todo o trabalho de educação e maturação do cliente só para um concorrente entrar na reta final e fechar o negócio.</p>
+      <h3>O que pesa mais em conta G do que em conta pequena/média</h3>
+      <ul class="blt">
+        <li>Capacidade multiunidade: suportar múltiplas filiais, unidades de negócio ou geografias, com governança centralizada e flexibilidade local</li>
+        <li>Perfil de cliente mais exigente: conta G tende a operar com a expectativa de que, pelo tamanho do contrato, tem direito a mais customização, atendimento e prioridade</li>
+        <li>SLAs mais duros em contrato: tempo de resposta, disponibilidade e penalidades contratuais tendem a ser negociados com rigor maior</li>
+        <li>Exigências de produto e melhorias: pedidos de roadmap de features específicas são mais frequentes</li>
+      </ul>
+      <div class="note">Diferenciação em conta G não é só "por que a impulseup e não o concorrente X", é também "a impulseup está preparada para sustentar as exigências operacionais de um cliente deste porte pelo tempo de vida do contrato". Conecta direto com o Eixo 6 (Serviço Enterprise).</div>
+
+      <h2>3. Burocracias do negócio</h2>
+      <p>O processo de Suprimentos, Jurídico e RFP formal costuma se concentrar na reta final, quando o fornecedor já foi escolhido internamente. É um sinal positivo importante, mas não significa vitória fechada — é nessa fase que negócios podem travar por semanas ou meses só na burocracia, mesmo com a decisão de negócio já tomada.</p>
+      <h3>Contrato</h3>
+      <ul class="blt">
+        <li>A impulseup opera com contrato-padrão para todo negócio, incluindo conta G</li>
+        <li>Contas G costumam pedir mais ajustes cláusula a cláusula (SLA, penalidades, dados, LGPD, vigência), demandando tempo maior de jurídico e vai-e-volta com o cliente</li>
+      </ul>
+      <h3>RFP</h3>
+      <ul class="blt">
+        <li>Diferente de contas menores, em conta G a impulseup é proativa em sugerir a própria RFP (Comparativo Estratégico de Fornecedores), em vez de esperar o cliente exigir um formato próprio</li>
+        <li>Isso dá controle sobre os critérios de comparação e reforça a percepção de organização e maturidade do fornecedor</li>
+      </ul>
+      <h3>Implicação prática para o closer</h3>
+      <ul class="blt">
+        <li>Antecipar o tempo de burocracia no forecast: a fase de PA em conta G tende a ser mais longa e exige acompanhamento mais próximo</li>
+        <li>Tratar a entrada em Suprimentos/Jurídico como sinal de avanço real, mas manter o mesmo nível de atenção até a assinatura, sem relaxar achando que o negócio já está ganho</li>
+        <li>Sugerir a RFP da impulseup proativamente, antes que o cliente peça um formato próprio ou de um concorrente</li>
+      </ul>
+
+      <h2>4. Confiança na marca</h2>
+      <p>O desafio não é solidez ou viabilidade financeira, é pura falta de reconhecimento espontâneo de marca. O cliente enterprise não desconfia da impulseup, apenas nunca ouviu falar dela antes, diferente de concorrentes como TOTVS ou Gupy, que carregam reconhecimento de mercado mesmo antes da primeira conversa.</p>
+      <p>O que já funciona hoje: logos de clientes conhecidos e cases de peso, usados como prova social para compensar a ausência de reconhecimento espontâneo. A lógica é transferir a credibilidade que o cliente já tem por outras marcas conhecidas para dentro da conversa de venda.</p>
+      <ul class="blt">
+        <li>Introduzir logos e cases de peso ativamente e cedo na jornada (já na Conexão ou Demo), não guardar isso só para a fase de Proposta</li>
+        <li>Priorizar cases de empresas do mesmo porte, segmento ou grau de complexidade organizacional do cliente em prospecção, para que a prova social seja proporcional</li>
+      </ul>
+
+      <h2>5. Impacto no negócio</h2>
+      <p>Turnover como métrica universal não escala bem para conta G: em alguns setores o número fica descolado da realidade e perde credibilidade, em outros simplesmente não é a dor central. Turnover deixa de ser o argumento padrão e passa a ser mais uma opção dentro de um cardápio de narrativas de impacto, calibrado por setor e contexto.</p>
+      <h3>Cardápio de narrativas de impacto</h3>
+      <ul class="blt">
+        <li><b>Cultura:</b> consistência de critério e de decisões de pessoas em escala, especialmente relevante com múltiplas unidades ou lideranças distantes da matriz</li>
+        <li><b>Eficiência operacional:</b> tempo de liderança e RH consumido em processos manuais/dispersos, em escala corporativa</li>
+        <li><b>Risco e governança:</b> decisões de pessoas defensáveis e documentadas, relevante para compliance e redução de exposição jurídica em desligamentos</li>
+        <li><b>Sucessão e continuidade:</b> visibilidade sobre quem está pronto para assumir posições críticas, forte quando há dependência de pessoas-chave</li>
+        <li><b>Dados para decisão estratégica:</b> RH deixando de ser operacional e passando a informar decisões de negócio com dado real</li>
+      </ul>
+      <div class="note">Princípio de uso: o closer escolhe a narrativa (ou combinação) que melhor conversa com o setor e a dor específica daquele cliente, sem hierarquia fixa entre elas.</div>
+
+      <h2>6. Serviço Enterprise</h2>
+      <ul class="blt">
+        <li>Existe CSI específico para contas enterprise, diferente do atendimento padrão</li>
+        <li>No handoff para CS (habilidade <code>handoff-cs-impulseup</code>), o closer deve garantir que o porte e a complexidade da conta (múltiplos stakeholders, múltiplas unidades, SLAs negociados) fiquem sinalizados com destaque, para o CSI enterprise assumir com o contexto completo desde o primeiro dia</li>
+      </ul>
+      <div class="note" style="border-left-color:var(--warn);">Pendência: compromisso formal de suporte prioritário ou gerente de conta dedicado como parte da proposta comercial não está claro — não se sabe se existe, como funciona, ou se pode ser oferecido como parte do fechamento. Validar com CS/Batalha antes de qualquer closer prometer isso ao cliente.</div>
+
+      <h2>7. Segurança da Informação</h2>
+      <p>A impulseup não tem certificações próprias formais (tipo ISO 27001 ou SOC 2); a segurança se apoia nas certificações dos serviços terceirizados de infraestrutura (ex: Heroku). Isso não é um conteúdo que o closer precisa dominar ou apresentar de cabeça.</p>
+      <h3>Fluxo padrão quando a TI do cliente aciona validação de segurança</h3>
+      <ul class="blt">
+        <li>TI do cliente envia um formulário/questionário de segurança da informação</li>
+        <li>O closer encaminha esse formulário para a equipe interna de SI responder, em vez de tentar responder sozinho</li>
+        <li>Em paralelo ou quando necessário, marca-se uma reunião entre a TI do cliente e o time técnico da impulseup (referência: Joyce/Bruno) para detalhar integrações entre sistemas, SSO e afins</li>
+      </ul>
+      <div class="note">Papel do closer: não é responder tecnicamente por segurança da informação, é orquestrar o fluxo — antecipar quando a TI vai exigir isso, encaminhar o formulário à equipe de SI e agendar a reunião técnica com a equipe certa.</div>
+
+      <h2>8. Cases de sucesso em contas enterprise</h2>
+      <p>Não há cases de conta G formalizados com métricas e contexto completo prontos para uso hoje. O que já é usado é mais simples: logos de grandes clientes exibidas no material apresentado ao cliente, funcionando como prova social visual (conecta direto com o Eixo 4).</p>
+      <div class="note" style="border-left-color:var(--warn);">Pendência: levantar e formalizar cases reais de conta G (contexto, desafio, resultado, métrica), quando houver material disponível.</div>
     </section>
 
     <div class="footer-note">Playbook Comercial impulseup · Documento vivo, atualizado por módulo · Versão de revisão em andamento</div>
