@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>impulseup — Cenários CP: CP1 x CP2</title>
+<style>
+  :root {
+    --magenta: #CC0088;
+    --black: #0C0C0C;
+    --gray-light: #F5F5F7;
+    --gray-mid: #9A9AA0;
+    --green: #0A8A3C;
+    --red: #C0392B;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Poppins', -apple-system, sans-serif;
+    background: #FFFFFF;
+    color: var(--black);
+    margin: 0;
+    padding: 32px;
+  }
+  h1 { font-size: 26px; font-weight: 600; margin-bottom: 4px; }
+  .subtitle { color: #6b6b70; font-size: 14px; margin-bottom: 20px; }
+  .legend-box {
+    display: flex;
+    gap: 28px;
+    background: var(--gray-light);
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin-bottom: 28px;
+    font-size: 13px;
+    flex-wrap: wrap;
+  }
+  .legend-box .item { display: flex; align-items: center; gap: 8px; }
+  .legend-box b { font-weight: 600; }
+
+  .section-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-desc {
+    font-size: 13px;
+    color: #6b6b70;
+    margin-bottom: 16px;
+  }
+  .cp-block {
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 28px;
+  }
+  .cp-block.cp1 { background: #FFF3FA; border: 1px solid #F4C6E4; }
+  .cp-block.cp2 { background: #F4F4F6; border: 1px solid #DCDCE0; }
+  .cp-tag {
+    display: inline-block;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+  .cp1 .cp-tag { background: var(--magenta); }
+  .cp2 .cp-tag { background: var(--black); }
+
+  .totals-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .stat-card {
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding: 12px 14px;
+    text-align: center;
+  }
+  .stat-card .label { font-size: 11px; color: #6b6b70; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.4px; }
+  .stat-card .value { font-size: 22px; font-weight: 700; }
+  .cp1 .stat-card .value { color: var(--magenta); }
+  .cp2 .stat-card .value { color: var(--black); }
+
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background: #FFFFFF;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .data-table th, .data-table td {
+    padding: 10px 12px;
+    text-align: right;
+    border-bottom: 1px solid #ECECEF;
+  }
+  .data-table th:first-child, .data-table td:first-child {
+    text-align: left;
+  }
+  .data-table thead th {
+    background: var(--black);
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .data-table tbody tr:last-child td { border-bottom: none; }
+  .data-table tr.porte-row td { font-weight: 700; background: #FFFFFF; }
+  .cp1 .data-table tr.porte-row td { background: #FDE6F4; }
+  .cp2 .data-table tr.porte-row td { background: #E8E8EC; }
+  .data-table td.indent { padding-left: 26px; color: #4a4a4e; font-weight: 400; }
+  .data-table td.taxa { font-weight: 700; }
+  .cp1 .data-table td.taxa { color: var(--magenta); }
+  .cp2 .data-table td.taxa { color: var(--black); }
+  .low-n { color: #B8B8BC; font-style: italic; }
+
+  .note-sample {
+    font-size: 12px;
+    color: var(--red);
+    background: #FBEAEA;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 16px;
+  }
+  .highlight-note {
+    font-size: 12px;
+    color: #0A6B8A;
+    background: #E7F3F8;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 12px;
+  }
+</style>
+</head>
+<body>
+
+<h1>Cenários CP — CP1 x CP2</h1>
+<div class="subtitle">Deals criados entre 01/01/26 e 30/06/26 · Closers ativos · Cruzamento com porte da conta e trimestre</div>
+
+<div class="legend-box">
+  <div class="item"><b>Q1</b> = 01/01/26 a 31/03/26</div>
+  <div class="item"><b>Q2</b> = 01/04/26 a 30/06/26</div>
+  <div class="item"><b>CP1</b> = Diretoria liberou a construção, mas sem aprovação do projeto/orçamento</div>
+  <div class="item"><b>CP2</b> = Analista seguro da contratação, mas sem levar à diretoria</div>
+  <div class="item">Cenário CP independe da categoria do cliente (pode ser Cat. 1, 2, 4 ou 5)</div>
+</div>
+
+<!-- ===================== CP1 ===================== -->
+<div class="cp-block cp1">
+  <div class="section-title"><span class="cp-tag">CP1</span> Diretoria liberou a construção</div>
+  <div class="section-desc">n=81 deals · falta aprovação do projeto/orçamento</div>
+
+  <div class="totals-row">
+    <div class="stat-card"><div class="label">n deals</div><div class="value">81</div></div>
+    <div class="stat-card"><div class="label">Taxa de fechamento</div><div class="value">13,8%</div></div>
+    <div class="stat-card"><div class="label">Champion Influente</div><div class="value">35,8%</div></div>
+    <div class="stat-card"><div class="label">Acesso a TD</div><div class="value">50,6%</div></div>
+    <div class="stat-card"><div class="label">Contatos/deal</div><div class="value">1,85</div></div>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Recorte</th>
+        <th>n</th>
+        <th>Won</th>
+        <th>Lost</th>
+        <th>Aberto</th>
+        <th>Taxa de fechamento</th>
+        <th>% Champion Influente</th>
+        <th>% Acesso TD</th>
+        <th>Contatos/deal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="porte-row"><td>&lt;500 colaboradores</td><td>42</td><td>2</td><td>31</td><td>9</td><td class="taxa">6,1%</td><td>21,4%</td><td>52,4%</td><td>1,76</td></tr>
+      <tr><td class="indent">↳ Q1</td><td>21</td><td>2</td><td>18</td><td>1</td><td class="taxa">10,0%</td><td>14,3%</td><td>47,6%</td><td>1,67</td></tr>
+      <tr><td class="indent">↳ Q2</td><td>21</td><td>0</td><td>13</td><td>8</td><td class="taxa low-n">0,0%</td><td>28,6%</td><td>57,1%</td><td>1,86</td></tr>
+      <tr class="porte-row"><td>≥500 colaboradores</td><td>39</td><td>6</td><td>19</td><td>14</td><td class="taxa">24,0%</td><td>51,3%</td><td>48,7%</td><td>1,95</td></tr>
+      <tr><td class="indent">↳ Q1</td><td>19</td><td>4</td><td>11</td><td>4</td><td class="taxa">26,7%</td><td>57,9%</td><td>63,2%</td><td>2,53</td></tr>
+      <tr><td class="indent">↳ Q2</td><td>20</td><td>2</td><td>8</td><td>10</td><td class="taxa">20,0%</td><td>45,0%</td><td>35,0%</td><td>1,40</td></tr>
+    </tbody>
+  </table>
+
+  <div class="highlight-note">💡 CP1 · ≥500 · Q1 é o segmento mais forte da base: 26,7% de fechamento, 57,9% champion influente, 63,2% acesso a TD. Perfil de referência para "deal perfeito".</div>
+  <div class="note-sample">⚠️ CP1 · ≥500 caiu em todos os indicadores de Q1 para Q2 (fechamento 26,7%→20,0%, TD 63,2%→35,0%, champion 57,9%→45,0%). Base razoável dos dois lados (19 e 20 deals) — sinal a investigar, não ruído.</div>
+</div>
+
+<!-- ===================== CP2 ===================== -->
+<div class="cp-block cp2">
+  <div class="section-title"><span class="cp-tag">CP2</span> Analista seguro, sem levar à diretoria</div>
+  <div class="section-desc">n=34 deals · decisão ainda não chegou à diretoria</div>
+
+  <div class="totals-row">
+    <div class="stat-card"><div class="label">n deals</div><div class="value">34</div></div>
+    <div class="stat-card"><div class="label">Taxa de fechamento</div><div class="value">7,4%</div></div>
+    <div class="stat-card"><div class="label">Champion Influente</div><div class="value">35,3%</div></div>
+    <div class="stat-card"><div class="label">Acesso a TD</div><div class="value">38,2%</div></div>
+    <div class="stat-card"><div class="label">Contatos/deal</div><div class="value">1,56</div></div>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Recorte</th>
+        <th>n</th>
+        <th>Won</th>
+        <th>Lost</th>
+        <th>Aberto</th>
+        <th>Taxa de fechamento</th>
+        <th>% Champion Influente</th>
+        <th>% Acesso TD</th>
+        <th>Contatos/deal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="porte-row"><td>&lt;500 colaboradores</td><td>15</td><td>0</td><td>13</td><td>2</td><td class="taxa low-n">0,0%</td><td>20,0%</td><td>40,0%</td><td>1,20</td></tr>
+      <tr><td class="indent">↳ Q1</td><td>13</td><td>0</td><td>12</td><td>1</td><td class="taxa low-n">0,0%</td><td>23,1%</td><td>30,8%</td><td>1,23</td></tr>
+      <tr><td class="indent">↳ Q2</td><td>2</td><td>0</td><td>1</td><td>1</td><td class="taxa low-n">0,0%</td><td>0,0%</td><td>100,0%</td><td>1,00</td></tr>
+      <tr class="porte-row"><td>≥500 colaboradores</td><td>19</td><td>2</td><td>12</td><td>5</td><td class="taxa">14,3%</td><td>47,4%</td><td>36,8%</td><td>1,84</td></tr>
+      <tr><td class="indent">↳ Q1</td><td>14</td><td>2</td><td>9</td><td>3</td><td class="taxa">18,2%</td><td>50,0%</td><td>35,7%</td><td>1,43</td></tr>
+      <tr><td class="indent">↳ Q2</td><td>5</td><td>0</td><td>3</td><td>2</td><td class="taxa low-n">0,0%</td><td>40,0%</td><td>40,0%</td><td>3,00</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note-sample">⚠️ Todas as linhas de Q2 em CP2 têm amostra muito pequena (2 a 5 deals). Os valores de 0,0% e 100,0% não devem ser lidos como sinal, apenas como ausência de dado maduro.</div>
+</div>
+
+<!-- ===================== Visão geral ===================== -->
+<div class="section-title" style="margin-top:8px;">Visão geral, sem separar por cenário</div>
+<div class="section-desc">Referência de base para comparação com os blocos acima</div>
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Recorte</th>
+      <th>n</th>
+      <th>Won</th>
+      <th>Lost</th>
+      <th>Aberto</th>
+      <th>Taxa de fechamento</th>
+      <th>% Champion Influente</th>
+      <th>% Acesso TD</th>
+      <th>Contatos/deal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="porte-row" style="background:#F5F5F7;"><td>Todos (Q1+Q2)</td><td>115</td><td>10</td><td>75</td><td>30</td><td class="taxa" style="color:var(--black);">11,8%</td><td>35,7%</td><td>47,0%</td><td>1,77</td></tr>
+    <tr><td class="indent">↳ &lt;500 colaboradores</td><td>57</td><td>2</td><td>44</td><td>11</td><td class="taxa" style="color:var(--black);">4,3%</td><td>21,1%</td><td>49,1%</td><td>1,61</td></tr>
+    <tr><td class="indent">↳ ≥500 colaboradores</td><td>58</td><td>8</td><td>31</td><td>19</td><td class="taxa" style="color:var(--black);">20,5%</td><td>50,0%</td><td>44,8%</td><td>1,91</td></tr>
+  </tbody>
+</table>
+
+</body>
+</html>
