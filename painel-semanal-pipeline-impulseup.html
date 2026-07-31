@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Painel Semanal de Pipeline — impulseup</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+:root{
+  --magenta:#CC0088;
+  --preto:#0C0C0C;
+  --branco:#FFFFFF;
+  --cinza-bg:#F7F5F7;
+  --cinza-borda:#E7E2E6;
+  --verde:#1E9E5A;
+  --vermelho:#D6362E;
+}
+*{box-sizing:border-box;}
+body{
+  font-family:'Poppins',sans-serif;
+  background:var(--cinza-bg);
+  color:var(--preto);
+  margin:0;
+  padding:32px 24px 60px;
+}
+.container{max-width:1600px;margin:0 auto;}
+header{margin-bottom:22px;}
+header h1{font-size:28px;font-weight:700;margin:0 0 4px;color:var(--preto);}
+header p{margin:0;color:#5A5560;font-size:14px;}
+.tag-magenta{color:var(--magenta);font-weight:600;}
+
+.toolbar{
+  display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap;
+  background:var(--branco);border:1px solid var(--cinza-borda);border-radius:12px;padding:14px 18px;
+}
+.toolbar label{font-size:12px;font-weight:600;color:#5A5560;text-transform:uppercase;letter-spacing:.04em;}
+.toolbar select{
+  border:1px solid var(--cinza-borda);border-radius:8px;padding:7px 10px;font-size:13px;
+  font-family:'Poppins',sans-serif;background:#fff;color:var(--preto);
+}
+.chip{
+  font-size:12px;background:#FBEFF6;color:var(--magenta);padding:5px 10px;border-radius:20px;font-weight:600;
+  margin-left:auto;
+}
+
+.summary{display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap;}
+.card{background:var(--branco);border:1px solid var(--cinza-borda);border-radius:12px;padding:16px 20px;flex:1;min-width:160px;}
+.card .num{font-size:26px;font-weight:700;color:var(--magenta);}
+.card .lbl{font-size:12px;color:#5A5560;text-transform:uppercase;letter-spacing:.04em;}
+
+.block{background:var(--branco);border-radius:14px;border:1px solid var(--cinza-borda);margin-bottom:28px;overflow:hidden;}
+.block-header{background:var(--preto);color:var(--branco);padding:14px 20px;display:flex;justify-content:space-between;align-items:center;}
+.block-header h2{margin:0;font-size:17px;font-weight:600;}
+.block-header .count{font-size:13px;color:#D9A9C6;}
+
+.porte-label{
+  background:#FBEFF6;color:var(--magenta);font-weight:600;font-size:12px;
+  text-transform:uppercase;letter-spacing:.05em;padding:8px 20px;
+  border-top:1px solid var(--cinza-borda);border-bottom:1px solid var(--cinza-borda);
+}
+.table-scroll{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:1280px;}
+thead th{
+  background:var(--cinza-bg);color:#5A5560;font-weight:600;text-align:left;
+  padding:10px 12px;border-bottom:1px solid var(--cinza-borda);white-space:nowrap;position:sticky;top:0;
+}
+tbody td{padding:10px 12px;border-bottom:1px solid #F0EDEF;vertical-align:top;}
+tbody tr:hover{background:#FCF8FA;}
+td.sticky-col, th.sticky-col{
+  position:sticky;left:0;background:#fff;z-index:2;box-shadow:2px 0 4px -2px rgba(0,0,0,0.08);
+}
+thead th.sticky-col{background:var(--cinza-bg);z-index:3;}
+.ka-badge{background:var(--magenta);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;margin-right:6px;}
+.editable{background:#FFFDF5;border:1px dashed #D9CBAA;border-radius:6px;min-width:90px;padding:5px 7px;font-size:12px;color:#8A8070;}
+.editable:focus{outline:2px solid var(--magenta);background:#fff;color:var(--preto);}
+.alerta{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 8px;border-radius:20px;white-space:nowrap;}
+.alerta.on{background:#FDEAEA;color:var(--vermelho);}
+.alerta.off{background:#EAF6EE;color:var(--verde);}
+.valor{font-weight:600;}
+.owner{color:#5A5560;font-size:12px;}
+.td-badge{font-size:11px;font-weight:600;padding:3px 8px;border-radius:20px;white-space:nowrap;}
+.td-badge.sim{background:#EAF6EE;color:var(--verde);}
+.td-badge.nao{background:#FDEAEA;color:var(--vermelho);}
+select.temp-select{border:1px solid var(--cinza-borda);border-radius:6px;padding:5px 8px;font-size:14px;font-family:'Poppins',sans-serif;background:#fff;}
+footer{margin-top:24px;font-size:12px;color:#8A8492;text-align:center;}
+.hidden-row{display:none;}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Painel Semanal de Pipeline <span class="tag-magenta">— impulseup</span></h1>
+    <p>Contas prioritárias (KA + Construindo Projeto, valor ≥ R$ 40.000) · Segmentadas por fase e porte (G: 500+ colaboradores · M: até 499) · Atualizado direto do HubSpot em 31/07/2026</p>
+  </header>
+
+  <div class="toolbar">
+    <label for="closerFilter">Filtrar por closer</label>
+    <select id="closerFilter" onchange="applyFilter()">
+      <option value="">Todos os closers</option>
+    </select>
+    <label for="kaFilter">Key Account</label>
+    <select id="kaFilter" onchange="applyFilter()">
+      <option value="">Todas as contas</option>
+      <option value="ka">Somente KA</option>
+      <option value="nao-ka">Somente não KA</option>
+    </select>
+
+    <label for="colabFilter">Colaboradores</label>
+    <select id="colabFilter" onchange="applyFilter()">
+      <option value="">Todas as faixas</option>
+    </select>
+
+    <span class="chip" id="chipCount"></span>
+  </div>
+
+  <div class="summary" id="summary"></div>
+
+  <div id="blocks"></div>
+
+  <footer>
+    MVP · impulseup — Campos 🤖 vêm do HubSpot (valor, closer, TD, data estimada de fechamento, concorrência mapeada, governança). Campos ✍️ (temperatura, o que mudou, ação da semana) devem ser preenchidos pelo closer antes da reunião de segunda-feira.<br>
+    Dossiê de Conta complementar deve ser aberto apenas para as contas com alerta de governança ativo ou pauta de decisão.
+  </footer>
+</div>
+
+<script>
+const DEALS = [{"id": 63085142590, "nome": "MCS Markup", "valor": 100000, "colab": "250-499", "fase": "BS", "ka": true, "owner": "Karynne Rocha", "last_mod": "2026-07-30", "concorrente": "YouRH (uMentor); Outro", "porte": "MS", "dias_sem_atualizacao": 1, "alerta": false, "td": true, "data_fech": "30/11/2026"}, {"id": 62842332971, "nome": "Grupo Felice", "valor": 56000, "colab": "500-999", "fase": "CP", "ka": false, "owner": "Lucas Costa", "last_mod": "2026-07-30", "concorrente": "", "porte": "GS", "dias_sem_atualizacao": 1, "alerta": false, "td": true, "data_fech": "30/11/2026"}, {"id": 62759910541, "nome": "Grupo Coobrastur", "valor": 40000, "colab": "100-249", "fase": "BS", "ka": false, "owner": "Karynne Rocha", "last_mod": "2026-07-24", "concorrente": "Não sei qual concorrente", "porte": "MS", "dias_sem_atualizacao": 7, "alerta": false, "td": false, "data_fech": "31/10/2026"}, {"id": 62610675311, "nome": "Bianchini", "valor": 74000, "colab": "1000-2000", "fase": "BS", "ka": true, "owner": "Luis Fonseca", "last_mod": "2026-07-31", "concorrente": "Não sei qual concorrente", "porte": "GS", "dias_sem_atualizacao": 0, "alerta": false, "td": true, "data_fech": "16/12/2026"}, {"id": 62454395156, "nome": "Halexistar Ind. Farmacêutica", "valor": 40500, "colab": "1000-2000", "fase": "BS", "ka": true, "owner": "Lucas Costa", "last_mod": "2026-07-28", "concorrente": "Qulture.Rocks", "porte": "GS", "dias_sem_atualizacao": 3, "alerta": false, "td": true, "data_fech": "31/08/2026"}, {"id": 62311071349, "nome": "Sabemi", "valor": 61555.2, "colab": "250-499", "fase": "BS", "ka": true, "owner": "Karynne Rocha", "last_mod": "2026-07-28", "concorrente": "Não sei qual concorrente", "porte": "MS", "dias_sem_atualizacao": 3, "alerta": false, "td": false, "data_fech": "18/11/2026"}, {"id": 62115688965, "nome": "Grupo Ramasa", "valor": 152340, "colab": "1000-2000", "fase": "BS", "ka": false, "owner": "Lucas Costa", "last_mod": "2026-07-30", "concorrente": "Qulture.Rocks", "porte": "GS", "dias_sem_atualizacao": 1, "alerta": false, "td": false, "data_fech": "31/08/2026"}, {"id": 61809663582, "nome": "Delfia", "valor": 150000, "colab": "1000-2000", "fase": "CP", "ka": true, "owner": "Jonny Steinmetz", "last_mod": "2026-07-27", "concorrente": "", "porte": "GS", "dias_sem_atualizacao": 4, "alerta": false, "td": false, "data_fech": "31/08/2026"}, {"id": 61749764231, "nome": "Redemix", "valor": 40000, "colab": "1000-2000", "fase": "CP", "ka": false, "owner": "Jonny Steinmetz", "last_mod": "2026-07-30", "concorrente": "", "porte": "GS", "dias_sem_atualizacao": 1, "alerta": false, "td": true, "data_fech": "31/10/2026"}, {"id": 61624658482, "nome": "G2L", "valor": 100000, "colab": "1000-2000", "fase": "BS", "ka": true, "owner": "Luis Fonseca", "last_mod": "2026-07-31", "concorrente": "Qulture.Rocks; Team Qulture", "porte": "GS", "dias_sem_atualizacao": 0, "alerta": false, "td": true, "data_fech": "30/09/2026"}, {"id": 61749702801, "nome": "Grupo Garbo", "valor": 45000, "colab": "100-249", "fase": "BS", "ka": true, "owner": "Karynne Rocha", "last_mod": "2026-07-30", "concorrente": "Sólides", "porte": "MS", "dias_sem_atualizacao": 1, "alerta": false, "td": true, "data_fech": "31/08/2026"}, {"id": 61272476026, "nome": "Myralis Farma", "valor": 177955.2, "colab": "1000-2000", "fase": "CP", "ka": false, "owner": "Luis Fonseca", "last_mod": "2026-07-26", "concorrente": "", "porte": "GS", "dias_sem_atualizacao": 5, "alerta": false, "td": false, "data_fech": "30/09/2026"}, {"id": 61224902501, "nome": "Transire", "valor": 93900, "colab": "1000-2000", "fase": "BS", "ka": false, "owner": "Luis Fonseca", "last_mod": "2026-07-20", "concorrente": "Não sei qual concorrente", "porte": "GS", "dias_sem_atualizacao": 11, "alerta": true, "td": true, "data_fech": "25/11/2026"}, {"id": 61186323497, "nome": "Sumidenso", "valor": 200000, "colab": "5000-Mais", "fase": "BS", "ka": true, "owner": "Jonny Steinmetz", "last_mod": "2026-07-29", "concorrente": "Feedz; Qulture.Rocks", "porte": "GS", "dias_sem_atualizacao": 2, "alerta": false, "td": false, "data_fech": "30/11/2026"}, {"id": 61129401880, "nome": "Grupo Fit", "valor": 80000, "colab": "1000-2000", "fase": "BS", "ka": true, "owner": "Luis Fonseca", "last_mod": "2026-07-24", "concorrente": "Pulses", "porte": "GS", "dias_sem_atualizacao": 7, "alerta": false, "td": true, "data_fech": "11/09/2026"}, {"id": 61112768009, "nome": "Grupo Boticário", "valor": 123000, "colab": "5000-Mais", "fase": "BS", "ka": false, "owner": "Luis Fonseca", "last_mod": "2026-07-24", "concorrente": "Interno/TI; Outro", "porte": "GS", "dias_sem_atualizacao": 7, "alerta": false, "td": false, "data_fech": "23/10/2026"}, {"id": 60959373438, "nome": "Grupo Comolatti", "valor": 185436, "colab": "2000-Mais", "fase": "Standby", "ka": true, "owner": "Luis Fonseca", "last_mod": "2026-07-29", "concorrente": "Qulture.Rocks; Elofy; Feedz", "porte": "GS", "dias_sem_atualizacao": 2, "alerta": false, "td": true, "data_fech": "29/09/2026"}, {"id": 60959925766, "nome": "Santa Mônica Clube de Campo", "valor": 40000, "colab": "250-499", "fase": "CP", "ka": true, "owner": "Karynne Rocha", "last_mod": "2026-07-24", "concorrente": "", "porte": "MS", "dias_sem_atualizacao": 7, "alerta": false, "td": false, "data_fech": "31/08/2026"}, {"id": 60893875479, "nome": "Nova Noiva", "valor": 44044, "colab": "250-499", "fase": "CP", "ka": true, "owner": "Karynne Rocha", "last_mod": "2026-07-24", "concorrente": "", "porte": "MS", "dias_sem_atualizacao": 7, "alerta": false, "td": true, "data_fech": "11/08/2026"}, {"id": 60642390457, "nome": "Plusoft", "valor": 45428.8, "colab": "250-499", "fase": "CP", "ka": true, "owner": "Lucas Costa", "last_mod": "2026-07-24", "concorrente": "", "porte": "MS", "dias_sem_atualizacao": 7, "alerta": false, "td": false, "data_fech": "30/09/2026"}, {"id": 60666604324, "nome": "CESAR", "valor": 42856, "colab": "1000-2000", "fase": "CP", "ka": true, "owner": "Jonny Steinmetz", "last_mod": "2026-07-30", "concorrente": "", "porte": "GS", "dias_sem_atualizacao": 1, "alerta": false, "td": false, "data_fech": "28/08/2026"}, {"id": 60254338981, "nome": "Veloe", "valor": 80000, "colab": "250-499", "fase": "BS", "ka": true, "owner": "Lucas Costa", "last_mod": "2026-07-29", "concorrente": "Qulture.Rocks", "porte": "MS", "dias_sem_atualizacao": 2, "alerta": false, "td": true, "data_fech": "31/12/2026"}, {"id": 59963220534, "nome": "PMC Automotiva", "valor": 50000, "colab": "500-999", "fase": "CP", "ka": true, "owner": "Luis Fonseca", "last_mod": "2026-07-17", "concorrente": "", "porte": "GS", "dias_sem_atualizacao": 14, "alerta": true, "td": true, "data_fech": "25/08/2026"}, {"id": 59814859572, "nome": "Sabin Diagnóstico", "valor": 400000, "colab": "5000-Mais", "fase": "BS", "ka": true, "owner": "Luis Fonseca", "last_mod": "2026-07-31", "concorrente": "Outro", "porte": "GS", "dias_sem_atualizacao": 0, "alerta": false, "td": false, "data_fech": "25/09/2026"}, {"id": 59776288093, "nome": "Bornelli (McDonald's)", "valor": 54000, "colab": "500-999", "fase": "CP", "ka": true, "owner": "Luis Fonseca", "last_mod": "2026-07-22", "concorrente": "", "porte": "GS", "dias_sem_atualizacao": 9, "alerta": false, "td": false, "data_fech": "24/08/2026"}, {"id": 59365558679, "nome": "Grupo Estrela", "valor": 40000, "colab": "500-999", "fase": "CP", "ka": false, "owner": "Jonny Steinmetz", "last_mod": "2026-07-23", "concorrente": "", "porte": "GS", "dias_sem_atualizacao": 8, "alerta": false, "td": true, "data_fech": "31/08/2026"}, {"id": 59273215761, "nome": "Grupo Santa (Hospitais Santa Lucia)", "valor": 80000, "colab": "5000-Mais", "fase": "BS", "ka": false, "owner": "Luis Queiroz", "last_mod": "2026-07-16", "concorrente": "Sólides; Feedz", "porte": "GS", "dias_sem_atualizacao": 15, "alerta": true, "td": true, "data_fech": "30/09/2026"}, {"id": 59186291024, "nome": "Delta Sementes", "valor": 40000, "colab": "100-249", "fase": "CP", "ka": true, "owner": "Lucas Costa", "last_mod": "2026-07-28", "concorrente": "", "porte": "MS", "dias_sem_atualizacao": 3, "alerta": false, "td": true, "data_fech": "31/08/2026"}, {"id": 58958253580, "nome": "Stone (piloto)", "valor": 182320, "colab": "5000-Mais", "fase": "BS", "ka": true, "owner": "Jonny Steinmetz", "last_mod": "2026-07-28", "concorrente": "Não sei qual concorrente", "porte": "GS", "dias_sem_atualizacao": 3, "alerta": false, "td": false, "data_fech": "31/10/2026"}, {"id": 58046925372, "nome": "Fast Sistemas Construtivos", "valor": 60000, "colab": "250-499", "fase": "CP", "ka": true, "owner": "Karynne Rocha", "last_mod": "2026-07-23", "concorrente": "", "porte": "MS", "dias_sem_atualizacao": 8, "alerta": false, "td": false, "data_fech": "31/08/2026"}, {"id": 57601257822, "nome": "Expresso Nepomuceno", "valor": 50000, "colab": "5000-Mais", "fase": "BS", "ka": false, "owner": "Luis Queiroz", "last_mod": "2026-07-28", "concorrente": "Planilha; Feedz; Outro", "porte": "GS", "dias_sem_atualizacao": 3, "alerta": false, "td": true, "data_fech": "30/09/2026"}, {"id": 57619599617, "nome": "HVAR", "valor": 41688, "colab": "100-249", "fase": "BS", "ka": true, "owner": "Lucas Costa", "last_mod": "2026-07-29", "concorrente": "Feedz", "porte": "MS", "dias_sem_atualizacao": 2, "alerta": false, "td": true, "data_fech": "31/08/2026"}, {"id": 56186909294, "nome": "Biancogres", "valor": 85000, "colab": "1000-2000", "fase": "Standby", "ka": false, "owner": "Jonny Steinmetz", "last_mod": "2026-07-16", "concorrente": "", "porte": "GS", "dias_sem_atualizacao": 15, "alerta": true, "td": false, "data_fech": "29/10/2026"}, {"id": 56019495540, "nome": "Estapar", "valor": 120000, "colab": "5000-Mais", "fase": "CP", "ka": true, "owner": "Luis Fonseca", "last_mod": "2026-07-29", "concorrente": "", "porte": "GS", "dias_sem_atualizacao": 2, "alerta": false, "td": false, "data_fech": "16/11/2026"}, {"id": 54740058247, "nome": "SPC Brasil", "valor": 97644, "colab": "500-999", "fase": "CP", "ka": false, "owner": "Jonny Steinmetz", "last_mod": "2026-07-29", "concorrente": "", "porte": "GS", "dias_sem_atualizacao": 2, "alerta": false, "td": false, "data_fech": "18/09/2026"}, {"id": 54730620050, "nome": "Patrus Transportes", "valor": 242372.05, "colab": "2000-Mais", "fase": "CP", "ka": true, "owner": "Jonny Steinmetz", "last_mod": "2026-07-29", "concorrente": "", "porte": "GS", "dias_sem_atualizacao": 2, "alerta": false, "td": false, "data_fech": "10/12/2026"}, {"id": 53758281588, "nome": "Ceneged", "valor": 237000, "colab": "2000-Mais", "fase": "CP", "ka": false, "owner": "Luis Fonseca", "last_mod": "2026-07-29", "concorrente": "", "porte": "GS", "dias_sem_atualizacao": 2, "alerta": false, "td": false, "data_fech": "07/10/2026"}, {"id": 51951694917, "nome": "Meta", "valor": 375264, "colab": "1000-2000", "fase": "Standby", "ka": true, "owner": "Luis Fonseca", "last_mod": "2026-07-21", "concorrente": "Elofy; Qulture.Rocks; HCM (LG/Oracle/Mereo/Senior/TOTVS)", "porte": "GS", "dias_sem_atualizacao": 10, "alerta": true, "td": false, "data_fech": "28/08/2026"}, {"id": 47209968489, "nome": "Amil", "valor": 100000, "colab": "5000-Mais", "fase": "BS", "ka": true, "owner": "Mayra Castro", "last_mod": "2026-07-31", "concorrente": "Qulture.Rocks", "porte": "GS", "dias_sem_atualizacao": 0, "alerta": false, "td": true, "data_fech": "30/09/2026"}, {"id": 44529126926, "nome": "Cimento Nacional", "valor": 195450, "colab": "1000-2000", "fase": "BS", "ka": true, "owner": "Luis Fonseca", "last_mod": "2026-07-30", "concorrente": "Mereo; Elofy", "porte": "GS", "dias_sem_atualizacao": 1, "alerta": false, "td": true, "data_fech": "30/09/2026"}, {"id": 44487342103, "nome": "Santa Casa de Misericórdia POA", "valor": 240000, "colab": "5000-Mais", "fase": "Standby", "ka": true, "owner": "Jonny Steinmetz", "last_mod": "2026-07-29", "concorrente": "", "porte": "GS", "dias_sem_atualizacao": 2, "alerta": false, "td": false, "data_fech": "30/11/2026"}, {"id": 41508811377, "nome": "Unimed Fesp", "valor": 80000, "colab": "500-999", "fase": "BS", "ka": true, "owner": "Luis Queiroz", "last_mod": "2026-07-23", "concorrente": "HCM (LG/Oracle/Mereo/Senior/TOTVS)", "porte": "GS", "dias_sem_atualizacao": 8, "alerta": false, "td": true, "data_fech": "31/08/2026"}, {"id": 41422465691, "nome": "MDS Group", "valor": 235000, "colab": "1000-2000", "fase": "BS", "ka": true, "owner": "Jonny Steinmetz", "last_mod": "2026-07-22", "concorrente": "Outro", "porte": "GS", "dias_sem_atualizacao": 9, "alerta": false, "td": true, "data_fech": "30/09/2026"}, {"id": 41101521477, "nome": "Keeggo", "valor": 80000, "colab": "500-999", "fase": "Standby", "ka": true, "owner": "Jonny Steinmetz", "last_mod": "2026-07-07", "concorrente": "Qulture.Rocks", "porte": "GS", "dias_sem_atualizacao": 24, "alerta": true, "td": true, "data_fech": "23/11/2027"}];
+
+function fmtBRL(v){
+  return "R$ " + v.toLocaleString('pt-BR', {minimumFractionDigits:0, maximumFractionDigits:0});
+}
+
+function populateCloserFilter(){
+  const closers = [...new Set(DEALS.map(d=>d.owner))].sort();
+  const sel = document.getElementById('closerFilter');
+  closers.forEach(c=>{
+    const opt = document.createElement('option');
+    opt.value = c; opt.textContent = c;
+    sel.appendChild(opt);
+  });
+}
+
+const COLAB_ORDER = ["100-249","250-499","500-999","1000-2000","2000-Mais","5000-Mais"];
+
+function populateColabFilter(){
+  const present = [...new Set(DEALS.map(d=>d.colab))];
+  const ordered = COLAB_ORDER.filter(c=>present.includes(c));
+  const sel = document.getElementById('colabFilter');
+  ordered.forEach(c=>{
+    const opt = document.createElement('option');
+    opt.value = c; opt.textContent = c + " colaboradores";
+    sel.appendChild(opt);
+  });
+}
+
+function renderSummary(list){
+  const bs = list.filter(d=>d.fase==="BS").length;
+  const cp = list.filter(d=>d.fase==="CP").length;
+  const sb = list.filter(d=>d.fase==="Standby").length;
+  const alertas = list.filter(d=>d.alerta).length;
+  const total = list.reduce((a,d)=>a+d.valor,0);
+  const cards = [
+    ["Buscando Solução", bs],
+    ["Construindo Projeto", cp],
+    ["Standby", sb],
+    ["Alertas de governança", alertas],
+    ["Valor total em pipe", fmtBRL(total)]
+  ];
+  document.getElementById('summary').innerHTML = cards.map(c=>
+    `<div class="card"><div class="num">${c[1]}</div><div class="lbl">${c[0]}</div></div>`
+  ).join('');
+}
+
+function rowsFor(list){
+  return list.map(d=>{
+    const alertaHtml = d.alerta
+      ? `<span class="alerta on">⚠ ${d.dias_sem_atualizacao}d sem atualização</span>`
+      : `<span class="alerta off">Ok</span>`;
+    const kaBadge = d.ka ? `<span class="ka-badge">KA</span>` : '';
+    const tdBadge = d.td
+      ? `<span class="td-badge sim">Sim</span>`
+      : `<span class="td-badge nao">Não</span>`;
+    return `<tr>
+      <td class="sticky-col">${kaBadge}${d.nome}</td>
+      <td class="owner">${d.owner}</td>
+      <td class="valor">${fmtBRL(d.valor)}</td>
+      <td>
+        <select class="temp-select">
+          <option value="">—</option>
+          <option value="quente">🔥 Quente</option>
+          <option value="morno">💨 Morno</option>
+          <option value="frio">❄️ Frio</option>
+        </select>
+      </td>
+      <td>${tdBadge}</td>
+      <td>${d.concorrente ? d.concorrente : '<input class="editable" placeholder="mapear">'}</td>
+      <td>${d.data_fech || '<input class="editable" placeholder="dd/mm">'}</td>
+      <td><input class="editable" style="min-width:160px" placeholder="o que mudou esta semana"></td>
+      <td><input class="editable" style="min-width:160px" placeholder="ação desta semana"></td>
+      <td>${alertaHtml}</td>
+    </tr>`;
+  }).join('');
+}
+
+function blockHtml(faseKey, titulo, list){
+  const filtered = list.filter(d=>d.fase===faseKey);
+  const gs = filtered.filter(d=>d.porte==="GS").sort((a,b)=>b.valor-a.valor);
+  const ms = filtered.filter(d=>d.porte==="MS").sort((a,b)=>b.valor-a.valor);
+  const header = `<thead><tr>
+    <th class="sticky-col">Conta</th><th>Closer</th><th>Valor</th><th>Temperatura ✍️</th>
+    <th>Acessamos TD? 🤖</th><th>Concorrência 🤖/✍️</th><th>Data estimada de fechamento 🤖</th>
+    <th>O que mudou 🤖/✍️</th><th>Ação da semana ✍️</th><th>Governança 🤖</th>
+  </tr></thead>`;
+  let groups = '';
+  if(gs.length){
+    groups += `<div class="porte-group"><div class="porte-label">G — Grande Porte, 500+ colaboradores (${gs.length})</div>
+      <div class="table-scroll"><table>${header}<tbody>${rowsFor(gs)}</tbody></table></div></div>`;
+  }
+  if(ms.length){
+    groups += `<div class="porte-group"><div class="porte-label">M — Médio Porte, até 499 colaboradores (${ms.length})</div>
+      <div class="table-scroll"><table>${header}<tbody>${rowsFor(ms)}</tbody></table></div></div>`;
+  }
+  if(!filtered.length){
+    groups = `<div style="padding:20px;color:#8A8492;font-size:13px;">Nenhuma conta com estes filtros nesta fase.</div>`;
+  }
+  return `<div class="block">
+    <div class="block-header"><h2>${titulo}</h2><span class="count">${filtered.length} contas</span></div>
+    ${groups}
+  </div>`;
+}
+
+function render(list){
+  document.getElementById('blocks').innerHTML =
+    blockHtml("BS","Buscando Solução", list) +
+    blockHtml("CP","Construindo Projeto", list) +
+    blockHtml("Standby","Standby", list);
+  renderSummary(list);
+}
+
+function applyFilter(){
+  const val = document.getElementById('closerFilter').value;
+  const kaVal = document.getElementById('kaFilter').value;
+  const colabVal = document.getElementById('colabFilter').value;
+  let list = val ? DEALS.filter(d=>d.owner===val) : DEALS.slice();
+  if(kaVal === 'ka') list = list.filter(d=>d.ka);
+  if(kaVal === 'nao-ka') list = list.filter(d=>!d.ka);
+  if(colabVal) list = list.filter(d=>d.colab === colabVal);
+
+  const parts = [];
+  if(val) parts.push(`closer: ${val}`);
+  if(kaVal === 'ka') parts.push('somente KA');
+  if(kaVal === 'nao-ka') parts.push('somente não KA');
+  if(colabVal) parts.push(`${colabVal} colaboradores`);
+  document.getElementById('chipCount').textContent = parts.length
+    ? `${list.length} contas — ${parts.join(' · ')}`
+    : `${DEALS.length} contas no total`;
+
+  render(list);
+}
+
+populateCloserFilter();
+populateColabFilter();
+applyFilter();
+</script>
+</body>
+</html>
