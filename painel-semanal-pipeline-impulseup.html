@@ -72,6 +72,11 @@ td.sticky-col, th.sticky-col{
 thead th.sticky-col{background:var(--cinza-bg);z-index:3;}
 .ka-badge{background:var(--magenta);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;margin-right:6px;}
 .editable{background:#FFFDF5;border:1px dashed #D9CBAA;border-radius:6px;min-width:90px;padding:5px 7px;font-size:12px;color:#8A8070;}
+textarea.editable{
+  width:100%; min-width:180px; min-height:56px; resize:vertical;
+  font-family:'Poppins',sans-serif; line-height:1.4; white-space:pre-wrap;
+  overflow-wrap:break-word;
+}
 .editable:focus{outline:2px solid var(--magenta);background:#fff;color:var(--preto);}
 .alerta{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 8px;border-radius:20px;white-space:nowrap;}
 .alerta.on{background:#FDEAEA;color:var(--vermelho);}
@@ -242,7 +247,7 @@ function rowsFor(list){
       <td>${d.concorrente ? d.concorrente : '<input class="editable" placeholder="mapear">'}</td>
       <td>${d.data_fech || '<input class="editable" placeholder="dd/mm">'}</td>
       <td style="font-size:12px; max-width:260px;">${d.resultado_ultima_semana || '<span style="color:#8A8492;">Sem observação registrada</span>'}</td>
-      <td><input class="editable" style="min-width:160px" placeholder="ação desta semana" value="${(d.acao||'').replace(/"/g,'&quot;')}"></td>
+      <td><textarea class="editable" placeholder="ação desta semana">${(d.acao||'').replace(/</g,'&lt;')}</textarea></td>
       <td>${alertaHtml}</td>
     </tr>`;
   }).join('');
