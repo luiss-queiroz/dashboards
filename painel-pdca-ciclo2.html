@@ -125,19 +125,90 @@
   .how-to h3 { font-size: 14px; margin: 0 0 8px; }
   .how-to ol { margin: 0; padding-left: 20px; }
   .how-to li { margin-bottom: 6px; }
+
+  /* ===== Sistema de abas ===== */
+  .tabs-bar {
+    display: flex;
+    gap: 8px;
+    border-bottom: 2px solid var(--gray-light);
+    margin-bottom: 28px;
+  }
+  .tab-btn {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 12px 22px;
+    border: none;
+    background: transparent;
+    color: #9a9aa0;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+  }
+  .tab-btn.active { color: var(--magenta); border-bottom-color: var(--magenta); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ===== Quadros de motivos de Lost e evolucao (aba 2) ===== */
+  .quadro { border-radius: 16px; padding: 26px; margin-bottom: 30px; }
+  .quadro.lost { background: #FBEAEA; border: 1px solid #F0C6C6; }
+  .quadro.evolucao { background: #E8F5EC; border: 1px solid #BEE3C8; }
+  .quadro-title { font-size: 20px; font-weight: 700; margin: 0 0 4px; }
+  .quadro.lost .quadro-title { color: var(--red); }
+  .quadro.evolucao .quadro-title { color: var(--green); }
+  .quadro-desc { font-size: 14px; color: #4a4a4e; margin-bottom: 18px; }
+  .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+  .stat-card { background: #FFFFFF; border-radius: 10px; padding: 14px; text-align: center; }
+  .stat-card .label { font-size: 12px; color: #6b6b70; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.3px; }
+  .stat-card .value { font-size: 22px; font-weight: 700; }
+  .quadro.lost .stat-card .value { color: var(--red); }
+  .quadro.evolucao .stat-card .value { color: var(--green); }
+  .quadro .data-table { width: 100%; border-collapse: collapse; font-size: 14px; background: #FFFFFF; border-radius: 12px; overflow: hidden; }
+  .quadro .data-table th, .quadro .data-table td { padding: 11px 14px; text-align: right; border-bottom: 1px solid #ECECEF; }
+  .quadro .data-table th:first-child, .quadro .data-table td:first-child { text-align: left; }
+  .quadro .data-table thead th { background: var(--black); color: #FFFFFF; font-weight: 600; font-size: 13px; }
+  .quadro .data-table tbody tr:last-child td { border-bottom: none; }
+  .quadro .data-table tr.destaque td { font-weight: 700; background: #FFF3F3; }
+  .quadro.evolucao .data-table tr.destaque td { background: #F0FAF3; }
+  .quadro .highlight-note, .quadro .note-sample { background: #FFFFFF; }
+  .quadro .highlight-note { border: 1px solid #BEE3C8; }
+  .quadro .note-sample { border: 1px solid #F0C6C6; }
+  .anomaly-note {
+    font-size: 12px; color: #6b6b70; background: #FFFFFF;
+    border: 1px dashed #C9C9CE; border-radius: 8px; padding: 10px 14px; margin-top: 12px;
+  }
+  .recorte-title {
+    font-size: 17px; font-weight: 700; margin: 30px 0 4px; color: var(--black);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .recorte-tag {
+    font-size: 11px; font-weight: 700; color: #FFFFFF; background: var(--black);
+    padding: 3px 10px; border-radius: 12px; letter-spacing: 0.3px;
+  }
+  .recorte-desc { font-size: 13px; color: #6b6b70; margin-bottom: 14px; }
+  .sem-dado-box {
+    background: #FAFAFB; border: 1px dashed #D8D8DC; border-radius: 10px;
+    padding: 14px 18px; font-size: 13px; color: #9a9aa0; font-style: italic; margin-bottom: 20px;
+  }
 </style>
 </head>
 <body>
 
+<div class="tabs-bar">
+  <button class="tab-btn active" onclick="showTab('aba1', this)">Acompanhamento do ciclo</button>
+  <button class="tab-btn" onclick="showTab('aba2', this)">Movimentação em CP</button>
+</div>
+
+<div id="aba1" class="tab-panel active">
 <h1>Painel PDCA Ciclo 2 — Stakeholders, TD e Champion Influente</h1>
-<div class="subtitle">Acompanhamento quinzenal · 30/07/26 a 30/09/26 · Base: deals em Construindo o Projeto, closers ativos</div>
+<div class="subtitle">Acompanhamento quinzenal · 20/07/26 a 30/09/26 · Base: deals em Construindo o Projeto, closers ativos</div>
 
 <div class="legend-box">
-  <div class="item"><b>Quinzena 1</b> = 30/07 a 13/08</div>
-  <div class="item"><b>Quinzena 2</b> = 13/08 a 27/08</div>
-  <div class="item"><b>Quinzena 3</b> = 27/08 a 10/09</div>
-  <div class="item"><b>Quinzena 4</b> = 10/09 a 24/09</div>
-  <div class="item"><b>Check final</b> = 24/09 a 30/09</div>
+  <div class="item"><b>Quinzena 1</b> = 1ª reunião: 20/07 a 13/08</div>
+  <div class="item"><b>Quinzena 2</b> = 1ª reunião: 14/08 a 27/08</div>
+  <div class="item"><b>Quinzena 3</b> = 1ª reunião: 28/08 a 10/09</div>
+  <div class="item"><b>Quinzena 4</b> = 1ª reunião: 11/09 a 24/09</div>
+  <div class="item"><b>Check final</b> = 1ª reunião: 25/09 a 30/09</div>
   <div class="item"><b>Todos os deals abertos</b> = todas as contas ativas em CP, sem filtro de data de entrada</div>
   <div class="item"><b>Acompanhamento quinzenal</b> = considera apenas deals com 1ª reunião a partir de 20/07/26</div>
 </div>
@@ -153,11 +224,11 @@
       <th>Meta</th>
       <th>Baseline<br><span style="font-weight:400;">Ciclo anterior</span></th>
       <th class="total-col">Todos os deals abertos<br><span style="font-weight:400;">Todas ativas</span></th>
-      <th>Quinzena 1<br><span style="font-weight:400;">30/07 a 13/08</span></th>
-      <th>Quinzena 2<br><span style="font-weight:400;">13/08 a 27/08</span></th>
-      <th>Quinzena 3<br><span style="font-weight:400;">27/08 a 10/09</span></th>
-      <th>Quinzena 4<br><span style="font-weight:400;">10/09 a 24/09</span></th>
-      <th>Check final<br><span style="font-weight:400;">24/09 a 30/09</span></th>
+      <th>Quinzena 1<br><span style="font-weight:400;">1ª reunião: 20/07 a 13/08</span></th>
+      <th>Quinzena 2<br><span style="font-weight:400;">1ª reunião: 14/08 a 27/08</span></th>
+      <th>Quinzena 3<br><span style="font-weight:400;">1ª reunião: 28/08 a 10/09</span></th>
+      <th>Quinzena 4<br><span style="font-weight:400;">1ª reunião: 11/09 a 24/09</span></th>
+      <th>Check final<br><span style="font-weight:400;">1ª reunião: 25/09 a 30/09</span></th>
     </tr>
   </thead>
   <tbody>
@@ -240,7 +311,7 @@
 </table>
 </div>
 
-<div class="note-sample">⚠️ Quinzena 1 tem apenas 5 deals novos com 1ª reunião a partir de 20/07 (a janela ainda está em curso e a base foi extraída em 13/08). Qualquer percentual aqui é o retrato de poucos negócios, não um resultado estatístico. À medida que novas quinzenas forem preenchidas, essa leitura ganha robustez.</div>
+<div class="note-sample">⚠️ Quinzena 1 (1ª reunião entre 20/07 e 13/08) tem apenas 5 deals novos, e a base foi extraída em 13/08, exatamente no fim da janela. Qualquer percentual aqui é o retrato de poucos negócios, não um resultado estatístico. À medida que novas quinzenas forem preenchidas, essa leitura ganha robustez.</div>
 <div class="section-desc" style="margin-top:8px;">*Baseline de 500-999 e ≥1.000 usa o mesmo valor (1,91), porque o ciclo anterior só tinha o corte agregado ≥500 colaboradores, sem quebra fina entre essas duas faixas.</div>
 
 <div class="highlight-note">💡 O grupo de todos os deals abertos hoje mostra baixa aderência à meta de stakeholders nas contas ≥500 colaboradores, exatamente o segmento onde o ciclo anterior validou que mapear mais pessoas mais impacta a taxa de fechamento. Esse é o ponto de maior atenção para a Quinzena 2.</div>
@@ -320,6 +391,104 @@
     <li>Recalcular a tabela de comparação por closer, usando o mesmo recorte de todos os deals ativos em CP, sem filtro de data</li>
   </ol>
 </div>
+</div><!-- fim aba1 -->
+
+<div id="aba2" class="tab-panel">
+<h1>Movimentação de deals em Construindo o Projeto</h1>
+<div class="subtitle">Deals de closers ativos que já passaram pela fase Construindo o Projeto, comparados em três recortes temporais</div>
+
+<div class="legend-box">
+  <div class="item"><b>Tudo do ano</b> = toda a base histórica, sem filtro de data</div>
+  <div class="item"><b>Pipeline ativo</b> = etapa atual diferente de Won e de Lost</div>
+  <div class="item"><b>Ciclo novo</b> = 1ª reunião a partir de 20/07/26</div>
+</div>
+
+<!-- ============ RECORTE: TUDO DO ANO ============ -->
+<div class="recorte-title"><span class="recorte-tag">TUDO DO ANO</span> Base histórica completa (n=243)</div>
+<div class="recorte-desc">Sem filtro de data. É o recorte com maior volume e a leitura mais estável dos dois quadros.</div>
+
+<div class="quadro lost">
+  <div class="quadro-title">Quadro 1 — Motivos de Lost em saída direta de CP</div>
+  <div class="quadro-desc">Deals que saíram de Construindo o Projeto direto para Lost, sem passar por Buscando Solução ou Negociando</div>
+  <div class="stat-row">
+    <div class="stat-card"><div class="label">Total de casos</div><div class="value">80</div></div>
+    <div class="stat-card"><div class="label">Motivo mais comum</div><div class="value" style="font-size:15px;">Não agreguei valor</div></div>
+    <div class="stat-card"><div class="label">Dias médios parado</div><div class="value">52 dias</div></div>
+    <div class="stat-card"><div class="label">Pior motivo (tempo)</div><div class="value" style="font-size:15px;">Não aprovado, 70 dias</div></div>
+  </div>
+  <table class="data-table">
+    <thead><tr><th>Motivo de Lost</th><th>Qtd.</th><th>% do total</th><th>Dias médios parado</th><th>Mediana de dias</th></tr></thead>
+    <tbody>
+      <tr><td>Não agreguei valor</td><td>28</td><td>35,0%</td><td>52,0</td><td>42,5</td></tr>
+      <tr><td>Projeto foi adiado</td><td>19</td><td>23,8%</td><td>49,6</td><td>48,0</td></tr>
+      <tr><td>Projeto não foi aprovado</td><td>17</td><td>21,3%</td><td>70,4</td><td>47,0</td></tr>
+      <tr class="destaque"><td>Perdi pra concorrente</td><td>16</td><td>20,0%</td><td>42,2</td><td>32,0</td></tr>
+    </tbody>
+  </table>
+  <div class="highlight-note">💡 "Perdi pra concorrente" tem o menor tempo médio parado entre os 4 motivos, mas é o único inteiramente atribuível ao closer: o cliente estava vivo e decidindo, e o atraso não teve causa externa.</div>
+  <div class="note-sample">⚠️ "Não agreguei valor" e "Projeto foi adiado" concentram sub-motivos como "cliente não retorna" e ausência prolongada do contato, sugerindo sumiço de relacionamento em boa parte dos 80 casos.</div>
+</div>
+
+<div class="quadro evolucao">
+  <div class="quadro-title">Quadro 2 — Evolução de Construindo o Projeto para Buscando Solução</div>
+  <div class="quadro-desc">Deals que avançaram corretamente de fase, saindo de CP para Buscando Solução</div>
+  <div class="stat-row">
+    <div class="stat-card"><div class="label">Já passaram por CP</div><div class="value">134</div></div>
+    <div class="stat-card"><div class="label">Evoluíram para BS</div><div class="value">11</div></div>
+    <div class="stat-card"><div class="label">Taxa de evolução</div><div class="value">8,2%</div></div>
+    <div class="stat-card"><div class="label">Mediana de dias até evoluir</div><div class="value">36 dias</div></div>
+  </div>
+  <div class="highlight-note">💡 Apenas 8,2% dos deals que já passaram por CP evoluíram formalmente para Buscando Solução. A grande maioria fica em CP até fechar direto, geralmente como Lost.</div>
+  <div class="note-sample">⚠️ Evoluir para BS não é garantia de sucesso: 5 dos 11 casos (45%) acabaram em Lost mesmo após avançar de fase.</div>
+  <div class="anomaly-note">Nota de qualidade de dado: 2 deals (Essencial Nutrição e MedSênior) foram excluídos por apresentarem data de entrada em Buscando Solução anterior à entrada em CP, indicando provável retorno à fase, não evolução linear. Vale revisar manualmente no CRM.</div>
+</div>
+
+<!-- ============ RECORTE: PIPELINE ATIVO ============ -->
+<div class="recorte-title"><span class="recorte-tag">PIPELINE ATIVO</span> Deals com etapa diferente de Won e Lost (n=72)</div>
+<div class="recorte-desc">Foto do funil vivo hoje. Por definição, este recorte não tem nenhum deal em Lost.</div>
+
+<div class="sem-dado-box">Quadro 1 (Motivos de Lost) não se aplica a este recorte: pipeline ativo exclui, por definição, todos os deals em Lost. Consulte o recorte "Tudo do ano" para essa leitura.</div>
+
+<div class="quadro evolucao">
+  <div class="quadro-title">Quadro 2 — Evolução de Construindo o Projeto para Buscando Solução</div>
+  <div class="quadro-desc">Apenas deals ainda ativos hoje que já passaram por CP</div>
+  <div class="stat-row">
+    <div class="stat-card"><div class="label">Já passaram por CP</div><div class="value">40</div></div>
+    <div class="stat-card"><div class="label">Evoluíram para BS</div><div class="value">5</div></div>
+    <div class="stat-card"><div class="label">Taxa de evolução</div><div class="value">12,5%</div></div>
+    <div class="stat-card"><div class="label">Mediana de dias até evoluir</div><div class="value">21 dias</div></div>
+  </div>
+  <div class="highlight-note">💡 Entre os deals ainda vivos, a taxa de evolução (12,5%) e a mediana de tempo (21 dias) são melhores que a base histórica completa (8,2% e 36 dias). Nenhum dos 5 casos que evoluíram morreu depois. É o grupo mais saudável dos três recortes.</div>
+</div>
+
+<!-- ============ RECORTE: CICLO NOVO ============ -->
+<div class="recorte-title"><span class="recorte-tag">CICLO NOVO</span> 1ª reunião a partir de 20/07/26 (n=18)</div>
+<div class="recorte-desc">Deals que entraram na jornada dentro do novo ciclo do PDCA. Amostra ainda muito pequena.</div>
+
+<div class="sem-dado-box">Quadro 1 (Motivos de Lost) não se aplica: nenhum deal deste recorte chegou a Lost até a data de extração (13/08/26).</div>
+
+<div class="quadro evolucao">
+  <div class="quadro-title">Quadro 2 — Evolução de Construindo o Projeto para Buscando Solução</div>
+  <div class="quadro-desc">Apenas 8 deals deste recorte já passaram por CP</div>
+  <div class="stat-row">
+    <div class="stat-card"><div class="label">Já passaram por CP</div><div class="value">8</div></div>
+    <div class="stat-card"><div class="label">Evoluíram para BS</div><div class="value">0</div></div>
+    <div class="stat-card"><div class="label">Taxa de evolução</div><div class="value">0,0%</div></div>
+    <div class="stat-card"><div class="label">Mediana de dias até evoluir</div><div class="value">sem dado</div></div>
+  </div>
+  <div class="sem-dado-box">Com apenas 24 dias de vida e 8 deals na base, é natural que ainda não haja evolução de fase registrada. Isso não deve ser lido como sinal de piora, apenas como ausência de tempo de maturação. Revisitar este recorte a partir da Quinzena 2 ou 3.</div>
+</div>
+
+</div><!-- fim aba2 -->
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
 
 </body>
 </html>
