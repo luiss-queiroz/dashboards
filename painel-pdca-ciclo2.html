@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>impulseup — Painel PDCA Ciclo 2</title>
+<style>
+  :root {
+    --magenta: #CC0088;
+    --black: #0C0C0C;
+    --gray-light: #F5F5F7;
+    --gray-mid: #9A9AA0;
+    --green: #0A8A3C;
+    --green-bg: #E8F5EC;
+    --red: #C0392B;
+    --red-bg: #FBEAEA;
+    --amber: #B8860B;
+    --amber-bg: #FDF3DC;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Poppins', -apple-system, sans-serif;
+    background: #FFFFFF;
+    color: var(--black);
+    margin: 0;
+    padding: 32px;
+  }
+  h1 { font-size: 26px; font-weight: 700; margin-bottom: 4px; }
+  .subtitle { color: #6b6b70; font-size: 15px; margin-bottom: 20px; }
+
+  .legend-box {
+    display: flex;
+    gap: 24px;
+    background: var(--gray-light);
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin-bottom: 28px;
+    font-size: 14px;
+    flex-wrap: wrap;
+  }
+  .legend-box .item { display: flex; align-items: center; gap: 8px; }
+  .legend-box b { font-weight: 600; }
+
+  .section-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 36px 0 6px;
+  }
+  .section-desc { font-size: 14px; color: #6b6b70; margin-bottom: 16px; }
+
+  .tracker-wrap { overflow-x: auto; border-radius: 14px; border: 1px solid #ECECEF; }
+  table.tracker {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    min-width: 950px;
+  }
+  .tracker th, .tracker td {
+    padding: 14px 16px;
+    text-align: center;
+    font-size: 15px;
+    border-bottom: 1px solid #ECECEF;
+    border-right: 1px solid #ECECEF;
+  }
+  .tracker th:first-child, .tracker td:first-child {
+    text-align: left;
+    position: sticky;
+    left: 0;
+    background: #FFFFFF;
+    z-index: 2;
+  }
+  .tracker thead th {
+    background: var(--black);
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .tracker thead th:first-child { background: var(--black); }
+  .tracker thead th.total-col { background: var(--magenta); }
+  .tracker td.total-col { background: #FFF3FA; font-weight: 700; }
+  .tracker td.meta-col { background: #FAFAFB; font-weight: 700; color: var(--black); }
+  .tracker tbody tr:last-child td { border-bottom: none; }
+  .tracker tbody tr.group-header td {
+    background: var(--gray-light);
+    font-weight: 700;
+    text-align: left;
+    color: var(--black);
+  }
+  .n-label { display: block; font-size: 12px; color: #9a9aa0; margin-top: 3px; }
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    margin-top: 5px;
+  }
+  .badge.bateu { background: var(--green-bg); color: var(--green); }
+  .badge.perto { background: var(--amber-bg); color: var(--amber); }
+  .badge.longe { background: var(--red-bg); color: var(--red); }
+  .empty-cell { color: #C9C9CE; font-style: italic; font-size: 14px; }
+
+  .note-sample {
+    font-size: 12px;
+    color: var(--red);
+    background: var(--red-bg);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 14px;
+  }
+  .highlight-note {
+    font-size: 12px;
+    color: #0A6B8A;
+    background: #E7F3F8;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 12px;
+  }
+  .how-to {
+    background: var(--gray-light);
+    border-radius: 12px;
+    padding: 18px 20px;
+    font-size: 13px;
+    margin-top: 30px;
+  }
+  .how-to h3 { font-size: 14px; margin: 0 0 8px; }
+  .how-to ol { margin: 0; padding-left: 20px; }
+  .how-to li { margin-bottom: 6px; }
+</style>
+</head>
+<body>
+
+<h1>Painel PDCA Ciclo 2 — Stakeholders, TD e Champion Influente</h1>
+<div class="subtitle">Acompanhamento quinzenal · 30/07/26 a 30/09/26 · Base: deals em Construindo o Projeto, closers ativos</div>
+
+<div class="legend-box">
+  <div class="item"><b>Quinzena 1</b> = 30/07 a 13/08</div>
+  <div class="item"><b>Quinzena 2</b> = 13/08 a 27/08</div>
+  <div class="item"><b>Quinzena 3</b> = 27/08 a 10/09</div>
+  <div class="item"><b>Quinzena 4</b> = 10/09 a 24/09</div>
+  <div class="item"><b>Check final</b> = 24/09 a 30/09</div>
+  <div class="item"><b>Todos os deals abertos</b> = todas as contas ativas em CP, sem filtro de data de entrada</div>
+  <div class="item"><b>Acompanhamento quinzenal</b> = considera apenas deals com 1ª reunião a partir de 20/07/26</div>
+</div>
+
+<div class="section-title">Tabela de acompanhamento</div>
+<div class="section-desc">As colunas de quinzena consideram apenas deals cuja primeira reunião ocorreu a partir de 20/07/26, dentro da janela correspondente. A coluna Todos os deals abertos mostra a foto atual de toda a base ativa, incluindo deals que entraram antes do ciclo começar.</div>
+
+<div class="tracker-wrap">
+<table class="tracker">
+  <thead>
+    <tr>
+      <th>Indicador</th>
+      <th>Meta</th>
+      <th>Baseline<br><span style="font-weight:400;">Ciclo anterior</span></th>
+      <th class="total-col">Todos os deals abertos<br><span style="font-weight:400;">Todas ativas</span></th>
+      <th>Quinzena 1<br><span style="font-weight:400;">30/07 a 13/08</span></th>
+      <th>Quinzena 2<br><span style="font-weight:400;">13/08 a 27/08</span></th>
+      <th>Quinzena 3<br><span style="font-weight:400;">27/08 a 10/09</span></th>
+      <th>Quinzena 4<br><span style="font-weight:400;">10/09 a 24/09</span></th>
+      <th>Check final<br><span style="font-weight:400;">24/09 a 30/09</span></th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr class="group-header"><td colspan="9">Stakeholders por deal, meta por porte de conta</td></tr>
+
+    <tr>
+      <td>&lt; 500 colaboradores</td>
+      <td class="meta-col">≥ 2</td>
+      <td>1,61</td>
+      <td class="total-col">1,85<span class="n-label">n=13</span><span class="badge perto">perto</span></td>
+      <td>2,00<span class="n-label">n=2</span><span class="badge bateu">bateu</span></td>
+      <td><span class="empty-cell">a preencher</span></td>
+      <td><span class="empty-cell">a preencher</span></td>
+      <td><span class="empty-cell">a preencher</span></td>
+      <td><span class="empty-cell">a preencher</span></td>
+    </tr>
+    <tr>
+      <td>500 a 999 colaboradores</td>
+      <td class="meta-col">≥ 3</td>
+      <td>1,91*</td>
+      <td class="total-col">2,12<span class="n-label">n=8</span><span class="badge longe">longe</span></td>
+      <td>2,00<span class="n-label">n=1</span><span class="badge longe">longe</span></td>
+      <td><span class="empty-cell">a preencher</span></td>
+      <td><span class="empty-cell">a preencher</span></td>
+      <td><span class="empty-cell">a preencher</span></td>
+      <td><span class="empty-cell">a preencher</span></td>
+    </tr>
+    <tr>
+      <td>≥ 1.000 colaboradores</td>
+      <td class="meta-col">≥ 4</td>
+      <td>1,91*</td>
+      <td class="total-col">2,45<span class="n-label">n=11</span><span class="badge longe">longe</span></td>
+      <td>1,00<span class="n-label">n=2</span><span class="badge longe">longe</span></td>
+      <td><span class="empty-cell">a preencher</span></td>
+      <td><span class="empty-cell">a preencher</span></td>
+      <td><span class="empty-cell">a preencher</span></td>
+      <td><span class="empty-cell">a preencher</span></td>
+    </tr>
+
+    <tr class="group-header"><td colspan="9">Acesso ao Tomador de Decisão e Champion Influente</td></tr>
+
+    <tr>
+      <td>Acesso a TD</td>
+      <td class="meta-col">≥ 60%</td>
+      <td>42,9% a 51,3%</td>
+      <td class="total-col">53,1%<span class="n-label">17/32</span><span class="badge perto">perto</span></td>
+      <td>60,0%<span class="n-label">3/5</span><span class="badge bateu">bateu</span></td>
+      <td><span class="empty-cell">a preencher</span></td>
+      <td><span class="empty-cell">a preencher</span></td>
+      <td><span class="empty-cell">a preencher</span></td>
+      <td><span class="empty-cell">a preencher</span></td>
+    </tr>
+    <tr>
+      <td>Champion Influente</td>
+      <td class="meta-col">≥ 50%</td>
+      <td>35,7% a 39,3%</td>
+      <td class="total-col">34,4%<span class="n-label">11/32</span><span class="badge longe">longe</span></td>
+      <td>40,0%<span class="n-label">2/5</span><span class="badge perto">perto</span></td>
+      <td><span class="empty-cell">a preencher</span></td>
+      <td><span class="empty-cell">a preencher</span></td>
+      <td><span class="empty-cell">a preencher</span></td>
+      <td><span class="empty-cell">a preencher</span></td>
+    </tr>
+
+    <tr class="group-header"><td colspan="9">Volume de deals na janela</td></tr>
+    <tr>
+      <td>n de deals com 1ª reunião na janela</td>
+      <td class="meta-col">—</td>
+      <td>—</td>
+      <td class="total-col">32</td>
+      <td>5</td>
+      <td><span class="empty-cell">a preencher</span></td>
+      <td><span class="empty-cell">a preencher</span></td>
+      <td><span class="empty-cell">a preencher</span></td>
+      <td><span class="empty-cell">a preencher</span></td>
+    </tr>
+
+  </tbody>
+</table>
+</div>
+
+<div class="note-sample">⚠️ Quinzena 1 tem apenas 5 deals novos com 1ª reunião a partir de 20/07 (a janela ainda está em curso e a base foi extraída em 13/08). Qualquer percentual aqui é o retrato de poucos negócios, não um resultado estatístico. À medida que novas quinzenas forem preenchidas, essa leitura ganha robustez.</div>
+<div class="section-desc" style="margin-top:8px;">*Baseline de 500-999 e ≥1.000 usa o mesmo valor (1,91), porque o ciclo anterior só tinha o corte agregado ≥500 colaboradores, sem quebra fina entre essas duas faixas.</div>
+
+<div class="highlight-note">💡 O grupo de todos os deals abertos hoje mostra baixa aderência à meta de stakeholders nas contas ≥500 colaboradores, exatamente o segmento onde o ciclo anterior validou que mapear mais pessoas mais impacta a taxa de fechamento. Esse é o ponto de maior atenção para a Quinzena 2.</div>
+
+<div class="section-title">Comparação por closer</div>
+<div class="section-desc">Todos os deals ativos em Construindo o Projeto, por closer, sem filtro de data de entrada. Closers com poucos deals têm leitura frágil, mesmo assim incluídos para visibilidade total do time.</div>
+
+<div class="tracker-wrap">
+<table class="tracker">
+  <thead>
+    <tr>
+      <th>Closer</th>
+      <th>n deals ativos</th>
+      <th>Contatos/deal</th>
+      <th>Acesso a TD</th>
+      <th>Champion Influente</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align:left;">Lucas Costa</td>
+      <td>10</td>
+      <td>2,80</td>
+      <td>60,0%<span class="n-label">6/10</span><span class="badge bateu">bateu</span></td>
+      <td>50,0%<span class="n-label">5/10</span><span class="badge bateu">bateu</span></td>
+    </tr>
+    <tr>
+      <td style="text-align:left;">Jonny Steinmetz</td>
+      <td>8</td>
+      <td>1,25</td>
+      <td>50,0%<span class="n-label">4/8</span><span class="badge perto">perto</span></td>
+      <td>12,5%<span class="n-label">1/8</span><span class="badge longe">longe</span></td>
+    </tr>
+    <tr>
+      <td style="text-align:left;">Karynne Rocha</td>
+      <td>6</td>
+      <td>1,50</td>
+      <td>50,0%<span class="n-label">3/6</span><span class="badge perto">perto</span></td>
+      <td>33,3%<span class="n-label">2/6</span><span class="badge longe">longe</span></td>
+    </tr>
+    <tr>
+      <td style="text-align:left;">Luis Fonseca</td>
+      <td>6</td>
+      <td>1,83</td>
+      <td>33,3%<span class="n-label">2/6</span><span class="badge longe">longe</span></td>
+      <td>33,3%<span class="n-label">2/6</span><span class="badge longe">longe</span></td>
+    </tr>
+    <tr>
+      <td style="text-align:left;">Luis Queiroz</td>
+      <td>2</td>
+      <td>5,00<span class="n-label">amostra muito pequena</span></td>
+      <td>100,0%<span class="n-label">2/2</span><span class="badge bateu">bateu</span></td>
+      <td>50,0%<span class="n-label">1/2</span><span class="badge bateu">bateu</span></td>
+    </tr>
+    <tr>
+      <td style="text-align:left;">Mayra Castro</td>
+      <td>0</td>
+      <td><span class="empty-cell">sem deals ativos em CP</span></td>
+      <td><span class="empty-cell">sem deals ativos em CP</span></td>
+      <td><span class="empty-cell">sem deals ativos em CP</span></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="note-sample">⚠️ Luis Queiroz tem apenas 2 deals ativos em CP hoje. Os 100% de TD e a média de 5 contatos/deal refletem 2 negócios específicos, não um padrão de atuação. Mayra Castro não tem nenhum deal ativo nesta fase no momento.</div>
+<div class="highlight-note">💡 Lucas Costa é o único closer batendo as duas metas de TD e Champion simultaneamente, com volume razoável (n=10). Pode valer a pena entender o que está diferente na abordagem dele e levar para o time.</div>
+
+<div class="how-to">
+  <h3>Como atualizar este painel a cada quinzena</h3>
+  <ol>
+    <li>Exportar o pipeline atualizado do HubSpot (mesmas colunas do arquivo usado até aqui, incluindo Colaboradores, Acessamos TD? e Quais I's o Champion tem)</li>
+    <li>Filtrar deals em Construindo o Projeto, closers ativos, com Data da Primeira Reunião dentro da janela da quinzena em questão</li>
+    <li>Calcular: média de contatos por deal (quebrado por faixa de colaboradores), % Acesso a TD, % Champion Influente</li>
+    <li>Recalcular também a coluna Todos os deals abertos, usando todas as contas ativas em CP até a data da extração, sem filtro de janela</li>
+    <li>Substituir as células "a preencher" da quinzena correspondente (deals com 1ª reunião a partir de 20/07/26) e atualizar a coluna Todos os deals abertos</li>
+    <li>Recalcular a tabela de comparação por closer, usando o mesmo recorte de todos os deals ativos em CP, sem filtro de data</li>
+  </ol>
+</div>
+
+</body>
+</html>
