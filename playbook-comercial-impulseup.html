@@ -125,6 +125,26 @@ code{background:var(--surface);border:1px solid var(--border);border-radius:4px;
 .placeholder-box{border:1.5px dashed var(--border-md);border-radius:var(--r-lg);padding:56px 40px;text-align:center;margin-top:12px;}
 .placeholder-box .ic{font-size:13px;font-weight:700;color:var(--warn);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:10px;}
 .placeholder-box p{color:var(--fg-muted);max-width:420px;margin:0 auto;}
+
+/* MÓDULO 9 — OBJEÇÕES E BATTLECARDS */
+.obj-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px 22px;margin-bottom:14px;}
+.obj-quote{font-weight:700;font-size:14.5px;margin-bottom:12px;}
+.obj-quote::before{content:"\201C";color:var(--primary);font-weight:800;}
+.obj-quote::after{content:"\201D";color:var(--primary);font-weight:800;}
+.obj-field{font-size:13px;margin-bottom:6px;display:flex;gap:6px;flex-wrap:wrap;}
+.obj-field:last-child{margin-bottom:0;}
+.obj-label{font-weight:700;color:var(--fg-muted);text-transform:uppercase;font-size:10.5px;letter-spacing:0.05em;white-space:nowrap;padding-top:2px;}
+.obj-value{flex:1;min-width:200px;color:#333;}
+.repo-block{background:var(--bg);border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:8px;padding:18px 22px;margin-bottom:16px;}
+.repo-context{font-size:13px;color:var(--fg-muted);font-style:italic;margin-bottom:12px;}
+.repo-block ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.repo-block li{font-size:13.5px;padding:11px 14px;background:var(--surface);border-radius:8px;}
+.trap-block{background:var(--bg);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:16px;}
+.trap-head{background:var(--fg);color:#fff;padding:9px 18px;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;}
+.trap-block ul{list-style:none;}
+.trap-block li{padding:12px 18px;font-size:13.5px;border-bottom:1px solid var(--border);}
+.trap-block li:last-child{border-bottom:none;}
+.trap-block li::before{content:"→ ";color:var(--primary);font-weight:700;}
 </style>
 </head>
 <body>
@@ -145,6 +165,7 @@ code{background:var(--surface);border:1px solid var(--border);border-radius:4px;
     <div class="nav-item" data-target="mod5"><span class="nav-num">6</span><span class="nav-label">Comissionamento</span></div>
     <div class="nav-item" data-target="mod4"><span class="nav-num">7</span><span class="nav-label">Operação e SLAs</span><span class="nav-badge">em revisão</span></div>
     <div class="nav-item" data-target="mod8"><span class="nav-num">8</span><span class="nav-label">Processo G</span></div>
+    <div class="nav-item" data-target="mod9"><span class="nav-num">9</span><span class="nav-label">Mapa de Objeções</span></div>
   </nav>
 
   <main class="main">
@@ -224,6 +245,15 @@ code{background:var(--surface);border:1px solid var(--border);border-radius:4px;
           <div class="toc-body">
             <div class="toc-title">Processo G</div>
             <div class="toc-desc">Fluxo comercial para contas enterprise (500+ usuários): stakeholders, diferenciação, burocracias, marca, impacto, serviço e segurança.</div>
+          </div>
+          <div class="toc-status ready">Publicado</div>
+          <div class="toc-chevron">›</div>
+        </div>
+        <div class="toc-row" data-target="mod9">
+          <div class="toc-num">9</div>
+          <div class="toc-body">
+            <div class="toc-title">Mapa de Objeções e Battlecards</div>
+            <div class="toc-desc">Objeções de fim de funil, frases de reposicionamento competitivo sem citar concorrente e perguntas armadilha.</div>
           </div>
           <div class="toc-status ready">Publicado</div>
           <div class="toc-chevron">›</div>
@@ -930,6 +960,173 @@ code{background:var(--surface);border:1px solid var(--border);border-radius:4px;
       <h2>8. Cases de sucesso em contas enterprise</h2>
       <p>Não há cases de conta G formalizados com métricas e contexto completo prontos para uso hoje. O que já é usado é mais simples: logos de grandes clientes exibidas no material apresentado ao cliente, funcionando como prova social visual (conecta direto com o Eixo 4).</p>
       <div class="note" style="border-left-color:var(--warn);">Pendência: levantar e formalizar cases reais de conta G (contexto, desafio, resultado, métrica), quando houver material disponível.</div>
+    </section>
+
+    <!-- MÓDULO 9 — MAPA DE OBJEÇÕES E BATTLECARDS -->
+    <section class="section" id="mod9">
+      <div class="eyebrow">Módulo 9</div>
+      <h1 class="page-title">Mapa de Objeções e Battlecards</h1>
+      <p class="page-sub">Objeções de fim de funil (escolha de fornecedor, timing de fechamento e acesso ao tomador de decisão) e frases de reposicionamento competitivo para uso em call, sem citar concorrente diretamente.</p>
+
+      <h2 style="margin-top:0;">1. Objeções de escolha de fornecedor</h2>
+      <p>Fase Buscando Solução / Negociando. O prospect já está comparando fornecedores ativamente.</p>
+
+      <div class="obj-card">
+        <div class="obj-quote">Estamos comparando com outro fornecedor e o preço dele está mais competitivo</div>
+        <div class="obj-field"><span class="obj-label">Causa raiz</span><span class="obj-value">Comparação feita por tabela de preço, sem considerar profundidade de implementação e suporte.</span></div>
+        <div class="obj-field"><span class="obj-label">Resposta</span><span class="obj-value">Não entrar em guerra de preço. Trazer a RFP comparativa (Comparativo Estratégico de Fornecedores) mostrando critérios reais de peso, não só custo. Reforçar VOI já gerado em cases similares e o custo de uma implementação que não engaja.</span></div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-quote">O concorrente já atende outra área da empresa, seria mais fácil manter um fornecedor só</div>
+        <div class="obj-field"><span class="obj-label">Causa raiz</span><span class="obj-value">Preferência por simplicidade operacional e relação já existente, não por qualidade de produto.</span></div>
+        <div class="obj-field"><span class="obj-label">Resposta</span><span class="obj-value">Perguntar diretamente se a ferramenta atual entrega profundidade em gestão de desempenho ou é usada de forma superficial ali. Consolidar processos genéricos numa ferramenta all-in-one costuma sacrificar exatamente a camada de DHO estratégico que motivou a busca.</span></div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-quote">A diretoria já tem uma relação com outro fornecedor</div>
+        <div class="obj-field"><span class="obj-label">Causa raiz</span><span class="obj-value">Fator político e de relacionamento pesando mais que o critério técnico.</span></div>
+        <div class="obj-field"><span class="obj-label">Resposta</span><span class="obj-value">Não tentar reverter isso na conversa com o analista. Sinal claro de que o Champion sozinho não sustenta a decisão: precisa de acesso ao TD (ver seção 3) ou de material que amplie a defesa dentro da diretoria.</span></div>
+      </div>
+
+      <h2>2. Objeções de timing de fechamento</h2>
+      <p>Fase Negociando / Pendente de Assinatura.</p>
+
+      <div class="obj-card">
+        <div class="obj-quote">Vamos fechar, mas só no próximo trimestre ou ano</div>
+        <div class="obj-field"><span class="obj-label">Causa raiz</span><span class="obj-value">Adiamento sem motivo orçamentário real, geralmente falta de urgência construída ou processo interno mais lento que o esperado.</span></div>
+        <div class="obj-field"><span class="obj-label">Resposta</span><span class="obj-value">Investigar se é budget, aprovação jurídica ou falta de prioridade. Se for falta de prioridade, reforçar o custo de manter o status quo por mais um ciclo. Se for processo interno, perguntar quais etapas faltam e propor apoio direto nelas.</span></div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-quote">Já aprovamos internamente, só falta assinar</div>
+        <div class="obj-field"><span class="obj-label">Causa raiz</span><span class="obj-value">Não é objeção de conteúdo, é risco de perda de ritmo. Deal parado em PA por tempo demais tende a esfriar ou reabrir discussão.</span></div>
+        <div class="obj-field"><span class="obj-label">Resposta</span><span class="obj-value">Não tratar como fechado até a assinatura. Manter cadência ativa, entender se há alguma trava jurídica ou financeira escondida, e reforçar o cronograma de implementação para dar sensação de continuidade do projeto.</span></div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-quote">Precisamos alinhar com outra área (TI, Financeiro, Jurídico) antes de assinar</div>
+        <div class="obj-field"><span class="obj-label">Causa raiz</span><span class="obj-value">Dependência de terceiros que não estavam na conversa e não têm o mesmo nível de convicção.</span></div>
+        <div class="obj-field"><span class="obj-label">Resposta</span><span class="obj-value">Oferecer para participar diretamente dessa validação com a outra área, levando material técnico específico, em vez de deixar o Champion validar por conta própria e correr risco de tradução equivocada.</span></div>
+      </div>
+
+      <h2>3. Objeções de acesso ao tomador de decisão</h2>
+      <p>Transversal a todas as fases. Sempre separar problema de processo (o closer nunca propôs nada) de problema de execução (o closer propôs, mas o cliente recusou ou adiou).</p>
+
+      <div class="obj-card">
+        <div class="obj-quote">Pode seguir comigo, eu levo para a diretoria</div>
+        <div class="obj-field"><span class="obj-label">Causa raiz</span><span class="obj-value">Champion tentando proteger seu papel, ou genuinamente acredita que consegue sozinho.</span></div>
+        <div class="obj-field"><span class="obj-label">Resposta</span><span class="obj-value">Não aceitar passivamente. Propor agenda concreta: participar da conversa com a diretoria para trazer dados e responder dúvidas técnicas na hora. Se o Champion recusar mesmo assim, isso é sinal de risco de deal, não motivo para desistir da tentativa.</span></div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-quote">A gente decide por comitê, não é uma pessoa só</div>
+        <div class="obj-field"><span class="obj-label">Causa raiz</span><span class="obj-value">Estrutura de decisão mais complexa, múltiplos stakeholders com pesos diferentes.</span></div>
+        <div class="obj-field"><span class="obj-label">Resposta</span><span class="obj-value">Mapear quem compõe o comitê e o peso de cada um (framework dos 3 I's: Incentivo, Influência, Informação). Propor participar de pelo menos uma reunião do comitê ou fornecer material específico para cada perfil de decisor.</span></div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-quote">O RH decide a ferramenta, mas Financeiro/Controladoria aprova o gasto</div>
+        <div class="obj-field"><span class="obj-label">Causa raiz</span><span class="obj-value">Decisão dividida entre dono do problema e dono do orçamento, com critérios diferentes.</span></div>
+        <div class="obj-field"><span class="obj-label">Resposta</span><span class="obj-value">Preparar dois argumentos em paralelo: um voltado a resultado de pessoas para o RH, outro voltado a ROI/VOI financeiro para quem aprova o gasto. Não assumir que o Champion vai traduzir sozinho o argumento financeiro corretamente.</span></div>
+      </div>
+
+      <h2>4. Objeções de recuperação e reabertura</h2>
+      <p>Cenários de deals frios ou perdidos, conectados à lógica de recuperação Tier 1 (Projeto adiado, ROI validado não aprovado, Champion não subiu).</p>
+
+      <div class="obj-card">
+        <div class="obj-quote">Analisamos, gostamos, mas a diretoria não aprovou o investimento</div>
+        <div class="obj-field"><span class="obj-label">Causa raiz</span><span class="obj-value">ROI apresentado não convenceu, ou o Champion não soube defender o caso internamente.</span></div>
+        <div class="obj-field"><span class="obj-label">Resposta</span><span class="obj-value">Perguntar especificamente o que a diretoria questionou. Reforçar material de aprovação construído com a identidade do próprio RH do cliente, não da impulseup, para dar mais credibilidade interna na nova tentativa.</span></div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-quote">O champion que conduzia o projeto saiu da empresa ou mudou de cargo</div>
+        <div class="obj-field"><span class="obj-label">Causa raiz</span><span class="obj-value">Perda do patrocinador interno, processo reinicia do zero em termos de relacionamento.</span></div>
+        <div class="obj-field"><span class="obj-label">Resposta</span><span class="obj-value">Tratar como nova reconexão, remapeando quem assumiu a posição e reconstruindo o caso de negócio, sem assumir que o sucessor já está alinhado com o que foi discutido antes.</span></div>
+      </div>
+
+      <h2>5. Frases de reposicionamento competitivo</h2>
+      <p>Uso em call, sem citar o nome do concorrente. O objetivo é deslocar a conversa para os critérios em que a impulseup tem vantagem real.</p>
+
+      <h3>Foco e prioridade de desenvolvimento vs. amplitude diluída</h3>
+      <div class="repo-block">
+        <div class="repo-context">O argumento não é sobre qual módulo o concorrente tem ou não. É sobre onde está o foco de investimento e evolução do produto. Um fornecedor que sustenta muitas frentes ao mesmo tempo tende a distribuir o investimento de forma mais rasa entre elas.</div>
+        <ul>
+          <li>Um jeito bom de comparar não é olhar quantos módulos cada fornecedor tem, é entender qual é a prioridade de investimento e evolução de cada um. Vale perguntar: se a empresa deles tivesse que escolher uma frente para evoluir esse ano, qual seria? A resposta mostra onde está o foco real.</li>
+          <li>Todo fornecedor vai te mostrar uma lista grande de funcionalidades. O que diferencia na prática é a profundidade de cada uma. Sugiro sempre pedir para ver o fluxo completo de um ciclo de avaliação de desempenho funcionando, do início ao fim, não só a tela inicial do módulo.</li>
+          <li>Faz sentido perguntar para qualquer fornecedor, inclusive para nós: qual foi a última funcionalidade nova lançada na parte de gestão de desempenho, e há quanto tempo. Isso mostra se aquela frente está recebendo investimento contínuo ou se ficou parada enquanto o fornecedor focou em outra parte do negócio.</li>
+        </ul>
+      </div>
+
+      <h3>Parceria estratégica vs. plataforma padronizada por plano</h3>
+      <div class="repo-block">
+        <div class="repo-context">Fornecedores que trabalham com planos em camada, cobrando itens de personalização e determinadas funcionalidades como avulso ou upgrade separado.</div>
+        <ul>
+          <li>Um jeito bom de comparar propostas é olhar o que vem incluso de fato versus o que é avulso ou liberado apenas no plano superior. A gente trabalha com um modelo onde a personalização de cultura, relatório e processo já faz parte da implementação, não é um upgrade que vocês vão precisar negociar depois.</li>
+          <li>Departamento Pessoal e Gestão de Desempenho são dois problemas diferentes, com maturidade e ciclo de decisão diferentes. Quando o fornecedor resolve os dois ao mesmo tempo, geralmente um dos lados fica mais raso. A gente foca 100% em performance e desenvolvimento, é onde a nossa profundidade realmente aparece.</li>
+        </ul>
+      </div>
+
+      <h3>Suporte humano e consultivo vs. automação e autoatendimento</h3>
+      <div class="repo-block">
+        <div class="repo-context">Fornecedores que apoiam a venda em número (clientes, percentual médio de redução de turnover) e jornada de implantação baseada em etapas padronizadas de autoatendimento.</div>
+        <ul>
+          <li>Número de cliente e percentual médio de redução de turnover contam uma parte da história, mas o que muda o resultado de verdade é o quanto o processo foi desenhado para a cultura de vocês, não para a média do mercado. A gente senta com vocês e constrói o cenário específico da empresa, com apoio de psicólogo organizacional quando faz sentido.</li>
+          <li>Pergunta importante para fazer para qualquer fornecedor: depois que a plataforma está no ar, quem acompanha a adoção, é uma pessoa dedicada ou um portal de central de ajuda? Aqui a nossa entrega não termina no go-live, ela começa ali.</li>
+        </ul>
+      </div>
+
+      <h3>Preço de entrada baixo vs. custo real do projeto</h3>
+      <div class="repo-block">
+        <div class="repo-context">Propostas com mensalidade reduzida nos primeiros meses e reajuste automático por faixa de colaboradores, item que costuma virar objeção de "achamos mais barato".</div>
+        <ul>
+          <li>Vale sempre olhar não só o valor do primeiro mês, mas o valor do 6º e do 12º mês, e o que acontece quando o número de colaboradores de vocês crescer além da faixa contratada. Preço de entrada baixo geralmente esconde um reajuste automático mais na frente, então o comparativo justo é o custo total em 24 meses, não a mensalidade inicial.</li>
+          <li>Prefiro ser direto sobre isso: nosso preço reflete profundidade de processo, não é o mais barato do mercado. Mas se a gente olhar o custo de uma implementação que não engaja, ou de um processo que a diretoria não aprova de novo por falta de dado, o barato geralmente sai caro.</li>
+        </ul>
+      </div>
+
+      <h3>Quando o prospect já tem RFP ou comparativo formal</h3>
+      <div class="repo-block">
+        <ul>
+          <li>Já que vocês estão comparando fornecedores formalmente, posso te ajudar com uma ferramenta que a gente usa exatamente para isso: um comparativo estruturado por critério de peso, não só por feature ou preço. Assim a decisão da diretoria fica baseada no que realmente importa para o negócio de vocês, e não numa lista de funcionalidades que nem sempre reflete o uso real.</li>
+        </ul>
+        <div class="note" style="margin-top:12px;"><b>Ferramenta de apoio:</b> Comparativo Estratégico de Fornecedores (RFP), disponível para até cinco fornecedores em oito módulos de avaliação com pontuação por peso de importância.</div>
+      </div>
+
+      <h2>6. Perguntas armadilha</h2>
+      <p>Perguntas para o closer levantar naturalmente na call, fazendo o próprio prospect perceber a lacuna do concorrente sem que o closer precise apontar diretamente.</p>
+
+      <div class="trap-block">
+        <div class="trap-head">Foco e prioridade de desenvolvimento</div>
+        <ul>
+          <li>De tudo que foi apresentado na proposta de vocês, qual módulo os representantes mais destacaram como diferencial? Foi gestão de desempenho, ou outra frente?</li>
+          <li>Vocês pediram para ver o fluxo completo do ciclo de avaliação funcionando, ou só a lista de funcionalidades até agora?</li>
+          <li>Esse fornecedor comentou algo sobre lançamentos recentes específicos de gestão de desempenho, ou a conversa ficou mais no institucional?</li>
+        </ul>
+      </div>
+      <div class="trap-block">
+        <div class="trap-head">Personalização vs. plataforma padronizada por plano</div>
+        <ul>
+          <li>No comparativo de vocês, o que está incluso no plano e o que é cobrado como avulso ou upgrade depois da assinatura?</li>
+          <li>Se o número de colaboradores de vocês crescer esse ano, o que acontece com o valor do contrato? Isso já está claro na proposta?</li>
+          <li>A customização de relatório e processo para a cultura de vocês está incluída, ou é um item separado de consultoria?</li>
+        </ul>
+      </div>
+      <div class="trap-block">
+        <div class="trap-head">Suporte e acompanhamento</div>
+        <ul>
+          <li>Depois que a plataforma estiver no ar, quem acompanha a adoção do time: uma pessoa dedicada, ou vocês vão abrir chamado num chat de suporte?</li>
+          <li>Esse fornecedor já perguntou algo sobre a cultura de vocês, ou a apresentação foi a mesma que ele faz para qualquer empresa do mesmo porte?</li>
+        </ul>
+      </div>
+      <div class="trap-block">
+        <div class="trap-head">Custo real do projeto</div>
+        <ul>
+          <li>Essa proposta já mostra o valor a partir do 6º mês, ou só a mensalidade inicial?</li>
+          <li>O que acontece com o valor se o número de colaboradores passar da faixa contratada? Isso está explícito, com o valor exato do reajuste?</li>
+        </ul>
+      </div>
+      <div class="trap-block">
+        <div class="trap-head">Sobre a decisão em si (uso geral)</div>
+        <ul>
+          <li>O que fez vocês colocarem esse fornecedor na comparação: foi indicação, preço, ou avaliação técnica mesmo?</li>
+          <li>Se pudessem escolher hoje sem pensar em preço, o que pesaria mais na decisão de vocês?</li>
+        </ul>
+      </div>
     </section>
 
     <div class="footer-note">Playbook Comercial impulseup · Documento vivo, atualizado por módulo · Versão de revisão em andamento</div>
