@@ -399,67 +399,128 @@ code{background:var(--surface);border:1px solid var(--border);border-radius:4px;
       </table>
 
       <h2>Auditoria de Processo</h2>
-      <p>Verificação automática e semanal de aderência ao playbook, feita a partir das transcrições do Salesbud. Toda sexta-feira ao meio-dia, o sistema classifica cada reunião por fase e avalia contra o checklist da fase mais um checklist geral. Cada critério só é marcado como atendido com evidência real na transcrição.</p>
+      <p>Verificação automática e semanal de aderência ao playbook, feita a partir das transcrições do Salesbud. O sistema identifica quais fases estão presentes na reunião (uma mesma reunião pode ter mais de uma fase na mesma agenda), aplica o checklist de cada fase separadamente e cruza isso com uma leitura independente de temperatura do negócio.</p>
       <ul class="blt">
-        <li>80% do score vem do checklist da fase, 20% do checklist geral</li>
-        <li>70% ou mais: aderente · 50% a 69%: atenção · abaixo de 50%: crítico</li>
-        <li>Alertas de alto risco aparecem em destaque independentemente do score</li>
+        <li><b>Regra de confiança mínima:</b> uma fase só é considerada presente se pelo menos 3 sinais distintos daquela fase aparecerem de forma explícita na transcrição</li>
+        <li><b>Regra central: menção não é execução.</b> Só marca "sim" com evidência textual específica de que o closer executou a ação de forma deliberada. Tema tocado de passagem, cliente que trouxe o assunto sozinho, ou inferência de que "provavelmente aconteceu" não contam como evidência. Na dúvida, marca "não"</li>
+        <li>Não existe "não se aplica" — se a situação não surgiu, é "não" com observação obrigatória, exceto nas flexibilidades previstas no checklist de Proposta</li>
       </ul>
-      <div class="note">O acesso ao TD é avaliado à parte do score, de forma transversal a todas as fases, para diferenciar falha de processo de situação do deal.</div>
 
-      <h3>Checklist de Conexão <span class="meta-tag" style="display:inline">— 12 critérios, meta ≥ 70%</span></h3>
+      <h3>Fases possíveis</h3>
+      <table>
+        <tr><th>Fase</th><th>Objetivo</th></tr>
+        <tr><td><b>Conexão</b></td><td>Primeira reunião diagnóstica: escutar, mapear dores e implicações, identificar stakeholders e plantar a semente do champion, sem apresentar a plataforma</td></tr>
+        <tr><td><b>Demo</b></td><td>Apresentação da plataforma conectada aos desafios já mapeados, fortalecendo o champion e saindo com proposta agendada</td></tr>
+        <tr><td><b>Pós-Teste/POC</b></td><td>Reunião após período de piloto ou POC: avalia se as expectativas foram atendidas, esclarece dúvidas técnicas e identifica necessidade de novos testes antes de avançar</td></tr>
+        <tr><td><b>Proposta</b></td><td>Apresentação comercial e preparação do champion para o TD, incluindo alinhamentos de escopo e detalhamento de valores, mesmo sem narrativa estratégica nova</td></tr>
+      </table>
+
+      <h3>Pesos dos critérios</h3>
+      <p>Cada critério contável tem um peso que indica sua relevância no score da fase: <b>1</b> (padrão), <b>2</b> (importante), <b>3</b> (crítico/estrutural). O peso não muda a exigência de evidência, só o quanto aquele critério pesa no cálculo final.</p>
+
+      <h3>Checklist de Conexão <span class="meta-tag" style="display:inline">— meta ≥ 70%</span></h3>
       <div class="checklist">
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C01</span>Deixou claro na abertura que é diagnóstico, não demo</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C02</span>Pediu ao cliente para se apresentar antes de falar da impulseup</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C03a</span>Não navegou na plataforma antes do diagnóstico completo</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C03b</span>Manteve o produto como "cheiro", sem virar produto a conversa</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C04</span>Pergunta de abertura calibrada pelo contexto do lead</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C05</span>Cliente falou pelo menos 50% do tempo</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C06</span>Instigou o cliente a aprofundar respostas rasas</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C07</span>Diagnosticou implicações no negócio, não só o sintoma</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C08</span>Mapeou stakeholders com nomes, não só cargos</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C09</span>Entendeu o caminho real de aprovação interna e riscos</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C10</span>Conectou pilares às dores nos últimos 20% da reunião</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C11</span>Plantou a semente do ROI e cronograma</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C12</span>Saiu com data de demo definida na reunião <span class="risk-tag">alto risco</span></div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C01</span>·1· Deixou claro na abertura que é diagnóstico, não demo</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C02</span>·1· Pediu ao cliente para se apresentar antes de falar da impulseup</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C03a</span>·2· Não navegou na plataforma antes do diagnóstico completo</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C03b</span>·2· Manteve o produto como "cheiro" durante o diagnóstico, sem virar produto a conversa</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C04</span>·1· Pergunta de abertura calibrada pelo contexto do lead, não genérica</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C05</span>·2· Cliente falou pelo menos 50% do tempo da reunião</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C06</span>·2· Instigou o cliente a aprofundar, não aceitou respostas rasas</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C07</span>·3· Diagnosticou implicações no negócio, foi além do sintoma</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C08</span>·3· Mapeou stakeholders com nomes, não só cargos genéricos, incluindo o nome do TD</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C09</span>·2· Entendeu o caminho real de aprovação interna e riscos</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C10</span>·1· Explicou por que clientes do mesmo perfil escolhem a impulseup, conectando ao que aquele cliente trouxe (não é pitch genérico de portfólio)</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">C12</span>·3· Saiu com data de demo definida na própria reunião, com participantes confirmados — "vou te mandar opções" não conta <span class="risk-tag">alto risco</span></div></div>
+      </div>
+      <div class="note">C12 é o único critério que entra ao mesmo tempo no cálculo ponderado do score de Conexão e na lista de alertas de alto risco quando o resultado é "não".</div>
+
+      <h3>Checklist de Demo <span class="meta-tag" style="display:inline">— critérios contados D02 a D10, meta ≥ 70%</span></h3>
+      <div class="checklist">
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D01</span>·bônus· Recapitulou os desafios mapeados antes de abrir a plataforma — não entra no score; se cumprido vira destaque, se não, não penaliza nem vira gap</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D02</span>·2· Deixou claro em algum momento da reunião que a proposta será tratada em agenda própria e separada</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D03</span>·2· Ao longo da reunião, voltou a conectar os desafios do cliente à forma como a impulseup resolve cada um, mantendo esse fio condutor mesmo diante de perguntas sobre outros pontos</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D04</span>·1· Apresentou benefício antes da feature (problema → como resolve → tela)</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D05</span>·1· Reforçou diferenciais dos módulos vinculados às dores do cliente, não pilares genéricos</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D06</span>·alerta· Perguntou um termômetro numérico claro (0 a 5, 0 a 10, 0 a 100 ou similar) do quanto a impulseup atende o projeto, e se a nota não foi a máxima, explorou o que faltaria <span class="risk-tag">alto risco</span></div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D07</span>·2· Perguntou qual diferencial percebido e quanto pesa na decisão — elogio espontâneo do cliente não cumpre, a pergunta precisa ser feita</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D08</span>·1· Verificou se faltou algo que o cliente esperava ver</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D09</span>·1· Tratou objeções e lacunas, todas com encaminhamento</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D10</span>·3· Saiu com uma nova agenda concreta definida (proposta, nova demo ou alinhamento), com data ou formato confirmado ali mesmo</div></div>
       </div>
 
-      <h3>Checklist de Demo <span class="meta-tag" style="display:inline">— 11 critérios, meta ≥ 70%</span></h3>
+      <h3>Checklist de Pós-Teste/POC <span class="meta-tag" style="display:inline">— nova fase, meta ≥ 70%</span></h3>
+      <p>Aplicável quando a reunião ocorre após o cliente ter testado a plataforma em piloto ou POC.</p>
       <div class="checklist">
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D01</span>Executou o pré-demo, recapitulando os desafios mapeados</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D02</span>Alinhou a agenda: proposta vem depois</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D03</span>Manteve o foco no slide "como a impulseup resolve"</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D04</span>Apresentou benefício antes da feature</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D05</span>Reforçou diferenciais vinculados às dores do cliente</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D06</span>Aplicou o termômetro pós-demo (escolheria a impulseup?) <span class="risk-tag">alto risco</span></div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D07</span>Validou o diferencial percebido e o peso na decisão</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D08</span>Verificou se faltou algo que o cliente esperava ver</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D09</span>Tratou objeções e lacunas, todas com encaminhamento</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D10</span>Saiu com data da proposta definida</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">D11</span>Verificou se há dores de negócio não cobertas</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">PT01</span>·1· Perguntou explicitamente se as expectativas definidas antes do teste foram atendidas</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">PT02</span>·1· Explorou o que funcionou bem e o que não funcionou durante o período de teste</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">PT03</span>·1· Esclareceu de forma completa as dúvidas técnicas levantadas sobre o uso da plataforma</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">PT04</span>·1· Identificou se há necessidade de testar funcionalidades adicionais antes de avançar</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">PT05</span>·3· Saiu com um próximo passo concreto definido (avançar para proposta, estender teste ou nova validação) — "vou verificar internamente e retorno" não conta</div></div>
       </div>
 
-      <h3>Checklist de Proposta <span class="meta-tag" style="display:inline">— 9 critérios, meta ≥ 70%</span></h3>
+      <h3>Checklist de Proposta <span class="meta-tag" style="display:inline">— meta ≥ 70%</span></h3>
       <div class="checklist">
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">P01</span>Usou material de aprovação que prepara o champion</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">P02</span>Apresentou o valor logo na abertura</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">P03</span>Conectou o projeto à estratégia do negócio</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">P04</span>Treinou o champion para as perguntas do TD</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">P05</span>Incluiu o risco de não agir agora</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">P06</span>Apresentou cronograma de implantação</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">P07</span>Mediu a confiança do champion de 0 a 10</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">P08</span>Saiu com data concreta com o TD <span class="risk-tag">alto risco</span></div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">P09</span>Avaliou se o champion tem acesso real ao TD <span class="risk-tag">alto risco</span></div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">P01</span>·2· Usou material de aprovação estruturado que prepara o champion para o TD, não apenas valores sem contexto</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">P03</span>·2· Conectou o projeto à estratégia do negócio, além do RH</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">P05</span>·1· Incluiu o risco de não agir agora como argumento explícito</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">P06</span>·2· Apresentou cronograma de implantação com fases e prazos, ou alinhou uma etapa concreta (com data) para construí-lo junto ao cliente</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">P07</span>·1· Mediu a confiança do champion de 0 a 10 na aprovação; se ≤8, perguntou o que faltaria para chegar a 9</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">P08</span>·alerta· Saiu com data concreta de reunião com o TD, não "te retorno essa semana" <span class="risk-tag">alto risco</span></div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">P09</span>·alerta· Avaliou como será a apresentação interna e se o champion tem acesso real ao TD ou só vai por e-mail <span class="risk-tag">alto risco</span></div></div>
+      </div>
+      <div class="note">Quando a reunião de proposta for essencialmente um alinhamento de escopo ou detalhamento de valores e implementação, sem espaço para narrativa estratégica nova, P01, P03, P05 e P07 podem não se aplicar plenamente: registram "não" com observação de contexto, sinalizada em flags, e a prioridade de leitura vai para P06 e o detalhamento de valores/processo.</div>
+
+      <h3>Checklist Geral <span class="meta-tag" style="display:inline">— toda reunião com ao menos uma fase identificada, peso 1 cada</span></h3>
+      <div class="checklist">
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">G02</span>Material refletiu as dores reais daquele cliente, não foi genérico</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">G03</span>Conduziu a conversa ativamente e manteve a estratégia mesmo ao fazer concessões</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">G04</span>Não antecipou detalhes comerciais prematuros — "cheiro" de faixa de preço é permitido (ex: "projetos como o seu ficam entre R-X e R-Y"); desconto específico, prazo de contrato, multa ou condições de pagamento antes da Proposta é vetado</div></div>
+        <div class="check-item"><div class="check-box"></div><div><span class="check-id">G05</span>Mencionou ou confirmou envio de material pós-reunião — qualquer menção clara conta, não exige e-mail formal estruturado</div></div>
       </div>
 
-      <h3>Checklist Geral <span class="meta-tag" style="display:inline">— 5 critérios, toda reunião, meta ≥ 70%</span></h3>
-      <div class="checklist">
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">G01</span>Reunião gravada e registrada no Salesbud</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">G02</span>Material refletiu as dores reais daquele cliente</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">G03</span>Conduziu a conversa ativamente</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">G04</span>Não antecipou detalhes comerciais prematuros</div></div>
-        <div class="check-item"><div class="check-box"></div><div><span class="check-id">G05</span>Mencionou ou confirmou envio de e-mail pós-reunião</div></div>
-      </div>
+      <h3>Acesso ao Tomador de Decisão</h3>
+      <p>Transversal a todas as fases, fora do cálculo de score, avaliado em duas partes.</p>
+      <table>
+        <tr><th>Parte 1 — o closer buscou a agenda?</th><th>Significado</th></tr>
+        <tr><td>Proposto e confirmado</td><td>Closer propôs e o cliente confirmou data ou formato ali mesmo</td></tr>
+        <tr><td>Proposto sem confirmação</td><td>Closer propôs claramente, mas o cliente foi evasivo ("deixa que eu levo para ele")</td></tr>
+        <tr><td>Não proposto</td><td>Closer não propôs nenhuma agenda concreta mesmo quando o momento pedia</td></tr>
+        <tr><td>Não aplicável</td><td>O momento da reunião ainda não permitia avaliar isso</td></tr>
+      </table>
+      <p><b>Parte 2 — quando o TD participou da própria reunião:</b> avalia se ele fez perguntas de autoridade, orçamento ou risco; se demonstrou ceticismo e o closer endereçou isso diretamente; e se saiu com posicionamento claro (favorável, contrário, neutro ou evasivo). Presença do TD não garante resultado positivo — a qualidade da participação é o que importa.</p>
+
+      <h3>Temperatura do negócio</h3>
+      <p>Camada separada da auditoria de processo: mede se o <b>cliente</b> está dando sinais reais de avanço, não se o closer seguiu o playbook. Uma reunião pode ser executada com perfeição e o cliente estar frio, ou o closer pode pular etapas e o cliente já estar comprado.</p>
+      <ul class="blt">
+        <li>Urgência real do cliente (prazo interno, orçamento já aprovado, pressão de diretoria)</li>
+        <li>Cliente antecipou perguntas sobre próximos passos por conta própria</li>
+        <li>Cliente trouxe outros stakeholders ou se ofereceu para apresentar o projeto internamente, sem ser solicitado</li>
+        <li>Tom de comprometimento genuíno vs. apenas cortesia educada</li>
+        <li>Objeções de fricção real (preço, prioridade, timing) vs. apenas curiosidade sem risco de perda</li>
+      </ul>
+      <p>Classificação: <b>quente</b>, <b>morno</b> ou <b>frio</b>, sempre com evidência textual — nunca inferido.</p>
+
+      <h3>Direção recomendada</h3>
+      <p>Cruza o score de processo com a temperatura do negócio para gerar uma orientação prática ao closer:</p>
+      <table>
+        <tr><th>Processo</th><th>Temperatura</th><th>Direção</th></tr>
+        <tr><td>Forte</td><td>Quente</td><td>Padrão a replicar, sem alertas adicionais</td></tr>
+        <tr><td>Fraco</td><td>Quente</td><td>O negócio anda por conta própria — risco do closer atrapalhar por falta de formalização. Fechar rápido os pontos de processo em aberto (próximo passo, acesso ao TD) antes que esfrie</td></tr>
+        <tr><td>Forte</td><td>Frio</td><td>Execução boa, mas cliente não avança — possível baixo fit ou dor não real. Energia deve ir para requalificar o lead, não repetir o roteiro</td></tr>
+        <tr><td>Fraco</td><td>Frio</td><td>Alerta duplo: coaching de processo e risco real de perda do negócio</td></tr>
+      </table>
+
+      <h3>Cálculo do score (ponderado por peso)</h3>
+      <ul class="blt">
+        <li><b>Score da fase</b> = soma de (peso × 1 se "sim", × 0 se "não") de todos os critérios contáveis da fase, dividido pela soma total dos pesos daquela fase, vezes 100</li>
+        <li>Alertas de alto risco puros (D06, P08, P09) nunca entram nessa soma — ficam só em alertas_alto_risco. C12 é exceção: entra no score de Conexão e também no alerta se "não". D01 nunca entra no cálculo</li>
+        <li><b>Uma fase presente:</b> score geral = score da fase × 80% + (% de "sim" em G02 a G05) × 20%</li>
+        <li><b>Duas ou mais fases presentes:</b> score geral = média dos scores das fases × 80% + checklist geral × 20%</li>
+        <li><b>Nenhuma fase identificada:</b> calcula-se apenas o checklist geral</li>
+        <li>Acesso ao TD e temperatura do negócio nunca entram no cálculo do score</li>
+      </ul>
+      <div class="note">Classificação final inalterada: 70% ou mais é aderente, 50% a 69% é atenção, abaixo de 50% é crítico.</div>
     </section>
 
     <!-- MÓDULO 3 -->
