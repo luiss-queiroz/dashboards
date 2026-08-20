@@ -145,6 +145,10 @@ code{background:var(--surface);border:1px solid var(--border);border-radius:4px;
 .trap-block li{padding:12px 18px;font-size:13.5px;border-bottom:1px solid var(--border);}
 .trap-block li:last-child{border-bottom:none;}
 .trap-block li::before{content:"→ ";color:var(--primary);font-weight:700;}
+
+/* GRID DE DORES */
+.dor-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:20px;}
+.dor-chip{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--primary);border-radius:8px;padding:12px 14px;font-size:13px;font-weight:500;color:var(--fg);}
 </style>
 </head>
 <body>
@@ -1208,7 +1212,7 @@ code{background:var(--surface);border:1px solid var(--border);border-radius:4px;
 
       <h2 style="margin-top:0;">Critérios obrigatórios para avançar</h2>
       <ul class="blt">
-        <li>Empresa é B2B, acima de 100 colaboradores</li>
+        <li>Empresa com 100 colaboradores ou mais</li>
         <li>Existe um problema ou oportunidade identificado</li>
         <li>Contato tem influência mínima (não é apenas curioso) — conecta com os 3 I's do Champion (Módulo 2)</li>
         <li>Dor clara e reconhecida pelo cliente</li>
@@ -1230,22 +1234,22 @@ code{background:var(--surface);border:1px solid var(--border);border-radius:4px;
 
       <h3>Dor clara e reconhecida pelo cliente</h3>
       <p>Lista de referência de dores que caracterizam qualificação válida:</p>
-      <ul class="blt">
-        <li>Avaliações subjetivas e sem critério</li>
-        <li>Falta de rastreabilidade histórica</li>
-        <li>RH sem clareza sobre gaps de competência</li>
-        <li>Colaboradores sem direção de desenvolvimento</li>
-        <li>Líderes sem preparo para dar feedback</li>
-        <li>Diretoria tomando decisões de pessoas sem dados</li>
-        <li>Falta de indicadores de cultura e clima conectados à performance</li>
-        <li>Dificuldade de engajamento dos colaboradores</li>
-        <li>Falta de integração entre avaliação e outros processos de gente</li>
-        <li>Retenção profissional</li>
-        <li>Baixa produtividade</li>
-        <li>Baixo engajamento</li>
-        <li>Cultura só no papel</li>
-        <li>RH desrespeitado</li>
-      </ul>
+      <div class="dor-grid">
+        <div class="dor-chip">Avaliações subjetivas e sem critério</div>
+        <div class="dor-chip">Falta de rastreabilidade histórica</div>
+        <div class="dor-chip">RH sem clareza sobre gaps de competência</div>
+        <div class="dor-chip">Colaboradores sem direção de desenvolvimento</div>
+        <div class="dor-chip">Líderes sem preparo para dar feedback</div>
+        <div class="dor-chip">Diretoria tomando decisões de pessoas sem dados</div>
+        <div class="dor-chip">Falta de indicadores de cultura e clima conectados à performance</div>
+        <div class="dor-chip">Dificuldade de engajamento dos colaboradores</div>
+        <div class="dor-chip">Falta de integração entre avaliação e outros processos de gente</div>
+        <div class="dor-chip">Retenção profissional</div>
+        <div class="dor-chip">Baixa produtividade</div>
+        <div class="dor-chip">Baixo engajamento</div>
+        <div class="dor-chip">Cultura só no papel</div>
+        <div class="dor-chip">RH desrespeitado</div>
+      </div>
 
       <h2>Processo de desqualificação (qualificação errada)</h2>
       <p>Quando identificada qualificação errada, a conta retorna do closer para o pré-vendas (CP2 → pré-vendas):</p>
