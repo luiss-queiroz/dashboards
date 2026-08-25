@@ -197,6 +197,7 @@
 <div class="tabs-bar">
   <button class="tab-btn active" onclick="showTab('aba1', this)">Acompanhamento do ciclo</button>
   <button class="tab-btn" onclick="showTab('aba2', this)">Movimentação em CP</button>
+  <button class="tab-btn" onclick="showTab('aba3', this)">Mês a mês</button>
 </div>
 
 <div id="aba1" class="tab-panel active">
@@ -482,6 +483,114 @@
 </div>
 
 </div><!-- fim aba2 -->
+
+<div id="aba3" class="tab-panel">
+<h1>Comparação mês a mês</h1>
+<div class="subtitle">Deals em Construindo o Projeto, closers ativos · Base atualizada em 25/08/26</div>
+
+<div class="legend-box">
+  <div class="item"><b>Q1</b> = Janeiro a Março</div>
+  <div class="item"><b>Q2</b> = Abril a Junho</div>
+  <div class="item"><b>Q3</b> = Julho a Setembro, quebrado em Julho e Agosto</div>
+</div>
+
+<div class="sem-dado-box" style="margin-bottom:20px;">📅 Agosto está parcial (dados até 25/08). Comparar Agosto parcial com meses fechados (como Julho) tende a subestimar o volume real do mês.</div>
+
+<div class="section-title">Indicadores por mês e trimestre</div>
+
+<div class="tracker-wrap">
+<table class="tracker">
+  <thead>
+    <tr>
+      <th>Indicador</th>
+      <th>Meta</th>
+      <th class="total-col">Média do ano<br><span style="font-weight:400;">Jan a Ago</span></th>
+      <th>Q1<br><span style="font-weight:400;">Jan a Mar</span></th>
+      <th>Q2<br><span style="font-weight:400;">Abr a Jun</span></th>
+      <th>Q3<br><span style="font-weight:400;">Jul a Set</span></th>
+      <th>Julho</th>
+      <th>Agosto<br><span style="font-weight:400;">parcial, até 25/08</span></th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr class="group-header"><td colspan="8">Stakeholders por deal, meta por porte de conta</td></tr>
+
+    <tr>
+      <td>&lt; 500 colaboradores</td>
+      <td class="meta-col">≥ 2</td>
+      <td class="total-col">1,69<span class="n-label">n=65</span><span class="badge perto">perto</span></td>
+      <td>1,50<span class="n-label">n=34</span><span class="badge longe">longe</span></td>
+      <td>1,78<span class="n-label">n=23</span><span class="badge perto">perto</span></td>
+      <td>2,25<span class="n-label">n=8</span><span class="badge bateu">bateu</span></td>
+      <td>2,33<span class="n-label">n=6</span><span class="badge bateu">bateu</span></td>
+      <td>2,00<span class="n-label">n=2</span><span class="badge bateu">bateu</span></td>
+    </tr>
+    <tr>
+      <td>500 a 999 colaboradores</td>
+      <td class="meta-col">≥ 3</td>
+      <td class="total-col">1,79<span class="n-label">n=29</span><span class="badge longe">longe</span></td>
+      <td>1,92<span class="n-label">n=12</span><span class="badge longe">longe</span></td>
+      <td>1,79<span class="n-label">n=14</span><span class="badge longe">longe</span></td>
+      <td>1,33<span class="n-label">n=3</span><span class="badge longe">longe</span></td>
+      <td>2,00<span class="n-label">n=1</span><span class="badge longe">longe</span></td>
+      <td>1,00<span class="n-label">n=2</span><span class="badge longe">longe</span></td>
+    </tr>
+    <tr>
+      <td>≥ 1.000 colaboradores</td>
+      <td class="meta-col">≥ 4</td>
+      <td class="total-col">2,16<span class="n-label">n=38</span><span class="badge longe">longe</span></td>
+      <td>2,14<span class="n-label">n=21</span><span class="badge longe">longe</span></td>
+      <td>2,00<span class="n-label">n=11</span><span class="badge longe">longe</span></td>
+      <td>2,50<span class="n-label">n=6</span><span class="badge longe">longe</span></td>
+      <td>3,33<span class="n-label">n=3</span><span class="badge perto">perto</span></td>
+      <td>1,67<span class="n-label">n=3</span><span class="badge longe">longe</span></td>
+    </tr>
+
+    <tr class="group-header"><td colspan="8">Acesso ao Tomador de Decisão e Champion Influente</td></tr>
+
+    <tr>
+      <td>Acesso a TD</td>
+      <td class="meta-col">≥ 60%</td>
+      <td class="total-col">50,8%<span class="n-label">67/132</span><span class="badge perto">perto</span></td>
+      <td>46,3%<span class="n-label">31/67</span><span class="badge perto">perto</span></td>
+      <td>54,2%<span class="n-label">26/48</span><span class="badge perto">perto</span></td>
+      <td>58,8%<span class="n-label">10/17</span><span class="badge perto">perto</span></td>
+      <td>60,0%<span class="n-label">6/10</span><span class="badge bateu">bateu</span></td>
+      <td>57,1%<span class="n-label">4/7</span><span class="badge perto">perto</span></td>
+    </tr>
+    <tr>
+      <td>Champion Influente</td>
+      <td class="meta-col">≥ 50%</td>
+      <td class="total-col">34,8%<span class="n-label">46/132</span><span class="badge longe">longe</span></td>
+      <td>35,8%<span class="n-label">24/67</span><span class="badge longe">longe</span></td>
+      <td>31,2%<span class="n-label">15/48</span><span class="badge longe">longe</span></td>
+      <td>41,2%<span class="n-label">7/17</span><span class="badge perto">perto</span></td>
+      <td>50,0%<span class="n-label">5/10</span><span class="badge bateu">bateu</span></td>
+      <td>28,6%<span class="n-label">2/7</span><span class="badge longe">longe</span></td>
+    </tr>
+
+    <tr class="group-header"><td colspan="8">Volume de deals</td></tr>
+    <tr>
+      <td>n de deals com 1ª reunião no período</td>
+      <td class="meta-col">—</td>
+      <td class="total-col">132</td>
+      <td>67</td>
+      <td>48</td>
+      <td>17</td>
+      <td>10</td>
+      <td>7</td>
+    </tr>
+
+  </tbody>
+</table>
+</div>
+
+<div class="highlight-note">💡 Julho é o melhor mês do ano em quase todos os indicadores: TD (60,0%), Champion (50,0%, único mês batendo a meta) e stakeholders em contas ≥1.000 (3,33, mais perto da meta de 4 do que em qualquer outro período). Vale entender o que mudou em julho antes de comemorar ou descartar como acaso.</div>
+<div class="note-sample">⚠️ Agosto (parcial) mostra queda em quase todos os indicadores frente a julho: TD cai de 60,0% para 57,1%, Champion despenca de 50,0% para 28,6%, e stakeholders em contas ≥1.000 cai de 3,33 para 1,67. Como agosto ainda está em curso (dado até 25/08, n=7), parte dessa queda pode se dever a poucos deals mais do que a uma reversão real de tendência.</div>
+<div class="sem-dado-box">Nenhuma faixa de porte de stakeholders bateu a meta de forma sustentada em mais de um período isolado. A meta de <500 colaboradores (≥2) só foi atingida a partir de Q3, com poucos deals em cada mês (6 a 8), o que ainda não configura tendência consolidada.</div>
+
+</div><!-- fim aba3 -->
 
 <script>
 function showTab(id, btn) {
