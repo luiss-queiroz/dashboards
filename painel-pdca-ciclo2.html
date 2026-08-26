@@ -412,24 +412,52 @@
 
 <div class="quadro lost">
   <div class="quadro-title">Quadro 1 — Motivos de Lost em saída direta de CP</div>
-  <div class="quadro-desc">Deals que saíram de Construindo o Projeto direto para Lost, sem passar por Buscando Solução ou Negociando</div>
+  <div class="quadro-desc">Deals que saíram de Construindo o Projeto direto para Lost, sem passar por Buscando Solução ou Negociando · Atualizado em 25/08/26</div>
   <div class="stat-row">
-    <div class="stat-card"><div class="label">Total de casos</div><div class="value">80</div></div>
+    <div class="stat-card"><div class="label">Total de casos</div><div class="value">85</div></div>
     <div class="stat-card"><div class="label">Motivo mais comum</div><div class="value" style="font-size:15px;">Não agreguei valor</div></div>
-    <div class="stat-card"><div class="label">Dias médios parado</div><div class="value">52 dias</div></div>
+    <div class="stat-card"><div class="label">Dias médios parado</div><div class="value">54 dias</div></div>
     <div class="stat-card"><div class="label">Pior motivo (tempo)</div><div class="value" style="font-size:15px;">Não aprovado, 70 dias</div></div>
   </div>
   <table class="data-table">
     <thead><tr><th>Motivo de Lost</th><th>Qtd.</th><th>% do total</th><th>Dias médios parado</th><th>Mediana de dias</th></tr></thead>
     <tbody>
-      <tr><td>Não agreguei valor</td><td>28</td><td>35,0%</td><td>52,0</td><td>42,5</td></tr>
-      <tr><td>Projeto foi adiado</td><td>19</td><td>23,8%</td><td>49,6</td><td>48,0</td></tr>
-      <tr><td>Projeto não foi aprovado</td><td>17</td><td>21,3%</td><td>70,4</td><td>47,0</td></tr>
-      <tr class="destaque"><td>Perdi pra concorrente</td><td>16</td><td>20,0%</td><td>42,2</td><td>32,0</td></tr>
+      <tr><td>Não agreguei valor</td><td>30</td><td>35,3%</td><td>55,8</td><td>42,5</td></tr>
+      <tr><td>Projeto foi adiado</td><td>21</td><td>24,7%</td><td>49,4</td><td>48,0</td></tr>
+      <tr class="destaque"><td>Perdi pra concorrente</td><td>17</td><td>20,0%</td><td>42,6</td><td>32,0</td></tr>
+      <tr><td>Projeto não foi aprovado</td><td>17</td><td>20,0%</td><td>70,4</td><td>47,0</td></tr>
     </tbody>
   </table>
   <div class="highlight-note">💡 "Perdi pra concorrente" tem o menor tempo médio parado entre os 4 motivos, mas é o único inteiramente atribuível ao closer: o cliente estava vivo e decidindo, e o atraso não teve causa externa.</div>
-  <div class="note-sample">⚠️ "Não agreguei valor" e "Projeto foi adiado" concentram sub-motivos como "cliente não retorna" e ausência prolongada do contato, sugerindo sumiço de relacionamento em boa parte dos 80 casos.</div>
+  <div class="note-sample">⚠️ "Não agreguei valor" e "Projeto foi adiado" concentram sub-motivos como "cliente não retorna" e ausência prolongada do contato, sugerindo sumiço de relacionamento em boa parte dos 85 casos.</div>
+
+  <div style="font-size:16px; font-weight:700; margin:24px 0 4px; color:var(--red);">Motivos de Lost por trimestre</div>
+  <div class="quadro-desc">Trimestre com base na data de entrada em Construindo o Projeto</div>
+  <table class="data-table">
+    <thead><tr><th>Motivo de Lost</th><th>Q1<br><span style="font-weight:400;">Jan a Mar</span></th><th>Q2<br><span style="font-weight:400;">Abr a Jun</span></th><th>Q3<br><span style="font-weight:400;">Jul a Set</span></th></tr></thead>
+    <tbody>
+      <tr><td>Não agreguei valor</td><td>14</td><td>15</td><td>1</td></tr>
+      <tr><td>Projeto foi adiado</td><td>16</td><td>4</td><td>0</td></tr>
+      <tr class="destaque"><td>Perdi pra concorrente</td><td>6</td><td>8</td><td>2</td></tr>
+      <tr><td>Projeto não foi aprovado</td><td>11</td><td>6</td><td>0</td></tr>
+    </tbody>
+  </table>
+  <div class="highlight-note">💡 "Projeto foi adiado" está fortemente concentrado em Q1 (16 de 21 casos) e praticamente desaparece em Q2 e Q3. Pode refletir sazonalidade de orçamento no início do ano, vale checar se o padrão se repete no próximo Q1.</div>
+  <div class="note-sample">⚠️ Q3 tem apenas 3 casos totais até 25/08 (dado ainda imaturo, a maioria dos deals que entraram em Q3 ainda não teve tempo de virar Lost). Não comparar Q3 com Q1/Q2 em termos absolutos ainda.</div>
+
+  <div style="font-size:16px; font-weight:700; margin:24px 0 4px; color:var(--red);">Motivos de Lost por closer</div>
+  <table class="data-table">
+    <thead><tr><th>Motivo de Lost</th><th>Jonny Steinmetz</th><th>Karynne Rocha</th><th>Lucas Costa</th><th>Luis Fonseca</th><th>Luis Queiroz</th><th>Mayra Castro</th></tr></thead>
+    <tbody>
+      <tr><td>Não agreguei valor</td><td>5</td><td>7</td><td>8</td><td>2</td><td>5</td><td>3</td></tr>
+      <tr><td>Projeto foi adiado</td><td>3</td><td>8</td><td>6</td><td>0</td><td>4</td><td>0</td></tr>
+      <tr class="destaque"><td>Perdi pra concorrente</td><td>7</td><td>3</td><td>1</td><td>2</td><td>4</td><td>0</td></tr>
+      <tr><td>Projeto não foi aprovado</td><td>2</td><td>4</td><td>3</td><td>4</td><td>4</td><td>0</td></tr>
+      <tr style="font-weight:700; background:#F5F5F7;"><td>Total de casos</td><td>17</td><td>22</td><td>18</td><td>8</td><td>17</td><td>3</td></tr>
+      <tr style="font-weight:700; background:#F5F5F7;"><td>Dias médios parado</td><td>37,1</td><td>59,4</td><td>41,8</td><td>106,5</td><td>40,9</td><td>132,0</td></tr>
+    </tbody>
+  </table>
+  <div class="note-sample">⚠️ Jonny Steinmetz concentra 7 dos 17 casos de "Perdi pra concorrente" (41%), mais que o dobro de qualquer outro closer. Luis Fonseca e Mayra Castro têm o tempo médio parado em CP muito mais alto que os demais (106 e 132 dias), mas com poucas ocorrências (8 e 3), o que exige cautela antes de tratar como padrão consolidado.</div>
 </div>
 
 <div class="quadro evolucao">
