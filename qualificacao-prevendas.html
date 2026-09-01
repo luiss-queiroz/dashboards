@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qualificação de contas: o que pesa de verdade</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+:root{
+  --color-bg:#FFFFFF;
+  --color-bg-alt:#F4F2EF;
+  --color-fg:#0C0C0C;
+  --color-fg-muted:#666666;
+  --color-border:#E0E0E0;
+  --color-primary:#CC0088;
+  --color-primary-hover:#A3006D;
+  --color-primary-active:#770055;
+  --color-surface:#F4F2EF;
+  --font-family:'Poppins', sans-serif;
+  --tint-green:#1E8E5A;
+  --tint-yellow:#B8860B;
+  --tint-red:#C23B3B;
+}
+
+*{box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  margin:0;
+  font-family:var(--font-family);
+  background:var(--color-bg-alt);
+  color:var(--color-fg);
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  overflow:hidden;
+}
+
+img{max-width:100%;}
+
+/* ---------- DECK ---------- */
+.deck{
+  height:100vh;
+  width:100%;
+  overflow-x:hidden;
+  overflow-y:hidden;
+  position:relative;
+}
+.slides{
+  height:100%;
+  display:flex;
+  transition:transform 480ms cubic-bezier(.2,.8,.2,1);
+}
+.slide{
+  flex:0 0 100%;
+  width:100%;
+  height:100%;
+  overflow-y:auto;
+  background:var(--color-bg);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:64px 72px;
+  position:relative;
+}
+.slide-inner{max-width:840px; margin:0 auto; width:100%;}
+
+.slide-kicker{
+  font-size:13px; font-weight:600; color:var(--color-primary); margin:0 0 14px;
+  letter-spacing:0.01em;
+}
+.slide-title{
+  font-size:36px; font-weight:800; line-height:1.2; margin:0 0 16px; letter-spacing:-0.01em;
+}
+.slide-sub{font-size:16px; color:var(--color-fg-muted); margin:0 0 28px; max-width:600px;}
+
+/* ---------- COVER SLIDE ---------- */
+.slide.cover{
+  background:var(--color-fg);
+  color:#fff;
+}
+.slide.cover .brand{font-size:15px; font-weight:700; margin-bottom:28px; color:#fff;}
+.slide.cover .brand span{color:var(--color-primary);}
+.slide.cover .slide-title{font-size:52px; color:#fff; max-width:680px;}
+.slide.cover .slide-sub{color:#B8B8B8; font-size:18px; max-width:560px;}
+.cover-stats{display:flex; gap:44px; margin-top:40px; flex-wrap:wrap;}
+.cover-stats .stat b{display:block; font-size:36px; font-weight:800; color:var(--color-primary); line-height:1;}
+.cover-stats .stat span{font-size:13px; color:#B8B8B8; display:block; margin-top:8px;}
+
+/* ---------- LEVELS ---------- */
+.levels{display:flex; flex-direction:column; gap:10px; margin:6px 0 0;}
+.level{
+  border-radius:8px; padding:14px 16px; font-size:15px; border-left:4px solid;
+  background:var(--color-surface);
+}
+.level b{display:inline-block; margin-right:6px;}
+.level .quotes{list-style:none; margin:8px 0 0; padding:0; font-size:13px; color:var(--color-fg-muted);}
+.level .quotes li{margin-bottom:4px; padding-left:14px; position:relative;}
+.level .quotes li::before{content:"\2022"; position:absolute; left:0; color:var(--color-fg-muted);}
+.flag{
+  display:inline-block; margin-left:6px; font-size:11px; font-weight:700; color:var(--tint-red);
+  background:rgba(194,59,59,0.1); padding:2px 7px; border-radius:10px; white-space:nowrap;
+}
+.level.baixo{border-color:var(--tint-red);}
+.level.medio{border-color:var(--tint-yellow);}
+.level.alto{border-color:var(--tint-green);}
+
+.callout{
+  margin-top:18px; padding:14px 16px; border-radius:8px;
+  background:var(--color-surface); border:1px dashed var(--color-border); font-size:14px;
+}
+.callout b{color:var(--color-primary);}
+.callout.risco{border-color:var(--tint-red); border-style:solid; border-width:1px;}
+.callout.risco b{color:var(--tint-red);}
+
+/* ---------- DATA BARS ---------- */
+.scale-note{font-size:12px; color:var(--color-fg-muted); margin:0 0 20px; font-weight:500;}
+.bar-row{margin-bottom:16px;}
+.bar-label{display:flex; justify-content:space-between; align-items:baseline; font-size:14px; margin-bottom:6px; gap:12px;}
+.bar-label .name{font-weight:500;}
+.bar-label .val{font-weight:700; color:var(--color-primary); white-space:nowrap;}
+.bar-track{width:100%; height:10px; border-radius:6px; background:var(--color-border); overflow:hidden;}
+.bar-fill{height:100%; border-radius:6px; background:var(--color-primary); width:0%; transition:width 700ms cubic-bezier(.2,.8,.2,1);}
+.bar-n{font-size:12px; color:var(--color-fg-muted); margin-top:4px;}
+
+.stat-block{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; margin:24px 0 8px;}
+.stat-card{background:var(--color-surface); border:1px solid var(--color-border); border-radius:10px; padding:20px;}
+.stat-card b{display:block; font-size:28px; font-weight:800; color:var(--color-primary); line-height:1;}
+.stat-card span{font-size:13px; color:var(--color-fg-muted); display:block; margin-top:8px;}
+
+.insight{
+  background:var(--color-surface); border:1px solid var(--color-border); border-left:4px solid var(--color-primary);
+  border-radius:8px; padding:16px 18px; font-size:14px; margin-top:22px;
+}
+.insight b{color:var(--color-primary);}
+
+/* ---------- TABLE ---------- */
+.table-wrap{overflow-x:auto; margin:16px 0 4px;}
+table.crosstab{width:100%; border-collapse:collapse; font-size:13px; min-width:480px;}
+table.crosstab th, table.crosstab td{padding:10px 12px; text-align:left; border-bottom:1px solid var(--color-border);}
+table.crosstab th{font-weight:600; color:var(--color-fg-muted); font-size:12px; background:var(--color-surface);}
+table.crosstab td:first-child, table.crosstab th:first-child{font-weight:600; color:var(--color-fg);}
+table.crosstab td.highlight{font-weight:700; color:var(--color-primary); background:rgba(204,0,136,0.06);}
+
+/* ---------- COMPETITORS ---------- */
+.comp-list{display:flex; flex-direction:column; gap:10px; margin-top:8px;}
+.comp-row{display:flex; align-items:center; gap:14px;}
+.comp-name{width:150px; font-size:14px; font-weight:500; flex:0 0 auto;}
+.comp-track{flex:1; height:8px; border-radius:5px; background:var(--color-border); overflow:hidden;}
+.comp-fill{height:100%; background:var(--color-fg-muted); border-radius:5px; width:0%; transition:width 700ms ease;}
+.comp-n{width:34px; text-align:right; font-size:13px; font-weight:700; color:var(--color-fg-muted);}
+
+/* ---------- ACTION / AGENDA GRID ---------- */
+.grid-2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+.grid-cards .item{
+  background:var(--color-surface); border:1px solid var(--color-border); border-radius:10px; padding:20px 22px;
+}
+.grid-cards .item .num{font-size:13px; font-weight:700; color:var(--color-primary); margin-bottom:8px; display:block;}
+.grid-cards .item h3{font-size:16px; margin:0 0 6px; font-weight:600;}
+.grid-cards .item p{font-size:13px; color:var(--color-fg-muted); margin:0;}
+
+.agenda-list{display:flex; flex-direction:column; gap:4px; margin-top:8px;}
+.agenda-row{
+  display:flex; align-items:center; gap:16px; padding:14px 4px; border-bottom:1px solid var(--color-border);
+  font-size:16px; font-weight:500;
+}
+.agenda-row .idx{
+  width:30px; height:30px; border-radius:50%; background:var(--color-surface); border:1px solid var(--color-border);
+  display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; color:var(--color-primary);
+  flex:0 0 auto;
+}
+
+/* ---------- MORE DETAIL TOGGLE (details/summary) ---------- */
+details.more{margin-top:20px;}
+details.more summary{
+  list-style:none; cursor:pointer; font-size:14px; font-weight:600; color:var(--color-primary);
+  display:flex; align-items:center; gap:8px; user-select:none;
+}
+details.more summary::-webkit-details-marker{display:none;}
+details.more summary .chevron{width:14px; height:14px; transition:transform 200ms ease;}
+details.more[open] summary .chevron{transform:rotate(180deg);}
+details.more .more-body{margin-top:14px; font-size:14px; color:var(--color-fg-muted);}
+
+/* ---------- CLOSING SLIDE ---------- */
+.slide.closing{background:var(--color-fg); color:#fff; align-items:center; text-align:left;}
+.slide.closing .slide-title{color:#fff;}
+.slide.closing .slide-sub{color:#B8B8B8;}
+
+/* ---------- NAV CONTROLS ---------- */
+.deck-nav{
+  position:fixed; bottom:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px 28px; background:rgba(255,255,255,0.94); backdrop-filter:blur(6px);
+  border-top:1px solid var(--color-border);
+}
+.nav-btn{
+  width:40px; height:40px; border-radius:50%; border:1px solid var(--color-border); background:#fff;
+  display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--color-fg);
+  transition:border-color 150ms ease, background 150ms ease;
+}
+.nav-btn:hover{border-color:var(--color-primary); color:var(--color-primary);}
+.nav-btn:disabled{opacity:0.3; cursor:default; pointer-events:none;}
+.nav-btn svg{width:18px; height:18px;}
+
+.progress-wrap{flex:1; margin:0 24px; display:flex; align-items:center; gap:10px;}
+.progress-track{flex:1; height:4px; background:var(--color-border); border-radius:3px; overflow:hidden;}
+.progress-fill{height:100%; background:var(--color-primary); width:0%; transition:width 300ms ease;}
+.slide-counter{font-size:13px; color:var(--color-fg-muted); font-weight:600; white-space:nowrap; min-width:52px;}
+
+.deck-brand{font-size:13px; font-weight:700; color:var(--color-fg-muted); display:flex; align-items:center; gap:6px;}
+.deck-brand span{color:var(--color-primary);}
+
+@media (max-width:760px){
+  .slide{padding:80px 24px 100px;}
+  .slide-title{font-size:26px;}
+  .slide.cover .slide-title{font-size:34px;}
+  .grid-2{grid-template-columns:1fr;}
+  .deck-nav{padding:12px 16px;}
+  .progress-wrap{margin:0 12px;}
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{transition:none !important;}
+}
+</style>
+</head>
+<body>
+
+<div class="deck">
+  <div class="slides" id="slides">
+
+    <!-- 1: CAPA -->
+    <section class="slide cover">
+      <div class="slide-inner">
+        <div class="brand">impulse<span>up</span></div>
+        <p class="slide-kicker" style="color:#B8B8B8;">Time de pré-vendas · PDCA 2027</p>
+        <h1 class="slide-title">Qualificação de contas: o que pesa de verdade</h1>
+        <p class="slide-sub">786 negócios fechados, R$ 35,3 milhões em jogo. Aprovação de orçamento é o critério mais forte para fechar, e a análise por receita mostra onde esse sinal se confirma e onde ele muda de figura.</p>
+        <div class="cover-stats">
+          <div class="stat"><b>786</b><span>negócios fechados analisados</span></div>
+          <div class="stat"><b>R$ 35,3 mi</b><span>em receita fechada, Won + Lost</span></div>
+          <div class="stat"><b>29,5%</b><span>fechamento por logo com orçamento aprovado</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2: AGENDA -->
+    <section class="slide">
+      <div class="slide-inner">
+        <p class="slide-kicker">Agenda</p>
+        <h2 class="slide-title">O que vamos ver hoje</h2>
+        <div class="agenda-list">
+          <div class="agenda-row"><span class="idx">1</span>Os 6 critérios de qualificação</div>
+          <div class="agenda-row"><span class="idx">2</span>Regras automáticas de desqualificação</div>
+          <div class="agenda-row"><span class="idx">3</span>O que o pipeline mostra</div>
+          <div class="agenda-row"><span class="idx">4</span>Análise de perdas: motivo, submotivo e concorrência</div>
+          <div class="agenda-row"><span class="idx">5</span>O que muda no dia a dia</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3: CRITERIO 0 - PORTE -->
+    <section class="slide">
+      <div class="slide-inner">
+        <p class="slide-kicker">Critério 0 de 6</p>
+        <h2 class="slide-title">Porte da empresa</h2>
+        <p class="slide-sub">Pergunta: quantos colaboradores a empresa tem hoje? Filtro de entrada, não soma pontos na régua final.</p>
+        <div class="levels">
+          <div class="level baixo"><b>M1</b>abaixo de 100 colaboradores. Desqualifica a conta automaticamente.</div>
+          <div class="level medio"><b>M2</b>de 100 a 249 colaboradores. Segue no processo, mas exige timing claro.</div>
+          <div class="level medio"><b>M3</b>de 250 a 500 colaboradores. Mesma regra de timing do M2.</div>
+          <div class="level alto"><b>G</b>500 colaboradores ou mais. Sem restrição adicional.</div>
+        </div>
+        <p class="callout">O porte não soma pontos na régua final. Ele funciona como um filtro de entrada que trava a conta antes mesmo de olhar para o resto.</p>
+      </div>
+    </section>
+
+    <!-- 4: CRITERIO 1 - PLANEJAMENTO -->
+    <section class="slide">
+      <div class="slide-inner">
+        <p class="slide-kicker">Critério 1 de 6</p>
+        <h2 class="slide-title">Planejamento (P)</h2>
+        <p class="slide-sub">Pergunta: como vocês definiram o conteúdo (competências, perguntas, indicadores) que será usado no processo?</p>
+        <div class="levels">
+          <div class="level baixo">
+            <b>Baixo</b>ideia embrionária, sem escopo definido.
+            <ul class="quotes">
+              <li>"Estamos apenas levantando as necessidades."</li>
+              <li>"Precisamos de ajuda para definir o que avaliar."</li>
+            </ul>
+          </div>
+          <div class="level medio">
+            <b>Médio</b>projeto desenhado, mas precisa de apoio na estruturação.
+            <ul class="quotes">
+              <li>"Temos as competências, mas não o descritivo."</li>
+              <li>"Ainda estamos definindo os indicadores."</li>
+            </ul>
+          </div>
+          <div class="level alto">
+            <b>Alto</b>processo maduro, escopo detalhado, geralmente migração de outro sistema.
+            <ul class="quotes">
+              <li>"Buscamos migrar nosso modelo atual e só precisamos de aderência."</li>
+              <li>"Já temos a régua de avaliação pronta."</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5: CRITERIO 2 - TIMING -->
+    <section class="slide">
+      <div class="slide-inner">
+        <p class="slide-kicker">Critério 2 de 6</p>
+        <h2 class="slide-title">Timing (T)</h2>
+        <p class="slide-sub">Pergunta: qual é a data limite para este projeto estar em vigor? O que acontece se ele atrasar?</p>
+        <div class="levels">
+          <div class="level baixo">
+            <b>Baixo</b>prazo indefinido ou acima de 6 meses.
+            <ul class="quotes">
+              <li>"Vamos rever isso no próximo ano."</li>
+              <li>"Não é prioridade para o Q4 (ou semestre atual)."</li>
+            </ul>
+          </div>
+          <div class="level medio">
+            <b>Médio</b>decisão ou implementação entre 90 e 180 dias.
+            <ul class="quotes">
+              <li>"Gostaríamos de ter pronto no final do Q2."</li>
+              <li>"Temos flexibilidade, mas o ideal é no próximo semestre."</li>
+            </ul>
+          </div>
+          <div class="level alto">
+            <b>Alto</b>decisão ou implementação em até 90 dias.
+            <ul class="quotes">
+              <li>"O contrato expira no próximo mês e precisamos rodar o ciclo." <span class="flag">⚠ atenção</span></li>
+              <li>"Temos que fechar neste trimestre."</li>
+            </ul>
+          </div>
+        </div>
+        <p class="callout risco"><b>Cuidado com "contrato expira no próximo mês":</b> essa fala parece Timing Alto, mas pode esconder duas situações opostas. Uma é urgência real de troca. A outra é o cliente buscando cotação só para negociar a renovação com o fornecedor atual. Antes de marcar Alto, valide explicitamente que o cliente pretende trocar de fornecedor. "Estamos vendo o mercado" ou "queremos comparar opções" não é confirmação de troca, é sinal de que ainda pode ser só barganha. Sem essa validação, trate como Médio.</p>
+        <p class="callout"><b>O que os dados mostram:</b> sozinho, o timing quase não separa quem fecha de quem perde. Ele só faz diferença de verdade junto com orçamento aprovado. Detalhe no bloco de dados.</p>
+      </div>
+    </section>
+
+    <!-- 6: CRITERIO 3 - APROVACAO -->
+    <section class="slide">
+      <div class="slide-inner">
+        <p class="slide-kicker">Critério 3 de 6</p>
+        <h2 class="slide-title">Aprovação (A)</h2>
+        <p class="slide-sub">Pergunta: qual é o mecanismo financeiro que viabilizará a contratação deste fornecedor?</p>
+        <div class="levels">
+          <div class="level baixo">
+            <b>Baixo</b>orçamento não aprovado, apenas levantando preços.
+            <ul class="quotes">
+              <li>"Estamos montando a planilha de custos."</li>
+              <li>"Não temos um valor, só queremos ter uma base."</li>
+            </ul>
+          </div>
+          <div class="level medio">
+            <b>Médio</b>budget existe, mas o valor ainda é desconhecido.
+            <ul class="quotes">
+              <li>"Estamos em fase de cotação com 3 fornecedores."</li>
+              <li>"Temos verba, mas precisamos do melhor custo-benefício."</li>
+            </ul>
+          </div>
+          <div class="level alto">
+            <b>Alto</b>orçamento aprovado e disponível.
+            <ul class="quotes">
+              <li>"Temos o valor liberado para este projeto."</li>
+              <li>"A verba está reservada e precisamos fechar."</li>
+            </ul>
+          </div>
+        </div>
+        <p class="callout"><b>O que os dados mostram:</b> com orçamento aprovado, a taxa de fechamento é de 29,5%. Sem isso, cai para 11,7%. É o critério isolado com maior correlação com o resultado.</p>
+      </div>
+    </section>
+
+    <!-- 7: CRITERIO 4 - DOR -->
+    <section class="slide">
+      <div class="slide-inner">
+        <p class="slide-kicker">Critério 4 de 6</p>
+        <h2 class="slide-title">Clareza de dor (D)</h2>
+        <p class="slide-sub">Pergunta: se o problema atual não for resolvido, qual o impacto em tempo, dinheiro ou risco para o negócio?</p>
+        <div class="levels">
+          <div class="level baixo">
+            <b>Baixo</b>dor generalista.
+            <ul class="quotes">
+              <li>"A plataforma é pouco intuitiva."</li>
+              <li>"O time de RH está sobrecarregado."</li>
+            </ul>
+          </div>
+          <div class="level medio">
+            <b>Médio</b>dor específica, mas sem impacto quantificado.
+            <ul class="quotes">
+              <li>"Os relatórios são manuais e ruins."</li>
+              <li>"Não temos IA para ajudar em feedbacks."</li>
+            </ul>
+          </div>
+          <div class="level alto">
+            <b>Alto</b>dor mensurável.
+            <ul class="quotes">
+              <li>"Perdemos Y mil por ano com alta rotatividade."</li>
+              <li>"Dois analistas ficam full-time gerando relatório."</li>
+            </ul>
+          </div>
+        </div>
+        <p class="callout risco"><b>Ponto de atenção:</b> Primária e Estratégica fecham menos do que Tática e Sistema. Isso não quer dizer que sejam dores mais graves ou mais leves, são só categorias diferentes da régua. Detalhe no bloco de dados.</p>
+      </div>
+    </section>
+
+    <!-- 8: CRITERIO 5 - TD -->
+    <section class="slide">
+      <div class="slide-inner">
+        <p class="slide-kicker">Critério 5 de 6</p>
+        <h2 class="slide-title">Acesso ao decisor (TD)</h2>
+        <p class="slide-sub">Pergunta: quem precisa participar da decisão e como garantimos o tempo dessa pessoa nas próximas etapas?</p>
+        <div class="levels">
+          <div class="level baixo">
+            <b>Baixo</b>analista ou estagiário, sem acesso à agenda do decisor. Desqualifica a conta.
+            <ul class="quotes">
+              <li>"Eu sou o filtro inicial."</li>
+              <li>"O diretor é quem decide, mas tem a agenda muito cheia."</li>
+            </ul>
+          </div>
+          <div class="level medio">
+            <b>Médio</b>gerente envolvido, mas o decisor final é um comitê de agenda difícil.
+            <ul class="quotes">
+              <li>"Minha gerente fará a reunião de validação."</li>
+              <li>"A decisão passa por um comitê interno."</li>
+            </ul>
+          </div>
+          <div class="level alto">
+            <b>Alto</b>o decisor é o próprio contato ou já confirmou presença na próxima etapa.
+            <ul class="quotes">
+              <li>"O Diretor/VP é quem decide e estará no próximo passo."</li>
+              <li>"Já usamos o sistema em outra empresa e ele defende a solução."</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9: REGRAS AUTOMATICAS -->
+    <section class="slide">
+      <div class="slide-inner">
+        <p class="slide-kicker">Parte 2</p>
+        <h2 class="slide-title">3 regras automáticas de desqualificação</h2>
+        <p class="slide-sub">Três combinações encerram a qualificação antes mesmo de somar pontos.</p>
+        <div class="grid-cards" style="display:flex; flex-direction:column; gap:12px;">
+          <div class="item">
+            <span class="num">A</span>
+            <h3>Porte M1 (abaixo de 100 colaboradores)</h3>
+            <p>Desqualifica sozinho. Ticket incompatível com o custo de atendimento. Mantenha a conta em nutrição de longo prazo, sem cadência ativa.</p>
+          </div>
+          <div class="item">
+            <span class="num">B</span>
+            <h3>Porte M2 ou M3 com Timing Baixo</h3>
+            <p>Sem prazo definido, o ciclo esfria antes de virar contrato. Mantenha em fluxo de maturação até surgir um gatilho real de decisão.</p>
+          </div>
+          <div class="item">
+            <span class="num">C</span>
+            <h3>Acesso ao decisor (TD) Baixo</h3>
+            <p>Sem acesso ao decisor, mesmo uma proposta perfeita fica travada. Peça a inclusão do gestor responsável antes de avançar.</p>
+          </div>
+        </div>
+        <p class="insight"><b>Por que isso importa:</b> 28,9% das percepções de Lost citam problema de aprovação de diretoria e 4,9% citam falta de acesso ao decisor de forma explícita. As regras automáticas cortam cedo o que o histórico já mostra que não fecha.</p>
+      </div>
+    </section>
+
+    <!-- 10: DADOS INTRO -->
+    <section class="slide">
+      <div class="slide-inner">
+        <p class="slide-kicker">Parte 3</p>
+        <h2 class="slide-title">O que o pipeline mostra</h2>
+        <p class="slide-sub">786 negócios fechados entre março e agosto, R$ 35,3 milhões em jogo. Nos próximos slides: taxa de fechamento por logo e por receita, lado a lado.</p>
+        <div class="stat-block">
+          <div class="stat-card"><b>R$ 45,2 mil</b><span>ticket médio dos negócios Won</span></div>
+          <div class="stat-card"><b>R$ 44,9 mil</b><span>ticket médio dos negócios Lost</span></div>
+          <div class="stat-card"><b>17,3% / 17,4%</b><span>taxa de fechamento por logo / por receita</span></div>
+        </div>
+        <p class="callout">No geral, taxa por logo e por receita quase não diferem: o tamanho da conta não distorce a taxa de fechamento agregada. Mas quando quebramos por critério, aparecem divergências específicas, e é aí que mora a informação útil.</p>
+      </div>
+    </section>
+
+    <!-- 11: DADOS APROVACAO -->
+    <section class="slide">
+      <div class="slide-inner">
+        <p class="slide-kicker">Dados · Aprovação</p>
+        <h2 class="slide-title">O critério que mais separa quem fecha</h2>
+        <p class="slide-sub">n = 470 negócios com resposta registrada</p>
+        <div class="table-wrap">
+          <table class="crosstab">
+            <thead>
+              <tr>
+                <th>Nível de aprovação</th>
+                <th>n</th>
+                <th>Taxa por logo</th>
+                <th>Taxa por receita</th>
+                <th>Ticket médio</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Orçamento aprovado</td>
+                <td>95</td>
+                <td class="highlight">29,5%</td>
+                <td>22,3%</td>
+                <td>R$ 56,2 mil</td>
+              </tr>
+              <tr>
+                <td>Diretoria pediu busca, sem budget definido</td>
+                <td>204</td>
+                <td>12,7%</td>
+                <td>9,7%</td>
+                <td>R$ 48,7 mil</td>
+              </tr>
+              <tr>
+                <td>RH busca sem budget, diretoria ciente</td>
+                <td>124</td>
+                <td>11,3%</td>
+                <td>13,1%</td>
+                <td>R$ 53,8 mil</td>
+              </tr>
+              <tr>
+                <td>RH busca sem budget, diretoria sem ciência</td>
+                <td>29</td>
+                <td>6,9%</td>
+                <td>20,9%</td>
+                <td>R$ 37,4 mil</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="insight"><b>Leitura:</b> orçamento aprovado quase triplica a chance de fechamento por logo. Mas por receita a vantagem encolhe (22,3% contra 29,5%). Dentro do grupo com orçamento aprovado, o ticket médio de quem ganhamos é R$ 42,5 mil e o de quem perdemos é R$ 62,0 mil: mesmo com budget confirmado, as contas maiores escapam mais que as menores.</p>
+      </div>
+    </section>
+
+    <!-- 12: DADOS TIMING -->
+    <section class="slide">
+      <div class="slide-inner">
+        <p class="slide-kicker">Dados · Timing</p>
+        <h2 class="slide-title">Sozinho, pesa pouco</h2>
+        <p class="slide-sub">n = 470 negócios com resposta registrada</p>
+        <div class="table-wrap">
+          <table class="crosstab">
+            <thead>
+              <tr>
+                <th>Timing</th>
+                <th>n</th>
+                <th>Taxa por logo</th>
+                <th>Taxa por receita</th>
+                <th>Ticket médio</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Principal prioridade do RH</td>
+                <td>272</td>
+                <td>17,3%</td>
+                <td>15,3%</td>
+                <td>R$ 55,1 mil</td>
+              </tr>
+              <tr>
+                <td>Uma das prioridades do RH</td>
+                <td>150</td>
+                <td>14,0%</td>
+                <td>14,7%</td>
+                <td>R$ 45,2 mil</td>
+              </tr>
+              <tr>
+                <td>Depende de outros projetos em paralelo</td>
+                <td>24</td>
+                <td>0,0%</td>
+                <td>0,0%</td>
+                <td>R$ 37,9 mil</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="insight"><b>Leitura:</b> por logo ou por receita, o padrão se repete: urgência alta não garante fechamento por si só. Ela reforça o resultado quando aparece ao lado de Aprovação alta, como já mostramos no slide de Aprovação.</p>
+      </div>
+    </section>
+
+    <!-- 13: DADOS DOR -->
+    <section class="slide">
+      <div class="slide-inner">
+        <p class="slide-kicker">Dados · Dor</p>
+        <h2 class="slide-title">Conversão varia por categoria de dor</h2>
+        <p class="slide-sub">n = 470 negócios com resposta registrada</p>
+        <div class="table-wrap">
+          <table class="crosstab">
+            <thead>
+              <tr>
+                <th>Nível de dor</th>
+                <th>n</th>
+                <th>Taxa por logo</th>
+                <th>Taxa por receita</th>
+                <th>Ticket médio</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Dor tática</td>
+                <td>82</td>
+                <td class="highlight">22,0%</td>
+                <td>21,5%</td>
+                <td>R$ 35,8 mil</td>
+              </tr>
+              <tr>
+                <td>Dor de sistema</td>
+                <td>141</td>
+                <td>19,9%</td>
+                <td>17,0%</td>
+                <td class="highlight">R$ 78,1 mil</td>
+              </tr>
+              <tr>
+                <td>Dor estratégica</td>
+                <td>22</td>
+                <td>13,6%</td>
+                <td>9,6%</td>
+                <td>R$ 31,7 mil</td>
+              </tr>
+              <tr>
+                <td>Dor primária</td>
+                <td>219</td>
+                <td>10,5%</td>
+                <td>9,1%</td>
+                <td>R$ 40,6 mil</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="insight"><b>Leitura:</b> as quatro categorias são recortes diferentes de dor, não uma escala de gravidade, então a conversão menor de Primária e Estratégica não significa que a dor "importa menos" nesses casos. Tática e Sistema convertem mais nos dois recortes, por logo e por receita. E aparece um dado novo: o ticket médio de Dor de sistema é praticamente o dobro dos outros níveis, R$ 78,1 mil. É a categoria que traz as contas de maior porte financeiro, mesmo não sendo a que mais converte. O cruzamento completo, com números de Won e Lost e receita lado a lado, está na seção de Perdas e Wons.</p>
+      </div>
+    </section>
+
+    <!-- 14: PERDAS MOTIVO -->
+    <section class="slide">
+      <div class="slide-inner">
+        <p class="slide-kicker">Parte 4 · Perdas</p>
+        <h2 class="slide-title">Motivo de Lost</h2>
+        <p class="slide-sub">650 negócios perdidos, R$ 29,2 milhões em receita perdida</p>
+        <div class="table-wrap">
+          <table class="crosstab">
+            <thead>
+              <tr>
+                <th>Motivo</th>
+                <th>n</th>
+                <th>% dos logos perdidos</th>
+                <th>% da receita perdida</th>
+                <th>Ticket médio</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Não agreguei valor</td>
+                <td>236</td>
+                <td class="highlight">36,3%</td>
+                <td class="highlight">35,8%</td>
+                <td>R$ 44,2 mil</td>
+              </tr>
+              <tr>
+                <td>Perdi pra concorrente</td>
+                <td>141</td>
+                <td>21,7%</td>
+                <td>24,8%</td>
+                <td>R$ 51,3 mil</td>
+              </tr>
+              <tr>
+                <td>Projeto foi adiado</td>
+                <td>161</td>
+                <td>24,8%</td>
+                <td>23,5%</td>
+                <td>R$ 42,5 mil</td>
+              </tr>
+              <tr>
+                <td>Projeto não foi aprovado</td>
+                <td>100</td>
+                <td>15,4%</td>
+                <td>14,6%</td>
+                <td>R$ 42,5 mil</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="insight"><b>Leitura:</b> "Não agreguei valor" lidera nos dois recortes. Mas repare em "Perdi pra concorrente": ele representa 21,7% dos logos perdidos, e sobe para 24,8% da receita perdida. Perdemos para concorrentes desproporcionalmente mais as contas de ticket maior (R$ 51,3 mil de médio, acima da média geral de Lost). O cruzamento por nível de dor no próximo slide detalha o gargalo de aprovação.</p>
+      </div>
+    </section>
+
+    <!-- 15.5: PERDAS/WONS DOR X RESULTADO -->
+    <section class="slide">
+      <div class="slide-inner">
+        <p class="slide-kicker">Parte 4 · Perdas e Wons</p>
+        <h2 class="slide-title">Dor x resultado: Won e Lost lado a lado</h2>
+        <p class="slide-sub">Mesma base da taxa de fechamento por dor, agora com logos e receita lado a lado.</p>
+        <div class="table-wrap">
+          <table class="crosstab">
+            <thead>
+              <tr>
+                <th>Nível de dor</th>
+                <th>Won</th>
+                <th>Lost</th>
+                <th>Taxa por logo</th>
+                <th>Taxa por receita</th>
+                <th>Receita em jogo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Dor tática</td>
+                <td>18</td>
+                <td>64</td>
+                <td class="highlight">22,0%</td>
+                <td>21,5%</td>
+                <td>R$ 2,9 mi</td>
+              </tr>
+              <tr>
+                <td>Dor de sistema</td>
+                <td>28</td>
+                <td>113</td>
+                <td class="highlight">19,9%</td>
+                <td>17,0%</td>
+                <td>R$ 11,0 mi</td>
+              </tr>
+              <tr>
+                <td>Dor estratégica</td>
+                <td>3</td>
+                <td>19</td>
+                <td>13,6%</td>
+                <td>9,6%</td>
+                <td>R$ 0,7 mi</td>
+              </tr>
+              <tr>
+                <td>Dor primária</td>
+                <td>23</td>
+                <td>196</td>
+                <td>10,5%</td>
+                <td>9,1%</td>
+                <td>R$ 8,9 mi</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="insight"><b>Leitura:</b> Dor primária é a categoria com mais volume de negócios (219, quase metade da base) e a que menos converte, tanto por logo (10,5%) quanto por receita (9,1%). Dor de sistema concentra o maior volume financeiro em jogo, R$ 11 milhões, quase o dobro de Dor primária apesar de menos negócios: são contas de ticket bem mais alto. O slide seguinte detalha, entre os perdidos, por que cada nível de dor não fechou.</p>
+      </div>
+    </section>
+
+    <!-- 16: PERDAS CROSSTAB -->
+    <section class="slide">
+      <div class="slide-inner">
+        <p class="slide-kicker">Parte 4 · Perdas</p>
+        <h2 class="slide-title">Dor x motivo de perda: o detalhe dentro do Lost</h2>
+        <p class="slide-sub">Agora olhando só para quem perdeu: qual foi o motivo, por nível de dor. Os percentuais somam 100% em cada linha.</p>
+        <div class="table-wrap">
+          <table class="crosstab">
+            <thead>
+              <tr>
+                <th>Nível de dor</th>
+                <th>Não agreguei valor</th>
+                <th>Perdi pra concorrente</th>
+                <th>Projeto foi adiado</th>
+                <th>Não foi aprovado</th>
+                <th>n</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Dor primária</td>
+                <td>34,0%</td>
+                <td>18,8%</td>
+                <td>27,7%</td>
+                <td class="highlight">19,4%</td>
+                <td>191</td>
+              </tr>
+              <tr>
+                <td>Dor de sistema</td>
+                <td>42,7%</td>
+                <td class="highlight">35,5%</td>
+                <td>16,4%</td>
+                <td>5,5%</td>
+                <td>110</td>
+              </tr>
+              <tr>
+                <td>Dor tática</td>
+                <td>37,5%</td>
+                <td>18,8%</td>
+                <td>28,1%</td>
+                <td>15,6%</td>
+                <td>64</td>
+              </tr>
+              <tr>
+                <td>Dor estratégica</td>
+                <td>31,6%</td>
+                <td>10,5%</td>
+                <td>36,8%</td>
+                <td>21,1%</td>
+                <td>19</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="insight"><b>Leitura:</b> quando a dor registrada é Primária, o negócio perdido tem quase 4x mais chance de cair em "Projeto não foi aprovado" (19,4%) do que quando a dor é de Sistema (5,5%). Já "Perdi pra concorrente" é quase o dobro nos casos de Dor de sistema (35,5%) frente à Dor primária (18,8%). Dor primária perde mais por falta de aprovação, dor de sistema perde mais para concorrência direta.</p>
+      </div>
+    </section>
+
+    <!-- 19: ACOES -->
+    <section class="slide">
+      <div class="slide-inner">
+        <p class="slide-kicker">Parte 5</p>
+        <h2 class="slide-title">O que muda no dia a dia do pré-vendas</h2>
+        <p class="slide-sub">Quatro ajustes de prática, direto dos dados, olhando logos e receita.</p>
+        <div class="grid-cards" style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+          <div class="item">
+            <span class="num">01</span>
+            <h3>Aprofunde Aprovação antes de tudo</h3>
+            <p>É o critério com maior correlação com o fechamento, tanto por logo quanto por receita. Vale uma pergunta a mais na Conexão antes de marcar Demo.</p>
+          </div>
+          <div class="item">
+            <span class="num">02</span>
+            <h3>Blinde as contas grandes com orçamento aprovado</h3>
+            <p>Mesmo com budget confirmado, o ticket médio de quem perdemos (R$ 62 mil) é maior que o de quem ganhamos (R$ 42 mil). Contas grandes aprovadas pedem reforço extra na Proposta.</p>
+          </div>
+          <div class="item">
+            <span class="num">03</span>
+            <h3>Questione "Dor primária" como resposta padrão</h3>
+            <p>É a categoria mais usada e a que menos fecha, em logo e em receita. Confirme se o discovery já foi fundo o suficiente para uma categoria mais específica.</p>
+          </div>
+          <div class="item">
+            <span class="num">04</span>
+            <h3>Priorize follow-up nas contas de Dor de sistema</h3>
+            <p>É a categoria com o maior ticket médio da base, quase o dobro das demais. Vale um cuidado extra de acompanhamento proporcional ao valor em jogo.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 20: FECHAMENTO -->
+    <section class="slide closing">
+      <div class="slide-inner">
+        <p class="slide-kicker" style="color:#B8B8B8;">impulseup</p>
+        <h2 class="slide-title">Perguntas?</h2>
+        <p class="slide-sub">Base: exportação HubSpot PDCA, negócios fechados até 31/08/2026. Uso interno, time de pré-vendas.</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<div class="deck-nav">
+  <button class="nav-btn" id="prevBtn" aria-label="Slide anterior">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <div class="progress-wrap">
+    <span class="slide-counter" id="counter">1 / 20</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="deck-brand">impulse<span>up</span></div>
+  </div>
+  <button class="nav-btn" id="nextBtn" aria-label="Próximo slide">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+  </button>
+</div>
+
+<script>
+(function(){
+  var slidesEl = document.getElementById('slides');
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var total = slides.length;
+  var current = 0;
+
+  var prevBtn = document.getElementById('prevBtn');
+  var nextBtn = document.getElementById('nextBtn');
+  var counter = document.getElementById('counter');
+  var progressFill = document.getElementById('progressFill');
+
+  function setBarTargets(scope){
+    scope.querySelectorAll('.bar-row[data-pct]').forEach(function(r){
+      var v = parseFloat(r.getAttribute('data-pct')) || 0;
+      var SCALE_MAX = 40;
+      var pct = Math.min(100, Math.max(v > 0 ? 1.5 : 0, (v / SCALE_MAX) * 100));
+      var fill = r.querySelector('.bar-fill');
+      if(fill && !fill.getAttribute('data-target')) fill.setAttribute('data-target', pct.toFixed(1) + '%');
+    });
+    var compFills = scope.querySelectorAll('.comp-fill');
+    if(compFills.length){
+      var compValues = Array.prototype.map.call(compFills, function(f){ return parseFloat(f.getAttribute('data-n')) || 0; });
+      var compMax = Math.max.apply(null, compValues.concat([1]));
+      compFills.forEach(function(f){
+        if(f.getAttribute('data-target')) return;
+        var v = parseFloat(f.getAttribute('data-n')) || 0;
+        var pct = Math.max(4, (v / compMax) * 100);
+        f.setAttribute('data-target', pct.toFixed(1) + '%');
+      });
+    }
+  }
+  setBarTargets(document);
+
+  function reveal(scope){
+    scope.querySelectorAll('.bar-fill, .comp-fill').forEach(function(el){
+      var target = el.getAttribute('data-target');
+      if(target) requestAnimationFrame(function(){ el.style.width = target; });
+    });
+  }
+
+  function goTo(index){
+    index = Math.max(0, Math.min(total - 1, index));
+    current = index;
+    slidesEl.style.transform = 'translateX(-' + (current * 100) + '%)';
+    counter.textContent = (current + 1) + ' / ' + total;
+    progressFill.style.width = ((current + 1) / total * 100) + '%';
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === total - 1;
+    reveal(slides[current]);
+  }
+
+  prevBtn.addEventListener('click', function(){ goTo(current - 1); });
+  nextBtn.addEventListener('click', function(){ goTo(current + 1); });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'ArrowRight' || e.key === 'PageDown'){ goTo(current + 1); }
+    if(e.key === 'ArrowLeft' || e.key === 'PageUp'){ goTo(current - 1); }
+  });
+
+  // swipe support
+  var touchStartX = null;
+  slidesEl.addEventListener('touchstart', function(e){ touchStartX = e.touches[0].clientX; }, {passive:true});
+  slidesEl.addEventListener('touchend', function(e){
+    if(touchStartX === null) return;
+    var dx = e.changedTouches[0].clientX - touchStartX;
+    if(Math.abs(dx) > 50){ dx < 0 ? goTo(current + 1) : goTo(current - 1); }
+    touchStartX = null;
+  }, {passive:true});
+
+  goTo(0);
+})();
+</script>
+
+</body>
+</html>
