@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>As 8 Estruturas de Cliente | Treinamento impulseup</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  --color-bg: #FFFFFF;
+  --color-bg-alt: #F4F2EF;
+  --color-fg: #0C0C0C;
+  --color-fg-muted: #666666;
+  --color-border: #E0E0E0;
+  --color-primary: #CC0088;
+  --color-primary-hover: #A3006D;
+  --color-surface: #F4F2EF;
+  --font-family: 'Poppins', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-family);
+  background: var(--color-bg);
+  color: var(--color-fg);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+.header {
+  background: var(--color-fg);
+  color: #FFFFFF;
+  padding: 2.5rem 1.5rem 2rem;
+  text-align: center;
+}
+
+.header .eyebrow {
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+.header h1 {
+  font-weight: 800;
+  font-size: 1.7rem;
+  max-width: 720px;
+  margin: 0 auto 0.6rem;
+}
+
+.header p {
+  color: #CFCFCF;
+  font-size: 0.95rem;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.intro-box {
+  max-width: 820px;
+  margin: -1.5rem auto 0;
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(12,12,12,0.08);
+  padding: 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.intro-box h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--color-primary);
+}
+
+.intro-box p {
+  font-size: 0.92rem;
+  color: var(--color-fg-muted);
+  margin-bottom: 0.5rem;
+}
+
+.container {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+.nav-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.6rem;
+  margin-bottom: 2.5rem;
+}
+
+.nav-item {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 0.7rem 0.8rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+  text-align: left;
+}
+
+.nav-item:hover {
+  border-color: var(--color-primary);
+  background: #FFF0F8;
+}
+
+.nav-item .num {
+  color: var(--color-primary);
+  font-weight: 800;
+  margin-right: 0.3rem;
+}
+
+.module {
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  margin-bottom: 1.4rem;
+  overflow: hidden;
+  scroll-margin-top: 1.5rem;
+}
+
+.module-head {
+  padding: 1.3rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  background: #FFFFFF;
+  transition: background 0.2s ease-out;
+}
+
+.module-head:hover { background: var(--color-bg-alt); }
+
+.module-number {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  border-radius: 12px;
+  background: var(--color-primary);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.module-title-wrap { flex: 1; }
+
+.module-title {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.module-subtitle {
+  font-size: 0.82rem;
+  color: var(--color-fg-muted);
+  margin-top: 0.1rem;
+}
+
+.chevron {
+  transition: transform 0.25s ease-out;
+  color: var(--color-fg-muted);
+  min-width: 20px;
+}
+
+.module.open .chevron { transform: rotate(180deg); }
+
+.module-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease-out;
+  background: var(--color-bg-alt);
+}
+
+.module.open .module-body {
+  max-height: 4000px;
+}
+
+.module-body-inner {
+  padding: 0 1.5rem 1.6rem;
+}
+
+.section-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-primary);
+  margin: 1.1rem 0 0.5rem;
+}
+
+.section-label:first-child { margin-top: 1rem; }
+
+.body-text {
+  font-size: 0.92rem;
+  color: var(--color-fg);
+  margin-bottom: 0.5rem;
+}
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.tag {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: 100px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--color-fg);
+}
+
+.example-card {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-primary);
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.88rem;
+}
+
+.example-card .example-label {
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.phrase-quote {
+  background: #FFFFFF;
+  border: 1px dashed var(--color-border);
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  font-size: 0.88rem;
+  font-style: italic;
+  color: var(--color-fg-muted);
+  margin-bottom: 0.5rem;
+}
+
+.dos-donts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 640px) {
+  .dos-donts { grid-template-columns: 1fr; }
+}
+
+.do-box, .dont-box {
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  font-size: 0.85rem;
+}
+
+.do-box { background: #EAFBF1; border: 1px solid #B9EDCB; }
+.dont-box { background: #FDEAF0; border: 1px solid #F5BBD3; }
+
+.do-box .label, .dont-box .label {
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.do-box .label { color: #1C8A4E; }
+.dont-box .label { color: #C21458; }
+
+ul.clean-list {
+  list-style: none;
+  padding: 0;
+}
+
+ul.clean-list li {
+  font-size: 0.88rem;
+  padding-left: 1.1rem;
+  position: relative;
+  margin-bottom: 0.4rem;
+}
+
+ul.clean-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-primary);
+}
+
+.footer-note {
+  text-align: center;
+  color: var(--color-fg-muted);
+  font-size: 0.82rem;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.footer-note .brand {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="eyebrow">Treinamento comercial · impulseup</div>
+  <h1>As 8 Estruturas de Cliente</h1>
+  <p>Como identificar e conduzir a venda de acordo com o jeito de cada cliente comprar, aplicado ao dia a dia de closers e SDRs da impulseup.</p>
+</div>
+
+<div class="intro-box">
+  <h2>Antes de começar</h2>
+  <p>Estrutura não é personalidade fixa. O mesmo lead pode estar pragmático numa call e consensual na outra, dependendo do momento, do humor e do contexto daquele dia. O objetivo aqui não é rotular o cliente, é ler o sinal que ele está dando agora e conduzir a conversa do jeito que ele precisa para decidir.</p>
+  <p>Revise cada estrutura com atenção. Quanto mais você internalizar esses sinais, mais natural fica reconhecer, no meio de uma call de Conexão ou de Proposta, qual caminho seguir.</p>
+</div>
+
+<div class="container">
+
+  <div class="nav-grid" id="navGrid"></div>
+
+  <div id="modulesWrap"></div>
+
+  <div class="footer-note">
+    Material de treinamento interno <span class="brand">impulseup</span> · Time comercial (Closers e SDRs)
+  </div>
+
+</div>
+
+<script>
+const modules = [
+  {
+    title: "Cliente Pragmático",
+    subtitle: "Direto ao ponto, decidido, sem paciência para enrolação",
+    tags: ["Direto", "Decidido", "Sem paciência para rodeio", "Responde rápido"],
+    identificacao: [
+      "Fala pouco e de forma objetiva. Não pede opinião, já sabe o que quer.",
+      "No WhatsApp manda mensagem curta, sem áudio e sem emoji. Do tipo: qual o valor do módulo de Avaliação de Desempenho para 200 colaboradores?",
+      "No Instagram quase não interage, não curte nem comenta. Entra no perfil só para buscar informação.",
+      "Em ligação, dá a sensação de estar com pressa. Não gosta de perguntas do tipo mas o que exatamente você quer pensar?",
+      "Costuma já chegar com RFP pronta e critérios objetivos definidos: número de colaboradores, budget aprovado, prazo."
+    ],
+    exemplos: [
+      { label: "Cenário impulseup", text: "É o lead que já chega qualificado pelo SDR, com escopo claro, e na call de Conexão pergunta direto: quantos módulos vocês têm, qual o prazo de implementação, me manda a proposta." },
+      { label: "Erro comum do closer", text: "Insistir em rapport prolongado, tipo bate-papo antes de ir ao ponto. Para esse perfil, isso soa como enrolação e pode custar a venda." }
+    ],
+    frases: ["Vamos direto ao ponto.", "Para não perder o seu tempo nem o meu, aqui está a proposta."],
+    dos: ["Seja uma autoridade no mercado de performance management, já pesquisado por ele.", "Cite 2 ou 3 diferenciais objetivos antes do preço.", "Seja pontual: se marcou ligar às 14h, ligue às 14h.", "Passe o preço sem medo e feche com uma pergunta direta."],
+    donts: ["Não force intimidade ou papo longo antes de falar de negócio.", "Não mande áudio longo nem textão no WhatsApp.", "Não use gatilho de última peça sem necessidade real.", "Não pergunte o que exatamente ele quer pensar."]
+  },
+  {
+    title: "Cliente Analítico",
+    subtitle: "Quer pensar, comparar e analisar dados antes de decidir",
+    tags: ["Visual", "Gosta de dados", "Demora a responder", "Pergunta por tópicos"],
+    identificacao: [
+      "Fala que precisa pensar, conversar com alguém, ou pede material por escrito.",
+      "Gosta muito de planilha, gráfico e material detalhado. Costuma ser mais visual.",
+      "No WhatsApp demora a responder porque está analisando, e organiza a mensagem por tópicos numerados.",
+      "Pergunta sobre risco, garantia e detalhes técnicos com frequência.",
+      "Em ligação ou vídeo, fala mais devagar, deixa você terminar de falar, escuta bastante e às vezes pega papel e caneta para anotar."
+    ],
+    exemplos: [
+      { label: "Cenário impulseup", text: "Muito comum em RH de empresas de médio e grande porte, sobretudo em Processo G, onde o Champion precisa levar dado técnico para o Comitê antes de aprovar." },
+      { label: "Pergunta típica", text: "Vocês têm case de empresa do mesmo setor que o nosso? Qual o percentual médio de aumento de engajamento depois da implementação?" }
+    ],
+    frases: ["Preciso analisar com calma.", "Você tem isso por escrito?", "Vou conversar com o time antes de decidir."],
+    dos: ["Envie material completo: cases, dados de retenção, estudos como os do Gallup e da McKinsey.", "Detalhe a Aba de Aprovação e o Plano de Ação com riqueza de dado.", "Agende contatos recorrentes com prazo curto, no máximo até o fim da semana.", "Pergunte sempre se a proposta está dentro da expectativa dele antes de insistir no fechamento."],
+    donts: ["Não use gatilho de escassez tipo é a última vaga, não funciona com esse perfil.", "Não deixe ele semanas sem contato entre uma call e outra.", "Não pressione para fechar sem ele ter processado a informação."]
+  },
+  {
+    title: "Cliente Consensual",
+    subtitle: "Caloroso, fala bastante, se importa com o que os outros acham",
+    tags: ["Emocional", "Sociável", "Indeciso", "Pede opinião"],
+    identificacao: [
+      "Tom de voz animado, bem-humorado, sorri enquanto fala.",
+      "Fala sobre a vida pessoal, sobre a equipe, sobre o momento da empresa antes de entrar no assunto comercial.",
+      "Pede sua opinião sobre o que está sendo apresentado.",
+      "No WhatsApp usa emoji, manda áudio ou texto mais longo.",
+      "Costuma dizer que precisa conversar com outra pessoa antes de decidir, geralmente porque teme desagradar alguém."
+    ],
+    exemplos: [
+      { label: "Cenário impulseup", text: "É o RH de cultura mais humanizada, que abre a call falando do momento que a empresa está vivendo e de como o projeto de performance é importante para cuidar das pessoas." },
+      { label: "Como conduzir a volta ao assunto", text: "Adorei saber disso, e olha, isso encaixa demais com o que a impulseup também acredita sobre cultura. Deixa eu te mostrar como a gente pode aplicar isso no seu processo." }
+    ],
+    frases: ["O que você acha disso?", "Preciso ver com meu time antes.", "Adorei conversar com você."],
+    dos: ["Converse, demonstre interesse genuíno pela pessoa e pelo contexto dela.", "Elogie de forma sincera e específica.", "Mantenha relacionamento ativo entre uma reunião e outra.", "Não tenha pressa para o fechamento, ele decide bastante pela conexão que sente com você."],
+    donts: ["Não corte o papo pessoal de forma abrupta.", "Não pressione, ele fica desconfortável e recua.", "Não deixe de retomar o assunto comercial ao final da conversa."]
+  },
+  {
+    title: "Cliente Inovador",
+    subtitle: "Gosta de ser o primeiro a adotar novidade e tendência",
+    tags: ["Curioso", "Gosta de novidade", "Decide pela emoção", "Fiel se bem trabalhado"],
+    identificacao: [
+      "Pergunta sobre o que há de mais novo antes mesmo de perguntar sobre preço.",
+      "Gosta de ser um dos primeiros a testar algo, se identifica com marcas e produtos em tendência.",
+      "Se interessa por tecnologia aplicada ao próprio mercado dele.",
+      "Decide rápido quando percebe exclusividade ou novidade real."
+    ],
+    exemplos: [
+      { label: "Cenário impulseup", text: "É o RH que já testou ou quer testar ferramentas de IA aplicadas à gestão de pessoas, fala de employee experience e quer ser referência em inovação de RH no setor dele." },
+      { label: "Aplicação prática", text: "Quando o closer lança uma funcionalidade nova, como o módulo de auditoria por IA, esse é o primeiro perfil de cliente a ser avisado, com senso de acesso antecipado." }
+    ],
+    frases: ["Isso já usa inteligência artificial?", "Vocês têm alguma novidade lançando agora?"],
+    dos: ["Mantenha uma lista própria desses clientes para avisar sempre que sair uma funcionalidade nova.", "Destaque o que há de mais recente na plataforma impulseup.", "Reforce a exclusividade: você está entre os primeiros a ter acesso a isso.", "Use vídeo ou demonstração visual da novidade."],
+    donts: ["Não apresente o produto de forma genérica ou repetitiva.", "Não deixe de reativar esse cliente quando lançar algo novo, ele pode comprar do concorrente que chegar primeiro."]
+  },
+  {
+    title: "Cliente Conservador",
+    subtitle: "Fiel, avesso a mudança, busca segurança e estabilidade",
+    tags: ["Fiel", "Sério", "Resistente a mudança", "Busca familiaridade"],
+    identificacao: [
+      "Fala que prefere continuar como já está, ou que já usa dessa forma há anos.",
+      "Tom de voz mais sério, pouca variação, postura mais fechada.",
+      "Costuma ter processo de avaliação de desempenho estabelecido há muito tempo, ainda que manual ou em planilha.",
+      "Não busca ativamente outras opções no mercado, mesmo quando existem alternativas melhores."
+    ],
+    exemplos: [
+      { label: "Cenário impulseup", text: "Empresa tradicional que já faz avaliação de desempenho há anos em planilha, ou que já usa um concorrente antigo e tem resistência natural a trocar de ferramenta." },
+      { label: "Frase típica desse perfil", text: "A gente sempre fez assim, por que mudar agora?" }
+    ],
+    frases: ["Eu prefiro continuar como está.", "Isso já funciona bem do jeito que é."],
+    dos: ["Use prova social de empresas do mesmo setor e tamanho que migraram com sucesso.", "Reforce que o processo de implementação é assistido, sem risco de perda de histórico.", "Vá plantando a novidade aos poucos, sem pressa.", "Fale bastante sobre garantia e suporte."],
+    donts: ["Não insista em mudança radical de uma vez.", "Não trate o apego dele ao processo antigo como resistência irracional.", "Não force intimidade, mantenha o tom mais profissional."]
+  },
+  {
+    title: "Cliente Desconfiado",
+    subtitle: "Testa o vendedor, repete perguntas, quer garantia e risco",
+    tags: ["Testa o vendedor", "Quer garantia", "Repete perguntas", "Defensivo"],
+    identificacao: [
+      "Pergunta a mesma coisa mais de uma vez, de formas diferentes, para ver se a resposta muda.",
+      "Quer saber detalhes técnicos, garantia e riscos antes de qualquer outra coisa.",
+      "Postura defensiva: braços cruzados, pouco contato visual, tom de dúvida.",
+      "Frases como será mesmo? ou como posso ter certeza disso?",
+      "No WhatsApp demora a responder e volta a perguntar sobre garantia mais de uma vez."
+    ],
+    exemplos: [
+      { label: "Cenário impulseup", text: "Comprador mais técnico de RH ou TI, que pergunta repetidamente sobre segurança de dados, LGPD e SLA de suporte, e pode pedir para falar com outros clientes atuais como referência." }
+    ],
+    frases: ["Será mesmo?", "Como posso ter certeza disso?", "Isso funciona mesmo na prática?"],
+    dos: ["Construa confiança em cada detalhe: postura, organização, clareza nas respostas.", "Use prova social forte, com depoimentos reais de clientes impulseup.", "Avance por microcompromissos, perguntando até aqui faz sentido para você?", "Seja transparente sobre o que a plataforma faz e o que não faz."],
+    donts: ["Não pressione para o fechamento antes de ele esgotar as dúvidas.", "Não demonstre impaciência ao repetir uma explicação.", "Não dê respostas vagas para parecer mais rápido."]
+  },
+  {
+    title: "Cliente Estraga-Prazeres / Sabe-Tudo",
+    subtitle: "Critica tudo, quer mostrar que sabe mais que você",
+    tags: ["Crítico", "Tom irônico", "Busca superioridade", "Desafiador"],
+    identificacao: [
+      "Aponta problema em quase toda solução apresentada.",
+      "Fala com tom irônico, do tipo aham, sei.",
+      "Costuma já ter testado vários concorrentes e questiona ponto a ponto.",
+      "Respiração mais curta, postura mais rígida, olhar de deboche.",
+      "Às vezes reclama bastante e mesmo assim compra."
+    ],
+    exemplos: [
+      { label: "Cenário impulseup", text: "RH ou diretor que já testou concorrentes como Qulture.Rocks, Sólides ou Gupy, e questiona ponto a ponto tentando pegar o closer em contradição." }
+    ],
+    frases: ["Aham, sei.", "Será que isso funciona mesmo?", "Já vi isso em outro lugar e não funcionou."],
+    dos: ["Use a técnica de validação reversa: eu adoro atender pessoas exigentes como você.", "Elogie o conhecimento dele de forma genuína.", "Peça para ele descrever o cenário ideal e alinhe a proposta a partir disso.", "Mantenha a postura profissional e não se sinta intimidado."],
+    donts: ["Nunca entre em disputa de conhecimento com esse cliente.", "Não compare diretamente com o concorrente de forma defensiva.", "Não leve as críticas para o lado pessoal."]
+  },
+  {
+    title: "Cliente Econômico",
+    subtitle: "Foco total em preço e desconto, o mais fácil de identificar",
+    tags: ["Foco em preço", "Pede desconto", "Compara concorrente", "Decide pelo valor"],
+    identificacao: [
+      "A primeira pergunta é sempre sobre preço, antes de qualidade ou diferencial.",
+      "Diz que encontrou mais barato em outro lugar.",
+      "Pede desconto mesmo depois de já ter recebido uma condição especial.",
+      "Costuma aparecer com mais frequência no segmento M1, onde o orçamento de RH é mais apertado."
+    ],
+    exemplos: [
+      { label: "Cenário impulseup", text: "Comum no segmento M1, de 60 a 99 colaboradores, onde o comparativo de preço com concorrentes como Sólides ou Feedz costuma ser direto." },
+      { label: "Script de negociação", text: "O que mais te chamou atenção no nosso produto? Se eu fizesse o mesmo preço do concorrente, de quem você compraria? Geralmente ele responde de você, e o motivo que ele dá vira o argumento para justificar o valor." }
+    ],
+    frases: ["Encontrei mais barato.", "Vocês têm desconto?", "Só fecho se conseguir um valor melhor."],
+    dos: ["Reforce 2 ou 3 diferenciais antes de falar preço.", "Negocie por etapas, nunca dando o desconto máximo de uma vez.", "Condicione desconto adicional ao fechamento no mesmo dia.", "Respeite o limite de 20% de desconto do closer; acima disso, alinhe com a liderança."],
+    donts: ["Não dê o desconto máximo logo de início.", "Não deixe de reforçar diferenciais antes de falar de valor.", "Não ceda a pedidos de desconto sem contrapartida de fechamento."]
+  }
+];
+
+const navGrid = document.getElementById('navGrid');
+const wrap = document.getElementById('modulesWrap');
+
+modules.forEach((m, i) => {
+  const navBtn = document.createElement('div');
+  navBtn.className = 'nav-item';
+  navBtn.innerHTML = `<span class="num">${i+1}</span>${m.title}`;
+  navBtn.onclick = () => {
+    document.getElementById('mod-' + i).scrollIntoView({behavior:'smooth', block:'start'});
+    openModule(i);
+  };
+  navGrid.appendChild(navBtn);
+
+  const mod = document.createElement('div');
+  mod.className = 'module';
+  mod.id = 'mod-' + i;
+
+  const tagsHtml = m.tags.map(t => `<span class="tag">${t}</span>`).join('');
+  const identHtml = m.identificacao.map(t => `<li>${t}</li>`).join('');
+  const exemplosHtml = m.exemplos.map(e => `<div class="example-card"><span class="example-label">${e.label}</span>${e.text}</div>`).join('');
+  const frasesHtml = m.frases.map(f => `<div class="phrase-quote">"${f}"</div>`).join('');
+  const dosHtml = m.dos.map(d => `<li>${d}</li>`).join('');
+  const dontsHtml = m.donts.map(d => `<li>${d}</li>`).join('');
+
+  mod.innerHTML = `
+    <div class="module-head" onclick="toggleModule(${i})">
+      <div class="module-number">${i+1}</div>
+      <div class="module-title-wrap">
+        <div class="module-title">${m.title}</div>
+        <div class="module-subtitle">${m.subtitle}</div>
+      </div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="module-body">
+      <div class="module-body-inner">
+        <div class="tag-row">${tagsHtml}</div>
+
+        <div class="section-label">Como identificar</div>
+        <ul class="clean-list">${identHtml}</ul>
+
+        <div class="section-label">Exemplos no cenário impulseup</div>
+        ${exemplosHtml}
+
+        <div class="section-label">Frases que ele costuma usar</div>
+        ${frasesHtml}
+
+        <div class="section-label">Estratégia de venda</div>
+        <div class="dos-donts">
+          <div class="do-box"><span class="label">Faça</span><ul class="clean-list">${dosHtml}</ul></div>
+          <div class="dont-box"><span class="label">Evite</span><ul class="clean-list">${dontsHtml}</ul></div>
+        </div>
+      </div>
+    </div>
+  `;
+  wrap.appendChild(mod);
+});
+
+function toggleModule(i) {
+  const mod = document.getElementById('mod-' + i);
+  mod.classList.toggle('open');
+}
+function openModule(i) {
+  const mod = document.getElementById('mod-' + i);
+  if (!mod.classList.contains('open')) mod.classList.add('open');
+}
+
+// Abre o primeiro módulo por padrão
+openModule(0);
+</script>
+
+</body>
+</html>
