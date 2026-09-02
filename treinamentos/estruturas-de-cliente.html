@@ -309,6 +309,42 @@ ul.clean-list li::before {
   background: var(--color-primary);
 }
 
+.voice-box {
+  background: #FFF0F8;
+  border: 1px solid #F6BFE0;
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  font-size: 0.88rem;
+  margin-bottom: 0.5rem;
+}
+
+.voice-box .voice-label {
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.voice-axes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.5rem;
+}
+
+.voice-axis {
+  background: #FFFFFF;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  border-radius: 100px;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
 .footer-note {
   text-align: center;
   color: var(--color-fg-muted);
@@ -336,6 +372,7 @@ ul.clean-list li::before {
   <h2>Antes de começar</h2>
   <p>Estrutura não é personalidade fixa. O mesmo lead pode estar pragmático numa call e consensual na outra, dependendo do momento, do humor e do contexto daquele dia. O objetivo aqui não é rotular o cliente, é ler o sinal que ele está dando agora e conduzir a conversa do jeito que ele precisa para decidir.</p>
   <p>Revise cada estrutura com atenção. Quanto mais você internalizar esses sinais, mais natural fica reconhecer, no meio de uma call de Conexão ou de Proposta, qual caminho seguir.</p>
+  <p>Cada estrutura traz também sua conexão com a régua de tom de voz da impulseup, usada pelo time de Customer Success: especializada sem ser autoritária, realista sem ser fria, atual sem ser infantil, empática sem ser falsa. O registro muda de cliente para cliente. A régua, não.</p>
 </div>
 
 <div class="container">
@@ -369,7 +406,9 @@ const modules = [
     ],
     frases: ["Vamos direto ao ponto.", "Para não perder o seu tempo nem o meu, aqui está a proposta."],
     dos: ["Seja uma autoridade no mercado de performance management, já pesquisado por ele.", "Cite 2 ou 3 diferenciais objetivos antes do preço.", "Seja pontual: se marcou ligar às 14h, ligue às 14h.", "Passe o preço sem medo e feche com uma pergunta direta."],
-    donts: ["Não force intimidade ou papo longo antes de falar de negócio.", "Não mande áudio longo nem textão no WhatsApp.", "Não use gatilho de última peça sem necessidade real.", "Não pergunte o que exatamente ele quer pensar."]
+    donts: ["Não force intimidade ou papo longo antes de falar de negócio.", "Não mande áudio longo nem textão no WhatsApp.", "Não use gatilho de última peça sem necessidade real.", "Não pergunte o que exatamente ele quer pensar."],
+    voiceAxes: ["Realista, não fria"],
+    voiceText: "Esse é o perfil que mais se beneficia do eixo realista da impulseup: direto ao essencial e ainda assim humano. Ser objetivo não é ser seco. Vá ao ponto, mas mantenha a mesma estrutura de qualquer boa resposta impulseup: reconheça a necessidade dele, assuma o compromisso e dê o próximo passo com prazo claro."
   },
   {
     title: "Cliente Analítico",
@@ -388,7 +427,9 @@ const modules = [
     ],
     frases: ["Preciso analisar com calma.", "Você tem isso por escrito?", "Vou conversar com o time antes de decidir."],
     dos: ["Envie material completo: cases, dados de retenção, estudos como os do Gallup e da McKinsey.", "Detalhe a Aba de Aprovação e o Plano de Ação com riqueza de dado.", "Agende contatos recorrentes com prazo curto, no máximo até o fim da semana.", "Pergunte sempre se a proposta está dentro da expectativa dele antes de insistir no fechamento."],
-    donts: ["Não use gatilho de escassez tipo é a última vaga, não funciona com esse perfil.", "Não deixe ele semanas sem contato entre uma call e outra.", "Não pressione para fechar sem ele ter processado a informação."]
+    donts: ["Não use gatilho de escassez tipo é a última vaga, não funciona com esse perfil.", "Não deixe ele semanas sem contato entre uma call e outra.", "Não pressione para fechar sem ele ter processado a informação."],
+    voiceAxes: ["Especializada, não autoritária"],
+    voiceText: "Com o cliente analítico, o eixo que mais pesa é o da especialista que não entrega verdade absoluta. Assim como a psicóloga da nossa âncora de tom de voz, mostre domínio profundo do tema, mas apresente caminhos e o critério de escolha, não uma única resposta fechada. Isso é o que faz ele confiar no dado que você está mostrando."
   },
   {
     title: "Cliente Consensual",
@@ -407,7 +448,9 @@ const modules = [
     ],
     frases: ["O que você acha disso?", "Preciso ver com meu time antes.", "Adorei conversar com você."],
     dos: ["Converse, demonstre interesse genuíno pela pessoa e pelo contexto dela.", "Elogie de forma sincera e específica.", "Mantenha relacionamento ativo entre uma reunião e outra.", "Não tenha pressa para o fechamento, ele decide bastante pela conexão que sente com você."],
-    donts: ["Não corte o papo pessoal de forma abrupta.", "Não pressione, ele fica desconfortável e recua.", "Não deixe de retomar o assunto comercial ao final da conversa."]
+    donts: ["Não corte o papo pessoal de forma abrupta.", "Não pressione, ele fica desconfortável e recua.", "Não deixe de retomar o assunto comercial ao final da conversa."],
+    voiceAxes: ["Empática, não falsa"],
+    voiceText: "Esse é exatamente o perfil onde mora o risco de cair em fofura defensiva, elogio em excesso, emoji sem propósito, simpatia sem conteúdo. O eixo empático da impulseup pede conexão real, não postura. Demonstre interesse genuíno pela pessoa, mas mantenha sempre um próximo passo claro por trás da conversa."
   },
   {
     title: "Cliente Inovador",
@@ -425,7 +468,9 @@ const modules = [
     ],
     frases: ["Isso já usa inteligência artificial?", "Vocês têm alguma novidade lançando agora?"],
     dos: ["Mantenha uma lista própria desses clientes para avisar sempre que sair uma funcionalidade nova.", "Destaque o que há de mais recente na plataforma impulseup.", "Reforce a exclusividade: você está entre os primeiros a ter acesso a isso.", "Use vídeo ou demonstração visual da novidade."],
-    donts: ["Não apresente o produto de forma genérica ou repetitiva.", "Não deixe de reativar esse cliente quando lançar algo novo, ele pode comprar do concorrente que chegar primeiro."]
+    donts: ["Não apresente o produto de forma genérica ou repetitiva.", "Não deixe de reativar esse cliente quando lançar algo novo, ele pode comprar do concorrente que chegar primeiro."],
+    voiceAxes: ["Atual, não infantil"],
+    voiceText: "Aqui mora o eixo de ser atual sem virar grupinho de fofoca. Falar de novidade e tecnologia com entusiasmo real é diferente de forçar um tom descontraído que não é seu. Mostre atualização genuína, startup com bagagem de mercado, não empolgação vazia."
   },
   {
     title: "Cliente Conservador",
@@ -443,7 +488,9 @@ const modules = [
     ],
     frases: ["Eu prefiro continuar como está.", "Isso já funciona bem do jeito que é."],
     dos: ["Use prova social de empresas do mesmo setor e tamanho que migraram com sucesso.", "Reforce que o processo de implementação é assistido, sem risco de perda de histórico.", "Vá plantando a novidade aos poucos, sem pressa.", "Fale bastante sobre garantia e suporte."],
-    donts: ["Não insista em mudança radical de uma vez.", "Não trate o apego dele ao processo antigo como resistência irracional.", "Não force intimidade, mantenha o tom mais profissional."]
+    donts: ["Não insista em mudança radical de uma vez.", "Não trate o apego dele ao processo antigo como resistência irracional.", "Não force intimidade, mantenha o tom mais profissional."],
+    voiceAxes: ["Realista, não fria", "Empática, não falsa"],
+    voiceText: "Reconhecer o apego dele ao processo atual antes de qualquer coisa é aplicar o mesmo princípio que usamos em qualquer resposta impulseup: reconhecer o impacto antes de explicar a causa. Diga que entende por que aquele processo funcionou até hoje, depois mostre o caminho, sem tratar a resistência dele como erro."
   },
   {
     title: "Cliente Desconfiado",
@@ -461,7 +508,9 @@ const modules = [
     ],
     frases: ["Será mesmo?", "Como posso ter certeza disso?", "Isso funciona mesmo na prática?"],
     dos: ["Construa confiança em cada detalhe: postura, organização, clareza nas respostas.", "Use prova social forte, com depoimentos reais de clientes impulseup.", "Avance por microcompromissos, perguntando até aqui faz sentido para você?", "Seja transparente sobre o que a plataforma faz e o que não faz."],
-    donts: ["Não pressione para o fechamento antes de ele esgotar as dúvidas.", "Não demonstre impaciência ao repetir uma explicação.", "Não dê respostas vagas para parecer mais rápido."]
+    donts: ["Não pressione para o fechamento antes de ele esgotar as dúvidas.", "Não demonstre impaciência ao repetir uma explicação.", "Não dê respostas vagas para parecer mais rápido."],
+    voiceAxes: ["Especializada, não autoritária"],
+    voiceText: "Com o desconfiado vale o mesmo princípio que usamos quando não sabemos algo no CS: dizer não tenho essa resposta agora, te confirmo até amanhã é autoridade, não fraqueza. Nunca disfarce insegurança com resposta vaga só para parecer mais seguro na hora."
   },
   {
     title: "Cliente Estraga-Prazeres / Sabe-Tudo",
@@ -479,7 +528,9 @@ const modules = [
     ],
     frases: ["Aham, sei.", "Será que isso funciona mesmo?", "Já vi isso em outro lugar e não funcionou."],
     dos: ["Use a técnica de validação reversa: eu adoro atender pessoas exigentes como você.", "Elogie o conhecimento dele de forma genuína.", "Peça para ele descrever o cenário ideal e alinhe a proposta a partir disso.", "Mantenha a postura profissional e não se sinta intimidado."],
-    donts: ["Nunca entre em disputa de conhecimento com esse cliente.", "Não compare diretamente com o concorrente de forma defensiva.", "Não leve as críticas para o lado pessoal."]
+    donts: ["Nunca entre em disputa de conhecimento com esse cliente.", "Não compare diretamente com o concorrente de forma defensiva.", "Não leve as críticas para o lado pessoal."],
+    voiceAxes: ["Especializada, não autoritária"],
+    voiceText: "É o perfil onde o risco de autoridade dura é maior: responder crítica com crítica. A régua da impulseup pede o oposto de afirmar quem está certo, ela pede apresentar caminho. Assim como a psicóloga da nossa âncora de tom de voz, escute, valide o que ele sabe e conduza a partir do cenário ideal que ele mesmo descrever."
   },
   {
     title: "Cliente Econômico",
@@ -497,7 +548,9 @@ const modules = [
     ],
     frases: ["Encontrei mais barato.", "Vocês têm desconto?", "Só fecho se conseguir um valor melhor."],
     dos: ["Reforce 2 ou 3 diferenciais antes de falar preço.", "Negocie por etapas, nunca dando o desconto máximo de uma vez.", "Condicione desconto adicional ao fechamento no mesmo dia.", "Respeite o limite de 20% de desconto do closer; acima disso, alinhe com a liderança."],
-    donts: ["Não dê o desconto máximo logo de início.", "Não deixe de reforçar diferenciais antes de falar de valor.", "Não ceda a pedidos de desconto sem contrapartida de fechamento."]
+    donts: ["Não dê o desconto máximo logo de início.", "Não deixe de reforçar diferenciais antes de falar de valor.", "Não ceda a pedidos de desconto sem contrapartida de fechamento."],
+    voiceAxes: ["Realista, não fria"],
+    voiceText: "Negociação também segue a régua: promessa vaga é vício a evitar. Não diga vou ver o que consigo fazer, diga exatamente qual desconto está sob sua alçada e até quando essa condição vale. Clareza sobre o próximo passo funciona tão bem para reverter objeção de preço quanto para resolver um chamado de suporte."
   }
 ];
 
@@ -524,6 +577,7 @@ modules.forEach((m, i) => {
   const frasesHtml = m.frases.map(f => `<div class="phrase-quote">"${f}"</div>`).join('');
   const dosHtml = m.dos.map(d => `<li>${d}</li>`).join('');
   const dontsHtml = m.donts.map(d => `<li>${d}</li>`).join('');
+  const voiceAxesHtml = m.voiceAxes.map(a => `<span class="voice-axis">${a}</span>`).join('');
 
   mod.innerHTML = `
     <div class="module-head" onclick="toggleModule(${i})">
@@ -551,6 +605,13 @@ modules.forEach((m, i) => {
         <div class="dos-donts">
           <div class="do-box"><span class="label">Faça</span><ul class="clean-list">${dosHtml}</ul></div>
           <div class="dont-box"><span class="label">Evite</span><ul class="clean-list">${dontsHtml}</ul></div>
+        </div>
+
+        <div class="section-label">Conexão com o tom de voz impulseup</div>
+        <div class="voice-box">
+          <span class="voice-label">Eixo em destaque</span>
+          <div class="voice-axes">${voiceAxesHtml}</div>
+          ${m.voiceText}
         </div>
       </div>
     </div>
