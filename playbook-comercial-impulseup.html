@@ -866,7 +866,30 @@ code{background:var(--surface);border:1px solid var(--border);border-radius:4px;
         <tr><td><b>Degustação ao vivo (in-demo)</b></td><td>Teste imediato e pontual, dentro da própria Demo: o closer envia a avaliação ou pesquisa ao vivo para o cliente experimentar como usuário final, sem necessidade de agenda paralela</td></tr>
       </table>
 
-      <h2>2. Levantamento de requisitos</h2>
+      <h2>2. Diferenciação por categoria do cliente</h2>
+      <p>O piloto prova coisas diferentes dependendo da categoria da conta, porque a promessa de venda até aqui foi diferente. Isso muda o que o closer prioriza na reunião de alinhamento, na sensibilização e na leitura final.</p>
+      <div class="grid2">
+        <div class="card">
+          <div class="card-title"><span class="dot"></span>Categoria 1 e 2 — "vendendo o sonho"</div>
+          Até aqui, vendemos a promessa de criar um processo que não existia (Cat. 1) ou de sair do operacional manual (Cat. 2). O piloto precisa provar que esse sonho é <b>alcançável e simples</b>, não mais uma ferramenta complicada em cima do problema já existente.
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="dot"></span>Categoria 5 — "vendendo otimização"</div>
+          O cliente já tem um processo e uma ferramenta rodando com um concorrente. O piloto não prova que "dá para ter processo", prova que a impulseup é <b>mensuravelmente melhor</b> do que o que já é usado hoje.
+        </div>
+      </div>
+
+      <table>
+        <tr><th>Dimensão</th><th>Cat. 1 e 2</th><th>Cat. 5</th></tr>
+        <tr><td><b>O que o piloto precisa provar</b></td><td>Que é fácil, que gera alívio operacional e que o time consegue adotar sem trauma</td><td>Que é superior ao que já é usado hoje, em pontos concretos e nomeáveis</td></tr>
+        <tr><td><b>Indicadores prioritários</b></td><td>Taxa de adesão, clareza percebida, satisfação com a experiência</td><td>NPS de uso, qualidade qualitativa das respostas, comparação direta com a ferramenta atual</td></tr>
+        <tr><td><b>Tom da sensibilização</b></td><td>"Estamos criando algo que a empresa nunca teve, participem para ajudar a moldar isso"</td><td>"Queremos que vocês comparem com o que já usam hoje e nos digam a diferença real"</td></tr>
+        <tr><td><b>Pergunta extra na leitura final</b></td><td>"O que antes era feito assim, ficou mais fácil de fazer?"</td><td>"Comparado com a ferramenta que vocês usam hoje, isso foi melhor, igual ou pior — e por quê?"</td></tr>
+        <tr><td><b>Erro a evitar</b></td><td>Tratar o piloto como comparação técnica fria — o cliente ainda não tem parâmetro de comparação, e forçar isso soa artificial</td><td>Tratar o piloto só como "mostrar que funciona" — o cliente já sabe que funciona, ele quer saber se é melhor</td></tr>
+      </table>
+      <div class="note">Categoria 4 (ferramenta genérica insuficiente) fica mais próxima do racional de Cat. 5 quando a comparação é direta contra uma ferramenta nomeada, e mais próxima de Cat. 1/2 quando o piloto é usado para provar profundidade que uma suíte genérica não tem. O closer calibra caso a caso.</div>
+
+      <h2>3. Levantamento de requisitos</h2>
       <p>Não há sistema externo nem integração envolvida no piloto. O levantamento junto ao cliente é enxuto, feito na reunião de alinhamento pré-piloto:</p>
       <ul class="blt">
         <li>Lista de participantes do teste (nomes e e-mails)</li>
@@ -875,42 +898,67 @@ code{background:var(--surface);border:1px solid var(--border);border-radius:4px;
         <li>Confirmação se haverá NDA (nesse caso, o fluxo jurídico corre à parte, fora do cronograma dos 10 dias)</li>
       </ul>
 
-      <h2>3. Reunião de alinhamento pré-piloto</h2>
+      <h2>4. Reunião de alinhamento pré-piloto</h2>
       <p>Reunião nova e separada, realizada logo após a Demo, antes do cliente enviar qualquer material. É nela que o closer e o Champion definem, juntos, os critérios de sucesso do piloto.</p>
-      <p><b>Os critérios de sucesso não ficam por conta do cliente.</b> A experiência mostra que o cliente costuma não saber o que precisa avaliar. Por isso, o closer sempre parte do pool fixo de indicadores abaixo, escolhendo de 3 a 5 com o Champion.</p>
+      <p><b>Os critérios de sucesso não ficam por conta do cliente.</b> A experiência mostra que o cliente costuma não saber o que precisa avaliar. Por isso, o closer sempre parte do pool fixo de indicadores abaixo, escolhendo de 3 a 5 com o Champion — priorizados conforme a categoria da conta (ver seção 2).</p>
       <table>
-        <tr><th>Indicador</th><th>O que mede</th><th>Como coletar</th></tr>
-        <tr><td>Taxa de adesão</td><td>% de participantes convidados que efetivamente responderam</td><td>Automático na plataforma</td></tr>
-        <tr><td>Tempo médio de resposta</td><td>Quanto tempo o usuário final levou para completar a avaliação</td><td>Automático na plataforma</td></tr>
-        <tr><td>Taxa de conclusão sem abandono</td><td>% que iniciou e terminou sem sair no meio</td><td>Automático na plataforma</td></tr>
-        <tr><td>Clareza percebida</td><td>Nota de 1 a 5 sobre entendimento das perguntas</td><td>Pergunta final da própria pesquisa</td></tr>
-        <tr><td>Satisfação com a experiência</td><td>Nota de 1 a 5 sobre a experiência de uso geral</td><td>Pergunta final da própria pesquisa</td></tr>
-        <tr><td>NPS de uso</td><td>Probabilidade de recomendar a experiência a um colega</td><td>Pergunta final, escala de 0 a 10</td></tr>
-        <tr><td>Qualidade qualitativa das respostas</td><td>Se as respostas abertas geraram insumo real e utilizável</td><td>Leitura conjunta na reunião de fechamento</td></tr>
+        <tr><th>Indicador</th><th>O que mede</th><th>Como coletar</th><th>Faixa de referência</th></tr>
+        <tr><td>Taxa de adesão</td><td>% de participantes convidados que efetivamente responderam</td><td>Automático na plataforma</td><td>Boa: &gt;70% · Atenção: 40–70% · Insuficiente: &lt;40%</td></tr>
+        <tr><td>Tempo médio de resposta</td><td>Quanto tempo o usuário final levou para completar a avaliação</td><td>Automático na plataforma</td><td>Boa: dentro do estimado na configuração · Atenção: até 50% acima · Insuficiente: mais que o dobro do estimado</td></tr>
+        <tr><td>Taxa de conclusão sem abandono</td><td>% que iniciou e terminou sem sair no meio</td><td>Automático na plataforma</td><td>Boa: &gt;85% · Atenção: 60–85% · Insuficiente: &lt;60%</td></tr>
+        <tr><td>Clareza percebida</td><td>Nota de 1 a 5 sobre entendimento das perguntas</td><td>Pergunta final da própria pesquisa</td><td>Boa: ≥4 · Atenção: 3 · Insuficiente: &lt;3</td></tr>
+        <tr><td>Satisfação com a experiência</td><td>Nota de 1 a 5 sobre a experiência de uso geral</td><td>Pergunta final da própria pesquisa</td><td>Boa: ≥4 · Atenção: 3 · Insuficiente: &lt;3</td></tr>
+        <tr><td>NPS de uso</td><td>Probabilidade de recomendar a experiência a um colega</td><td>Pergunta final, escala de 0 a 10</td><td>Boa: ≥50 · Atenção: 0–49 · Insuficiente: negativo</td></tr>
+        <tr><td>Qualidade qualitativa das respostas</td><td>Se as respostas abertas geraram insumo real e utilizável</td><td>Leitura conjunta na reunião de fechamento</td><td>Avaliação qualitativa do closer e do Champion, sem faixa numérica</td></tr>
+        <tr><td><b>Comparação direta com a ferramenta atual</b> <span class="meta-tag" style="display:inline;color:var(--primary);">Cat. 5</span></td><td>Percepção explícita de melhora, empate ou piora frente ao fornecedor atual, por participante</td><td>Pergunta extra na pesquisa, só incluída em contas Cat. 5</td><td>Boa: maioria aponta melhora · Atenção: empate predominante · Insuficiente: maioria aponta piora</td></tr>
       </table>
-      <div class="note">Saídas desta reunião: indicadores escolhidos (3 a 5 do pool acima), lista de participantes e prazo combinado com o cliente.</div>
+      <div class="note">Saídas desta reunião: indicadores escolhidos (3 a 5 do pool acima, calibrados pela categoria), lista de participantes e prazo combinado com o cliente. As faixas de referência servem para orientar a leitura no fechamento, não são metas contratuais.</div>
 
-      <h2>4. Cronograma padrão</h2>
+      <h2>5. Papéis e responsabilidades</h2>
+      <table>
+        <tr><th>Quem</th><th>Responsabilidade</th></tr>
+
+        <tr><td><b>Closer</b></td><td>Configura o ambiente, monitora a adesão ao longo de toda a janela, aciona o Champion em caso de baixa adesão e conduz a reunião de fechamento</td></tr>
+        <tr><td><b>Champion</b></td><td>Comunica o teste internamente (com apoio direto do closer em contas maiores, nunca sozinho) e ajuda a mobilizar os participantes</td></tr>
+        <tr><td><b>Participantes</b></td><td>Apenas respondem na plataforma dentro da janela combinada</td></tr>
+      </table>
+      <div class="note">O closer nunca entrega a sensibilização para o RH conduzir sozinho: o RH não domina todas as informações do produto para tirar dúvidas dos participantes na hora.</div>
+
+      <h2>6. Cronograma e passo a passo</h2>
       <p>Duração máxima de <b>10 dias úteis</b> (aproximadamente 2 semanas), para não dilatar o tempo de venda. O relógio começa a contar a partir do recebimento efetivo dos materiais do cliente, não da reunião de alinhamento.</p>
       <table>
-        <tr><th>Quando</th><th>O que acontece</th></tr>
-        <tr><td>Dias 1 a 3</td><td><b>Configuração do ambiente</b> — closer monta o ambiente de teste com os dados recebidos do cliente</td></tr>
-        <tr><td>Dia 4</td><td><b>Sensibilização dos participantes</b> — Champion, com apoio do closer, comunica o teste aos participantes</td></tr>
-        <tr><td>Dias 5 a 9</td><td><b>Janela de respostas</b> — participantes do cliente respondem na plataforma</td></tr>
-        <tr><td>Dia 10</td><td><b>Coleta e leitura de resultados</b> — closer e Champion leem juntos os indicadores definidos na etapa 3</td></tr>
+        <tr><th>Dia</th><th>Ação</th><th>Entregável do closer</th><th>Critério de conclusão</th></tr>
+        <tr><td>0<br><span style="color:var(--fg-muted);font-size:11px;">(alinhamento)</span></td><td>Definir indicadores, participantes e prazo com o Champion</td><td>Ficha de escopo preenchida</td><td>Champion confirma por escrito (e-mail/chat) os indicadores e a lista de participantes</td></tr>
+        <tr><td>1 a 3</td><td>Configurar ambiente com os dados do cliente</td><td>Ambiente de teste ativo</td><td>Closer valida pessoalmente o ambiente antes de liberar acesso — sem erro de cadastro, cenário fiel ao cliente</td></tr>
+        <tr><td>4</td><td>Sensibilizar participantes</td><td>Comunicado enviado + reunião de kickoff (contas maiores)</td><td>Confirmação de disparo do comunicado e, quando houver, de que a reunião de sensibilização aconteceu</td></tr>
+        <tr><td>5 a 9</td><td>Acompanhar a janela de respostas</td><td>Monitoramento ativo, sem entregável formal</td><td>Closer verifica a adesão a cada 2 dias, não apenas no fim do prazo</td></tr>
+        <tr style="background:var(--primary-dim);"><td><b>7</b></td><td><b>Checkpoint de adesão parcial</b></td><td>Print ou relatório de adesão parcial</td><td>Se adesão estiver abaixo de 50% do esperado, o closer aciona o Champion imediatamente — não espera o dia 10 para agir</td></tr>
+        <tr><td>10</td><td>Fechamento e leitura</td><td>Reunião de leitura + registro no site do cliente</td><td>Indicadores lidos com o Champion e próximo passo do funil definido com data</td></tr>
       </table>
+      <div class="note">O checkpoint do dia 7 é o ponto que mais protege o resultado do piloto: sem ele, uma adesão baixa só é percebida no dia 10, quando já não há tempo hábil de reagir.</div>
 
-      <h2>5. Sensibilização dos participantes</h2>
-      <p>Um piloto sem sensibilização adequada nasce contaminado: participantes respondem sem entender o motivo, e isso distorce os próprios indicadores de qualidade. O closer sempre chega à etapa 4 com dois materiais de apoio prontos:</p>
+      <h2>7. Kit de materiais padrão</h2>
+      <p>Quatro artefatos de apoio, prontos antes do dia 4, para que a sensibilização nunca dependa de o closer improvisar. O comunicado e o roteiro devem ser ajustados ao tom da categoria da conta (seção 2).</p>
       <div class="grid2">
-        <div class="card"><div class="card-title"><span class="dot"></span>Roteiro de sensibilização</div>Script curto de 3 a 4 pontos, para o closer usar caso o Champion prefira que a impulseup fale diretamente com os participantes.</div>
+        <div class="card"><div class="card-title"><span class="dot"></span>Ficha de escopo</div>Formulário simples com os indicadores escolhidos, participantes, datas e prazo, preenchido na reunião de alinhamento.</div>
         <div class="card"><div class="card-title"><span class="dot"></span>Comunicado pré-formatado</div>Texto curto, pronto para o Champion colar em e-mail ou canal interno, explicando o que é o teste, quanto tempo leva e por que a participação importa.</div>
+        <div class="card"><div class="card-title"><span class="dot"></span>Roteiro de sensibilização</div>Script curto de 3 a 4 pontos, para o closer usar quando o Champion prefere que a impulseup fale diretamente com os participantes.</div>
+        <div class="card"><div class="card-title"><span class="dot"></span>Modelo de registro de resultados</div>Estrutura onde o closer anota os indicadores no fechamento, para virar conteúdo da aba "Piloto Guiado" no site do cliente.</div>
       </div>
 
-      <h2>6. Fechamento e leitura de resultados</h2>
-      <p>No dia 10, closer e Champion leem juntos, em reunião, os indicadores escolhidos na etapa 3, agora com números reais. Essa leitura alimenta diretamente a fase seguinte do funil (BS ou N) e vira conteúdo da aba "Piloto Guiado" no site do cliente, dando transparência ao processo para quem o Champion reportar internamente.</p>
+      <h2>8. Quando o piloto não vai bem</h2>
+      <p>Protocolo de recuperação para quando o checkpoint do dia 7 mostra adesão baixa ou resultado insuficiente:</p>
+      <ul class="blt">
+        <li><b>Primeira ação:</b> contato direto do closer (ou do Champion, com apoio do closer) com os participantes que ainda não responderam, reforçando prazo e importância</li>
+        <li><b>Segunda ação, se ainda insuficiente:</b> estender o prazo em até 3 dias úteis, sem estender o cronograma total do funil de forma indefinida</li>
+        <li><b>Último recurso:</b> reduzir o escopo de leitura para os indicadores que já têm dado suficiente, em vez de declarar o piloto "sem resultado" — um piloto parcial bem lido vale mais que um piloto completo mal aproveitado</li>
+      </ul>
+      <div class="note">O objetivo desse protocolo é nunca chegar ao dia 10 sem ação prévia. Adesão baixa detectada e não trabalhada entre os dias 7 e 9 é falha de condução do closer, não do piloto em si.</div>
 
-      <h2>7. Escopo das entregas</h2>
+      <h2>9. Fechamento e leitura de resultados</h2>
+      <p>No dia 10, closer e Champion leem juntos, em reunião, os indicadores escolhidos na etapa 4, agora com números reais, usando as faixas de referência para calibrar a leitura — sempre com a pergunta extra da categoria (seção 2) incluída na conversa. Essa leitura alimenta diretamente a fase seguinte do funil (BS ou N) e vira conteúdo da aba "Piloto Guiado" no site do cliente, dando transparência ao processo para quem o Champion reportar internamente.</p>
+
+      <h2>10. Escopo das entregas</h2>
       <div class="card" style="background:var(--fg);color:#fff;border:none;">
         As entregas do Piloto Guiado são restritas a cliente e closer. Não há repasse de dados do piloto para outras áreas fora dessa relação direta.
       </div>
