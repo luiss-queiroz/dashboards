@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PDCA 2027 — impulseup</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+:root{
+  --magenta:#CC0088; --preto:#0C0C0C; --branco:#FFFFFF; --cinza-bg:#F7F5F7; --cinza-borda:#E7E2E6;
+  --verde:#1E9E5A; --amarelo:#D69E00; --vermelho:#D6362E;
+}
+*{box-sizing:border-box;}
+body{font-family:'Poppins',sans-serif; background:var(--cinza-bg); color:var(--preto); margin:0; padding:32px 24px 60px;
+  padding-top:calc(32px + env(safe-area-inset-top,0px)); padding-bottom:calc(60px + env(safe-area-inset-bottom,0px));}
+.container{max-width:1400px;margin:0 auto;}
+header h1{font-size:28px;font-weight:700;margin:0 0 4px;}
+header p{margin:0;color:#5A5560;font-size:14px;}
+.tag{color:var(--magenta);font-weight:600;}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:28px 0;}
+.kpi-card{background:#fff;border:1px solid var(--cinza-borda);border-radius:14px;padding:20px;}
+.kpi-card .val{font-size:32px;font-weight:700;color:var(--magenta);}
+.kpi-card .lbl{font-size:13px;color:#5A5560;margin-top:4px;}
+.kpi-card .meta{font-size:11px;color:#8A8492;margin-top:8px;}
+.bar-bg{background:#F0EDEF;border-radius:8px;height:8px;margin-top:10px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:8px;background:var(--magenta);}
+.bar-fill.ok{background:var(--verde);}
+.bar-fill.warn{background:var(--amarelo);}
+.bar-fill.bad{background:var(--vermelho);}
+section{margin:36px 0;}
+h2{font-size:19px;font-weight:600;margin-bottom:14px;}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;font-size:13px;}
+thead th{background:var(--preto);color:#fff;text-align:left;padding:10px 12px;}
+tbody td{padding:9px 12px;border-bottom:1px solid #F0EDEF;}
+tbody tr:hover{background:#FCF8FA;}
+.pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;}
+.pill.ok{background:#EAF6EE;color:var(--verde);}
+.pill.bad{background:#FDEAEA;color:var(--vermelho);}
+.table-scroll{overflow-x:auto;border:1px solid var(--cinza-borda);border-radius:12px;}
+footer{margin-top:30px;font-size:12px;color:#8A8492;text-align:center;}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<h1>PDCA 2027 <span class="tag">— impulseup</span></h1>
+<p>Pipeline ativo (exclui Lost/Won) · 88 contas · Metas: TD ≥60% · Champion c/ Influência ≥50% · Stakeholders por porte (2/3/4) · Base: export HubSpot 23/09/2026</p>
+</header>
+
+<section>
+<h2>Indicadores gerais</h2>
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="val">47/88</div>
+    <div class="lbl">Acessamos TD — 53.4% (meta ≥60%)</div>
+    <div class="bar-bg"><div class="bar-fill bad" style="width:53.4%"></div></div>
+  </div>
+  <div class="kpi-card">
+    <div class="val">47/88</div>
+    <div class="lbl">Champion com Influência — 53.4% (meta ≥50%)</div>
+    <div class="bar-bg"><div class="bar-fill ok" style="width:53.4%"></div></div>
+  </div>
+  <div class="kpi-card">
+    <div class="val">57.1%</div>
+    <div class="lbl">Stakeholders OK — Porte &lt;500 (35 contas, meta ≥2)</div>
+    <div class="bar-bg"><div class="bar-fill warn" style="width:57.1%"></div></div>
+  </div>
+  <div class="kpi-card">
+    <div class="val">6.9%</div>
+    <div class="lbl">Stakeholders OK — Porte 500-999 (29 contas, meta ≥3)</div>
+    <div class="bar-bg"><div class="bar-fill bad" style="width:6.9%"></div></div>
+    <div class="meta">⚠️ Muito abaixo da meta — pior indicador do ciclo</div>
+  </div>
+  <div class="kpi-card">
+    <div class="val">20.8%</div>
+    <div class="lbl">Stakeholders OK — Porte ≥1000 (24 contas, meta ≥4)</div>
+    <div class="bar-bg"><div class="bar-fill bad" style="width:20.8%"></div></div>
+  </div>
+</div>
+</section>
+
+<section>
+<h2>Por closer</h2>
+<div class="table-scroll">
+<table>
+<thead><tr><th>Closer</th><th>Contas</th><th>TD %</th><th>Champion Influência %</th><th>Stakeholders OK %</th></tr></thead>
+<tbody>
+<tr>
+    <td>Luis Fonseca</td><td>28</td>
+    <td><span class="pill warn">42.9%</span></td>
+    <td><span class="pill ok">64.3%</span></td>
+    <td><span class="pill bad">17.9%</span></td>
+    </tr>
+<tr>
+    <td>Jonny Andrey Steinmetz</td><td>25</td>
+    <td><span class="pill warn">52.0%</span></td>
+    <td><span class="pill ok">52.0%</span></td>
+    <td><span class="pill bad">4.0%</span></td>
+    </tr>
+<tr>
+    <td>Lucas Costa</td><td>14</td>
+    <td><span class="pill ok">64.3%</span></td>
+    <td><span class="pill ok">64.3%</span></td>
+    <td><span class="pill ok">78.6%</span></td>
+    </tr>
+<tr>
+    <td>Karynne Rocha</td><td>13</td>
+    <td><span class="pill ok">69.2%</span></td>
+    <td><span class="pill warn">30.8%</span></td>
+    <td><span class="pill ok">53.8%</span></td>
+    </tr>
+<tr>
+    <td>Natália Baldivia</td><td>7</td>
+    <td><span class="pill warn">42.9%</span></td>
+    <td><span class="pill warn">42.9%</span></td>
+    <td><span class="pill warn">28.6%</span></td>
+    </tr>
+<tr>
+    <td>Luis Queiroz</td><td>1</td>
+    <td><span class="pill ok">100.0%</span></td>
+    <td><span class="pill bad">0.0%</span></td>
+    <td><span class="pill ok">100.0%</span></td>
+    </tr>
+</tbody></table>
+</div>
+</section>
+
+<section>
+<h2>Contas de risco crítico (sem TD e sem Champion com Influência)</h2>
+<div class="table-scroll">
+<table>
+<thead><tr><th>Conta</th><th>Closer</th><th>Etapa</th><th>Porte</th><th>TD</th><th>Champion</th><th>Stakeholders</th></tr></thead>
+<tbody>
+<tr>
+    <td>[KA] Stone -piloto 1.000 colaboradores (LI de cliente)</td><td>Jonny Andrey Steinmetz</td><td>Buscando Solução</td><td>500 a 999 colaboradores</td>
+    <td><span class="pill bad">Não</span></td><td>Incentivo + Informação</td><td>2</td>
+    </tr>
+<tr>
+    <td>[KA] Supermercados Zona Sul -300 AD e 7000 pesquisa</td><td>Jonny Andrey Steinmetz</td><td>Buscando Solução</td><td>500 a 999 colaboradores</td>
+    <td><span class="pill bad">Não</span></td><td>Incentivo + Informação</td><td>2</td>
+    </tr>
+<tr>
+    <td>Grupo EPR- 1.800 ou 3.000 colaboradores</td><td>Jonny Andrey Steinmetz</td><td>Buscando Solução</td><td>500 a 999 colaboradores</td>
+    <td><span class="pill bad">Não</span></td><td>Incentivo + Informação</td><td>1</td>
+    </tr>
+<tr>
+    <td>Universidade de Mogi das Cruzes (UMC)-350 AD +900 learning</td><td>Luis Fonseca</td><td>Buscando Solução</td><td>500 a 999 colaboradores</td>
+    <td><span class="pill bad">Não</span></td><td>Incentivo + Informação</td><td>1</td>
+    </tr>
+<tr>
+    <td>[KA] [Novo negócio]Integrada</td><td>Jonny Andrey Steinmetz</td><td>Buscando Solução</td><td>500 a 999 colaboradores</td>
+    <td><span class="pill bad">Não</span></td><td>Incentivo + Informação</td><td>1</td>
+    </tr>
+<tr>
+    <td>[KA] Sumidenso -5.000 colaboradores</td><td>Jonny Andrey Steinmetz</td><td>StandBy</td><td>500 a 999 colaboradores</td>
+    <td><span class="pill bad">Não</span></td><td>Incentivo + Informação</td><td>1</td>
+    </tr>
+<tr>
+    <td>Supermercados Super Pax - 1.300 a 1.400</td><td>Jonny Andrey Steinmetz</td><td>Construindo o Projeto</td><td>500 a 999 colaboradores</td>
+    <td><span class="pill bad">Não</span></td><td>Incentivo + Informação</td><td>1</td>
+    </tr>
+<tr>
+    <td>[SB] Biancogres -1500 colaboradores (LI de cliente) - Ad</td><td>Jonny Andrey Steinmetz</td><td>Entendendo o Problema</td><td>500 a 999 colaboradores</td>
+    <td><span class="pill bad">Não</span></td><td>Incentivo + Informação</td><td>1</td>
+    </tr>
+<tr>
+    <td>Costa Brasil - Piloto com 60 usuários (liderança)</td><td>Karynne Rocha</td><td>Buscando Solução</td><td>100 a 249 colaboradores</td>
+    <td><span class="pill bad">Não</span></td><td>Incentivo + Informação</td><td>3</td>
+    </tr>
+<tr>
+    <td>Grupo Eurobike - 450 colaboradores</td><td>Karynne Rocha</td><td>Construindo o Projeto</td><td>250 a 499 colaboradores</td>
+    <td><span class="pill bad">Não</span></td><td>Incentivo + Informação</td><td>2</td>
+    </tr>
+<tr>
+    <td>[KA] Santa Mônica Clube de Campo -300/310 colaboradores</td><td>Karynne Rocha</td><td>Construindo o Projeto</td><td>250 a 499 colaboradores</td>
+    <td><span class="pill bad">Não</span></td><td>Incentivo + Informação</td><td>2</td>
+    </tr>
+<tr>
+    <td>Siner -160 colaboradores</td><td>Natália Baldivia</td><td>Buscando Solução</td><td>100 a 249 colaboradores</td>
+    <td><span class="pill bad">Não</span></td><td>Incentivo + Informação</td><td>1</td>
+    </tr>
+<tr>
+    <td> RLX Fluídos Refrigerantes- 150 colaboradores</td><td>Natália Baldivia</td><td>Construindo o Projeto</td><td>100 a 249 colaboradores</td>
+    <td><span class="pill bad">Não</span></td><td>Incentivo + Informação</td><td>1</td>
+    </tr>
+<tr>
+    <td>Grupo RFM -100colaboradores</td><td>Jonny Andrey Steinmetz</td><td>Construindo o Projeto</td><td>250 a 499 colaboradores</td>
+    <td><span class="pill bad">Não</span></td><td>Incentivo + Informação</td><td>1</td>
+    </tr>
+<tr>
+    <td>Supercomm SA</td><td>Lucas Costa</td><td>Buscando Solução</td><td>100 a 249 colaboradores</td>
+    <td><span class="pill bad">Não</span></td><td>Incentivo + Informação</td><td>1</td>
+    </tr>
+<tr>
+    <td>Sindiônibus</td><td>Karynne Rocha</td><td>Construindo o Projeto</td><td>250 a 499 colaboradores</td>
+    <td><span class="pill bad">Não</span></td><td>Incentivo + Informação</td><td>1</td>
+    </tr>
+<tr>
+    <td>Unical -158 colaboradores</td><td>Natália Baldivia</td><td>Construindo o Projeto</td><td>100 a 249 colaboradores</td>
+    <td><span class="pill bad">Não</span></td><td>Incentivo + Informação</td><td>1</td>
+    </tr>
+<tr>
+    <td>ApoioEcolimp -100/150 colaboradores</td><td>Luis Fonseca</td><td>Buscando Solução</td><td>Mais de 5.000 colaboradores</td>
+    <td><span class="pill bad">Não</span></td><td>Incentivo + Informação</td><td>3</td>
+    </tr>
+<tr>
+    <td>Ceneged - 5000 créditos </td><td>Luis Fonseca</td><td>Construindo o Projeto</td><td>3.000 a 4.999 colaboradores</td>
+    <td><span class="pill bad">Não</span></td><td>Apenas Incentivo</td><td>2</td>
+    </tr>
+<tr>
+    <td>Eletromidia - Novo(a) Deal</td><td>Luis Fonseca</td><td>Buscando Solução</td><td>1.000 a 2.999 colaboradores</td>
+    <td><span class="pill bad">Não</span></td><td>Apenas Informação</td><td>1</td>
+    </tr>
+<tr>
+    <td>[KA] Ipiranga - 3500 créditos </td><td>Luis Fonseca</td><td>Buscando Solução</td><td>3.000 a 4.999 colaboradores</td>
+    <td><span class="pill bad">Não</span></td><td>Incentivo + Informação</td><td>1</td>
+    </tr>
+<tr>
+    <td>[KA] Grupo Raízes - 700 a 2300 créditos</td><td>Lucas Costa</td><td>Construindo o Projeto</td><td>1.000 a 2.999 colaboradores</td>
+    <td><span class="pill bad">Não</span></td><td>Incentivo + Informação</td><td>1</td>
+    </tr>
+<tr>
+    <td>Alvoar Lácteos - 500 colaboradores</td><td>Luis Fonseca</td><td>StandBy</td><td>Mais de 5.000 colaboradores</td>
+    <td><span class="pill bad">Não</span></td><td>Incentivo + Informação</td><td>1</td>
+    </tr>
+<tr>
+    <td>[LM Inbound] Myralis farma - Campanha IAP 1600 colaboradores</td><td>Luis Fonseca</td><td>Construindo o Projeto</td><td>1.000 a 2.999 colaboradores</td>
+    <td><span class="pill bad">Não</span></td><td>Incentivo + Informação</td><td>1</td>
+    </tr>
+</tbody></table>
+</div>
+</section>
+
+<footer>PDCA 2027 · impulseup · Base HubSpot exportada em 23/09/2026 · Escopo: 88 contas em pipeline ativo (exclui Lost e Won)</footer>
+</div>
+</body>
+</html>
