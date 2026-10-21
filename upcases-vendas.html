@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Upcases de Vendas | impulseup</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap">
+<style>
+:root{--bg:#F4F2EF;--card:#FFFFFF;--fg:#0C0C0C;--muted:#666666;--border:#E0E0E0;--primary:#CC0088;--primary-soft:#FBE6F3;--deep:#A3006D;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html,body{background:var(--bg)}
+body{font-family:'Poppins',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;color:var(--fg);margin:0;padding:24px;line-height:1.6}
+.wrap{max-width:1280px;margin:0 auto}
+header{background:var(--card);border:1px solid var(--border);border-left:6px solid var(--primary);border-radius:16px;padding:28px 32px;margin-bottom:20px}
+.brand{font-weight:800;color:var(--primary);font-size:14px;letter-spacing:.5px}
+h1{margin:6px 0 4px;font-size:clamp(22px,3vw,30px);font-weight:700}
+.sub{margin:0;color:var(--muted);font-size:14px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 20px}
+.stat b{display:block;font-size:28px;font-weight:700;color:var(--primary);line-height:1.2}
+.stat span{font-size:12px;color:var(--muted)}
+.controls{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;display:grid;grid-template-columns:2fr repeat(3,1fr) auto;gap:14px;align-items:end}
+@media(max-width:900px){.controls{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.controls{grid-template-columns:1fr}body{padding:14px}}
+label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:6px}
+input,select{width:100%;font-family:inherit;font-size:14px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:#fff;color:var(--fg);outline:none}
+input:focus,select:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+button{font-family:inherit;font-weight:600;font-size:13px;padding:10px 16px;border-radius:8px;border:1px solid var(--primary);background:#fff;color:var(--primary);cursor:pointer}
+button:hover{background:var(--primary);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px}
+@media(max-width:400px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(12,12,12,.08);border-color:var(--primary)}
+.card h2{margin:0 0 8px;font-size:18px;font-weight:700}
+.tags{display:flex;flex-wrap:wrap;gap:6px;padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:8px}
+.tag{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:var(--bg);color:var(--fg)}
+.tag.cat{background:var(--primary-soft);color:var(--deep)}
+.tag.comp{background:#0C0C0C;color:#fff}
+.sec{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--primary);margin:12px 0 4px}
+ul{margin:0;padding-left:18px;font-size:13px;color:#333}
+li{margin-bottom:3px}
+mark{background:var(--primary-soft);color:var(--deep);padding:0 2px;border-radius:3px}
+.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:48px;background:var(--card);border-radius:14px;border:1px dashed var(--border)}
+footer{text-align:center;color:var(--muted);font-size:12px;margin-top:28px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="brand">impulseup</div>
+  <h1>Upcases de Vendas</h1>
+  <p class="sub">Casos de fechamento por segmento, porte, categoria de compra e fornecedor substituído. Use para prova social, preparação de objeções e estratégia de deal.</p>
+</header>
+
+<div class="stats">
+  <div class="stat"><b id="s-total">0</b><span>Empresas exibidas</span></div>
+  <div class="stat"><b id="s-troca">0</b><span>Trocas de concorrente</span></div>
+  <div class="stat"><b id="s-seg">0</b><span>Segmentos</span></div>
+  <div class="stat"><b id="s-colabs">0</b><span>Colaboradores impactados</span></div>
+</div>
+
+<div class="controls">
+  <div><label for="q">Buscar</label><input id="q" type="search" placeholder="Empresa, concorrente, POC, Nine Box, WhatsApp..."></div>
+  <div><label for="f-seg">Segmento</label><select id="f-seg"></select></div>
+  <div><label for="f-cat">Categoria</label><select id="f-cat"></select></div>
+  <div><label for="f-comp">Fornecedor anterior</label><select id="f-comp"></select></div>
+  <button id="reset" type="button">Limpar</button>
+</div>
+
+<div class="grid" id="grid"></div>
+<footer>impulseup · Base consolidada de upcases comerciais</footer>
+</div>
+
+<script>
+const CATS={"Categoria 1":"Categoria 1 · Sem processo","Categoria 2":"Categoria 2 · Excel e planilhas","Categoria 4":"Categoria 4 · Substituindo ERP","Categoria 5":"Categoria 5 · Troca de concorrente"};
+const SEGS={"Tecnologia":"Tecnologia e Software","Saúde":"Saúde e Hospitalar","Educação":"Educação","Indústria":"Indústria","Serviços Financeiros":"Serviços Financeiros","Serviços":"Serviços, Jurídico e Varejo","Agronegócio":"Agronegócio"};
+
+const companies=[
+{name:"ConnectCar",segment:"Tecnologia",colabs:185,category:"Categoria 5",from:["Qulture.Rocks","Umanni"],
+ diff:["Ambiente de testes com dados reais","Importação de métricas externas para o Nine Box","Módulos flexíveis"],
+ challenges:["Trauma de trocas duplas (Qulture.Rocks e Umanni)","Exigências extremas de TI e compliance (SSO)","Inércia de Compras"],
+ strategy:["Venda focada em segurança e prova técnica","Apresentação de cronograma direto para Procurement"]},
+{name:"MedSenior",segment:"Saúde",colabs:3000,sizeLabel:"3.000+ colabs",category:"Categoria 5",from:["Gupy"],
+ diff:["Relatórios finais automáticos sem BI externo","Camada configurável de sigilo","Apoio a certificações (ONA Nível 3)"],
+ challenges:["Insatisfação com a base engessada da Gupy","Troca de Champion durante a negociação","Concorrência agressiva de preço (Smart Leader)"],
+ strategy:["Prova social intensa de ex-cliente","Revalidação de critérios com a nova Champion"]},
+{name:"Zig",segment:"Tecnologia",colabs:600,category:"Categoria 5",from:["Gupy"],
+ diff:["Congelamento e retenção de base no lançamento do ciclo","Módulo de Analytics moderno e CS Enterprise"],
+ challenges:["Trauma extremo com a Gupy","Insegurança com prazos curtos de implementação"],
+ strategy:["Venda de confiança técnica com antecedência ideal","Engenharia de contrato em 18 meses"]},
+{name:"Grupo Via1",segment:"Serviços",colabs:2500,category:"Categoria 1",from:[],
+ diff:["Descentralização por loja e marca no Analytics","PDI consultivo sem necessidade de cursos genéricos"],
+ challenges:["Concorrência com plataformas de cursos prontos (Gupy e Qulture.Rocks)","Falta de RH local nas filiais"],
+ strategy:["Estratégia Fenabrave (integração de cursos especializados no PDI)","Uso ativo de indicador como prova social"]},
+{name:"Lolly Brasil",segment:"Indústria",colabs:211,category:"Categoria 2",from:[],
+ diff:["Notificação e preenchimento via WhatsApp","Facilidade operacional do Nine Box para a liderança"],
+ challenges:["Fracasso duplo no selo GPTW","Receio da Champion em alterar formulário criado pelo Diretor"],
+ strategy:["Co-construção de Business Case com a Champion","Testes guiados com gerentes operacionais","Venda por créditos"]},
+{name:"Erca",segment:"Indústria",colabs:100,category:"Categoria 1",from:[],
+ diff:["Segurança e apoio do serviço consultivo de implantação"],
+ challenges:["Falta de urgência e budget no primeiro contato"],
+ strategy:["Nutrição ativa por quase 1 ano até a liberação orçamentária","Entrada inbound de comprador preparado"]},
+{name:"Colégio Farroupilha",segment:"Educação",colabs:700,sizeLabel:"700+ colabs",category:"Categoria 2",from:[],
+ diff:["Alta personalização para perfis distintos (docente, administrativo, higienização)","Ficha de aula via tablet"],
+ challenges:["Objeção do Diretor (\"colcha de retalhos\", preferia sistema de folha)","Ciclo longo de 17 meses"],
+ strategy:["Champion defensora interna","Retomada após falha na entrega da ferramenta da Metadados"]},
+{name:"Flash Kurier",segment:"Tecnologia",colabs:150,category:"Categoria 5",from:["Feedz"],
+ diff:["Analytics com agrupadores e filtros","Confiança na metodologia de vendas"],
+ challenges:["Perda de dados de um ciclo no concorrente anterior","Decisão top-down da holding para usar a Feedz"],
+ strategy:["Testes guiados durante as férias da Champion","Reversão em 24h após falha de implantação da Feedz"]},
+{name:"Gran Cursos",segment:"Educação",colabs:1100,category:"Categoria 5",from:["Elofy"],
+ diff:["Customização avançada de formulários","Analytics com filtros personalizáveis","Notificação via WhatsApp e SMS"],
+ challenges:["Baixa adesão do corpo docente na Elofy","Concorrência forte da Gupy com integração Slack"],
+ strategy:["POC técnica conduzida por ex-colaboradores da impulseup","Influência de parecer técnico desfavorável à Gupy"]},
+{name:"Banco Semear",segment:"Serviços Financeiros",colabs:150,category:"Categoria 5",from:["Mindsight","Sólides"],
+ diff:["Parametrização do dossiê interno de carreira no perfil 360","Uso de IA para devolutivas e feedbacks"],
+ challenges:["Lideranças desengajadas pelo uso de múltiplos softwares","Falta de apoio dos fornecedores antigos (Mindsight e Sólides)"],
+ strategy:["Foco na unificação da base de dados","Garantia de alinhamento com a sócia e diretora"]},
+{name:"Contabilizei",segment:"Tecnologia",colabs:1800,category:"Categoria 5",from:["Elofy"],
+ diff:["Pesos específicos de competências por cargo","Perfil 360 integrado ao Nine Box","Integração Sênior"],
+ challenges:["Uso da Elofy apenas para coleta (resto no Excel)","Analista inicial sem budget ou autoridade imediata"],
+ strategy:["Social selling e acompanhamento da mudança de empresa da analista","Testes práticos com BPs e DHO"]},
+{name:"Cultura Inglesa",segment:"Educação",colabs:1000,category:"Categoria 2",from:[],
+ diff:["Módulo de Pesquisas com plano de ação de cultura","Envio automático de lembretes de adesão"],
+ challenges:["Ausência de orçamento no ano corrente para a pesquisa de clima obrigatória"],
+ strategy:["Engenharia de contrato estendido antecipando a renovação do ano seguinte","Inclusão antecipada sem custo imediato"]},
+{name:"Hero Seguros",segment:"Serviços Financeiros",colabs:160,category:"Categoria 1",from:[],
+ diff:["Visualização integrada de AD e Metas para bônus e PLR","Usabilidade simples para liderança júnior"],
+ challenges:["Orçamento de RH esgotado em outras ferramentas de DP","Contatos travados após as férias do vendedor"],
+ strategy:["Parceria com consultoria (Carreira Z) para reforçar a indicação","Simulações de escopo combinado"]},
+{name:"Indústrias Colombo",segment:"Indústria",colabs:1300,category:"Categoria 2",from:[],
+ diff:["Plataforma multi-idioma (espanhol e inglês)","Metas integradas à avaliação e aos cargos"],
+ challenges:["Equipe de DHO enxuta e sobrecarregada com apurações manuais de bônus","Sumiço temporário dos interlocutores"],
+ strategy:["Abordagem persistente e emocional do closer","Apresentação de 6 cenários para transição gradual por usuários"]},
+{name:"HCosta",segment:"Serviços",colabs:2000,category:"Categoria 5",from:["Feedz"],
+ diff:["SLA imediato para importação de metas (contra 15 dias da Feedz)","Autonomia para pesquisas de onboarding"],
+ challenges:["Uso da ouvidoria da Feedz para clientes externos","Perda prévia do timing do ciclo"],
+ strategy:["Nutrição da Champion por mais de 2 anos até a entrada de novo superintendente","Apresentação de Business Case"]},
+{name:"Pulse (SX Negócios)",segment:"Serviços Financeiros",colabs:10000,category:"Categoria 4",from:["Sênior","Educa","Mereo"],
+ diff:["Privilégio de administrador por módulo","Analytics imediato por sites e regiões","Integração Sênior + SSO"],
+ challenges:["Fragmentação extrema entre 3 softwares (Sênior, Educa e Mereo)","Burocracia rigorosa de TI bancária"],
+ strategy:["Incentivo a teste piloto de emergência para a liderança do projeto","Follow-up contínuo com múltiplos BPs"]},
+{name:"Nortec Química",segment:"Indústria",colabs:310,category:"Categoria 2",from:[],
+ diff:["Uso de IA nos PDIs e interface intuitiva","Integração nativa com ERP TOTVS Protheus"],
+ challenges:["Preferência inicial da diretoria por módulos nativos da TOTVS e Feedz","Turnover interno de profissionais de RH"],
+ strategy:["Construção conjunta de apresentação comparativa com a Champion","Respostas técnicas rápidas para mais de 200 itens de segurança da TI"]},
+{name:"Topaz",segment:"Tecnologia",colabs:1800,category:"Categoria 5",from:["StarMeUp"],
+ diff:["Árvore de metas e workflow de aprovação integrados ao Nine Box","Otimização de verbas de treinamento"],
+ challenges:["Uso de software local barato (StarMeUp) sem budget prévio","Negociação 100% em espanhol (Colômbia e Uruguai)"],
+ strategy:["Estudo de ROI baseado na meta de faturamento de US$ 1 bi","Apoio de diretora regional da matriz (Stefanini)"]},
+{name:"Motoline",segment:"Serviços",colabs:210,category:"Categoria 1",from:[],
+ diff:["Apoio consultivo do CS na implementação","Uso de IA para PDIs e rituais de feedback","Treinamento de liderança incluso na implantação"],
+ challenges:["Falta de maturidade em DHO","Indicação da Feedz por consultoria externa","Insegurança do Diretor sobre engajamento de campo e filiais"],
+ strategy:["Reunião executiva com o Diretor focada nas garantias do serviço de implementação e treinamento de líderes"]},
+{name:"Valid",segment:"Tecnologia",colabs:3000,category:"Categoria 5",from:["KPI Insights"],
+ diff:["Centralização de Avaliação, Metas e Pesquisas via WhatsApp","Pesos individualizados por meta"],
+ challenges:["Metas mantidas em Excel isoladas da KPI Insights","Analista tentando restringir o escopo por budget"],
+ strategy:["Subida de nível para a Gerência de DHO com a solução completa e degustação de LMS"]},
+{name:"C Innovation",segment:"Indústria",colabs:550,category:"Categoria 2",from:[],
+ diff:["Regras de visibilidade para formulários heterogêneos de equipes offshore","Diagnóstico de lacunas de treinamento"],
+ challenges:["Avaliação do público offshore mantida em dezenas de planilhas separadas"],
+ strategy:["E-mail de defesa técnica mapeando dores e funcionalidades com evidências","Condução junto ao novo gerente de DHO"]},
+{name:"Conimel",segment:"Indústria",colabs:180,category:"Categoria 2",from:[],
+ diff:["Nine Box configurável com cores e nomes culturais","Biblioteca de PDIs com IA","Troca de dados fácil com TOTVS"],
+ challenges:["Inclinação prévia para fechar com a Feedz pela integração TOTVS"],
+ strategy:["Demo focada e rápida (30 min) em Analytics e Nine Box","Apoio técnico imediato sobre a integração TOTVS"]},
+{name:"Caju",segment:"Tecnologia",colabs:600,category:"Categoria 2",from:[],
+ diff:["IA para PDIs e devolutivas","Integração nativa com Slack","Atendimento consultivo e personalização cultural"],
+ challenges:["Uso prévio de planilhas sem processos automatizados","Avaliação de múltiplos softwares (Mereo, Factorial e Qulture.Rocks)"],
+ strategy:["Demonstrações gravadas em vídeo (Loom) personalizadas para o C-Level","Benchmarks com clientes de tecnologia"]},
+{name:"HMDCC",segment:"Saúde",colabs:1700,category:"Categoria 1",from:[],
+ diff:["Líderes delegados para equipes de 200+ pessoas","Relatórios auditáveis para órgãos públicos","Avaliação de consenso"],
+ challenges:["Tramitação pública burocrática","Tentativa de uso do módulo nativo do ERP Sênior"],
+ strategy:["Visita presencial e POC no hospital","Apoio na construção do Termo de Referência de inexigibilidade"]},
+{name:"Unimed Fortaleza",segment:"Saúde",colabs:3900,category:"Categoria 5",from:["LG (Lugar de Gente)"],
+ diff:["Agilidade na análise de dados cruzados por unidades (hospital e clínicas)","PDIs conectados"],
+ challenges:["Insatisfação histórica com relatórios engessados da LG (Lugar de Gente)"],
+ strategy:["Prova social e indicação de parceiro (Gomes de Matos) com recomendação da Pague Menos","Atendimento consultivo estendido"]},
+{name:"MSC",segment:"Serviços",colabs:60,category:"Categoria 2",from:[],
+ diff:["Centralização e eliminação de planilhas","Analytics com cruzamento de Metas e AD","Autonomia perante a consultoria"],
+ challenges:["Acesso difícil ao CEO (Dr. João)","Resistência de consultoria externa travando o processo"],
+ strategy:["Atuação via Champion ex-cliente (Adriana)","Apresentações de ROI prontas para o CEO"]},
+{name:"DP6",segment:"Tecnologia",colabs:150,category:"Categoria 5",from:["Qulture.Rocks"],
+ diff:["Dupla gestão (líderes e tutores de chapters)","Preservação de histórico na troca de squads","Mapa de calor em pesquisas"],
+ challenges:["Insegurança da diretoria após piloto ruim na Qulture.Rocks","Exigência de migração do histórico antigo"],
+ strategy:["POC guiada com preenchimento da própria diretora de RH"]},
+{name:"Usina Lins",segment:"Indústria",colabs:600,category:"Categoria 4",from:["TOTVS"],
+ diff:["Acesso operacional via link individual no aplicativo interno","Pesos flexíveis por tipo de avaliador","Notas no Nine Box"],
+ challenges:["Insatisfação com o produto da TOTVS e suporte não especializado","Falta de integração entre TOTVS e SAP"],
+ strategy:["Cronograma executivo de 6 etapas com 3 gestores de TI para homologação SAP"]},
+{name:"AGIS",segment:"Serviços",colabs:250,category:"Categoria 5",from:["Micropower"],
+ diff:["Nine Box integrado a metas de bonificação (70/30)","Autonomia do RH sem suporte do fornecedor","Avaliação em grade"],
+ challenges:["Falhas operacionais da Micropower","Trava de custos de integração na TI"],
+ strategy:["Operação inicial via importação de planilhas, sem custo de integração nativa"]},
+{name:"Bioplanta",segment:"Agronegócio",colabs:100,category:"Categoria 2",from:[],
+ diff:["Relatórios gráficos didáticos para a diretoria","Módulos de PDI, Feedback e Reuniões no pacote de pesquisas"],
+ challenges:["Pesquisas manuais em Google Forms sem desdobramento em ações","Sem budget para o módulo de AD completo"],
+ strategy:["Plano de ação pós-pesquisa como valor agregado sem custo adicional (venda em 15 dias)"]},
+{name:"Grupo San",segment:"Saúde",colabs:130,category:"Categoria 1",from:[],
+ diff:["Simplicidade e modelo por créditos para avaliação médica anual","Biblioteca de PDIs por unidade"],
+ challenges:["Sem RH formal (gerido por dois médicos diretores com pouco tempo)"],
+ strategy:["Venda ágil em duas reuniões condensando demo e plano de projeto (fechamento em 19 dias)"]},
+{name:"Ademicon",segment:"Serviços Financeiros",colabs:285,category:"Categoria 2",from:[],
+ diff:["Analytics com filtros personalizáveis","Cruzamento de metas mensais e AD semestral no Nine Box","Avaliação em grade"],
+ challenges:["Falta de dados confiáveis (96 solicitações de aumento sem indicadores objetivos)","Disputa com Elofy e Sólides"],
+ strategy:["Benchmark de alinhamento com o RH da Thyssenkrupp"]},
+{name:"Credsystem",segment:"Serviços Financeiros",colabs:560,category:"Categoria 5",from:["Appus"],
+ diff:["Fórmulas customizadas de metas (mínimo, meta e desafio convertidos em pontuação de 100 a 500 para PLR)"],
+ challenges:["Fórmula em Excel complexa que concorrentes não automatizavam","Fornecedor anterior (Appus) falhou na POC"],
+ strategy:["Simulação e resolução técnica da lógica de cálculo de metas do cliente dentro do software"]},
+{name:"Ourofino Saúde Animal",segment:"Indústria",colabs:450,category:"Categoria 4",from:["SAP SuccessFactors"],
+ diff:["Acompanhamento de metas em tempo real","Integração nativa SAP","Autonomia sem consultorias pagas por hora"],
+ challenges:["Custos elevados de consultoria do SAP SuccessFactors","Trava na TI e no comitê"],
+ strategy:["Atuação no squad interno do cliente e comunicação direta ao CTO reajustando o cronograma de transição"]},
+{name:"Morar EUA",segment:"Serviços",colabs:85,category:"Categoria 1",from:[],
+ diff:["Acompanhamento de reuniões 1:1 integrado a feedbacks","Treinamento de líderes via CS"],
+ challenges:["Turnover alto na equipe jovem","CEO resistia alegando falta de maturidade da liderança"],
+ strategy:["Tabulação de pesquisa interna provando que o turnover vinha da ausência de rituais de feedback e 1:1"]}
+];
+
+const $=id=>document.getElementById(id);
+const norm=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=n=>n.toLocaleString('pt-BR');
+
+function fillSelect(el,all,items){el.innerHTML=`<option value="">${all}</option>`+items.map(([v,l])=>`<option value="${esc(v)}">${esc(l)}</option>`).join('')}
+fillSelect($('f-seg'),'Todos os segmentos',Object.entries(SEGS).filter(([k])=>companies.some(c=>c.segment===k)));
+fillSelect($('f-cat'),'Todas as categorias',Object.entries(CATS));
+const comps=[...new Set(companies.flatMap(c=>c.from))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
+fillSelect($('f-comp'),'Todos',comps.map(c=>[c,c]));
+
+function hl(text,q){const t=esc(text);if(!q)return t;const n=norm(t);const i=n.indexOf(q);if(i<0)return t;return t.slice(0,i)+'<mark>'+t.slice(i,i+q.length)+'</mark>'+t.slice(i+q.length)}
+
+function render(){
+  const q=norm($('q').value.trim()),seg=$('f-seg').value,cat=$('f-cat').value,comp=$('f-comp').value;
+  const data=companies.filter(c=>{
+    const hay=norm([c.name,c.segment,...c.from,...c.diff,...c.challenges,...c.strategy].join(' '));
+    return (!q||hay.includes(q))&&(!seg||c.segment===seg)&&(!cat||c.category===cat)&&(!comp||c.from.includes(comp));
+  });
+  $('s-total').textContent=data.length;
+  $('s-troca').textContent=data.filter(c=>c.category==='Categoria 5').length;
+  $('s-seg').textContent=new Set(data.map(c=>c.segment)).size;
+  $('s-colabs').textContent=fmt(data.reduce((a,c)=>a+c.colabs,0));
+  const list=a=>`<ul>${a.map(x=>`<li>${hl(x,q)}</li>`).join('')}</ul>`;
+  $('grid').innerHTML=data.length?data.map(c=>`
+    <article class="card">
+      <h2>${hl(c.name,q)}</h2>
+      <div class="tags">
+        <span class="tag">${esc(SEGS[c.segment]||c.segment)}</span>
+        <span class="tag">${esc(c.sizeLabel||fmt(c.colabs)+' colabs')}</span>
+        <span class="tag cat">${esc(CATS[c.category])}</span>
+        ${c.from.map(f=>`<span class="tag comp">Saiu de ${esc(f)}</span>`).join('')}
+      </div>
+      <div class="sec">Diferenciais decisivos</div>${list(c.diff)}
+      <div class="sec">Desafios e objeções</div>${list(c.challenges)}
+      <div class="sec">Estratégia de fechamento</div>${list(c.strategy)}
+    </article>`).join(''):`<div class="empty">Nenhum caso encontrado com esses filtros.</div>`;
+}
+['q','f-seg','f-cat','f-comp'].forEach(id=>$(id).addEventListener(id==='q'?'input':'change',render));
+$('reset').addEventListener('click',()=>{$('q').value='';['f-seg','f-cat','f-comp'].forEach(id=>$(id).value='');render()});
+render();
+</script>
+</body>
+</html>
